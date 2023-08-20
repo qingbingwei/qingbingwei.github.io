@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>清兵卫的博客</title>
     <link>https://qingbingwei.github.io/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <description>Recent content on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 19 Aug 2023 10:37:33 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Blog</title>
-      <link>https://qingbingwei.github.io/post/blog/</link>
-      <pubDate>Sat, 19 Aug 2023 10:37:33 +0800</pubDate>
-      
-      <guid>https://qingbingwei.github.io/post/blog/</guid>
-      <description>第二次部署，因为不知道如何更新而重新部署，真就遇事不决就重装</description>
-    </item>
-    
+    <language>en-us</language><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
