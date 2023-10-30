@@ -6,7 +6,31 @@
     <description>Recent content on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 23 Oct 2023 23:00:26 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Oct 2023 22:06:01 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《C&#43;&#43;primer》读后感</title>
+      <link>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
+      <pubDate>Mon, 30 Oct 2023 22:06:01 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F/</guid>
+      <description>阅读了《C++primer》后，发现自己确实对C++的认识过于浅薄，还有很多我不了解的语法与注意事项需要学习。
+1.初始化的四种方式 1.int a = 0; 2.int a = {0}; 3.int a(0); 4.int a{0};
+其中方式2，4（初始化列表）对于类型检查更加严格，若会出现丢失数据风险则编译器报错。
+2.定义 ！= 声明 1.任何包含显式声明的声明即成为定义 int a = 0;为定义而非声明 extern int a;为声明而非定义 extern int a = 0;为定义而非声明 3.初始化 ！= 赋值 4.建议使用nullptr为指针赋空值 int *p = nullptr;
+5.指针值的四种状态 p47 对第二种理解不了&amp;mdash;指向紧邻对象所指空间下一个位置 6.加深对于const的理解 1.常量引用与指向常量指针：前者可绑定非常量值，后者可指向非常量对象 2.顶层const与底层const：前者狭义即指针本身是常量，广义即表示任意对象为常量，后者表示指针所指对象为一个常量
+今天阅读收获颇多。</description>
+    </item>
+    
+    <item>
+      <title>Git学习</title>
+      <link>https://qingbingwei.github.io/post/git%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 30 Oct 2023 11:37:24 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/git%E5%AD%A6%E4%B9%A0/</guid>
+      <description>对git进行了学习，了解了基本git操作指令与远程仓库相关指令，了解了分支概念及其相关指令（合并，拉取，获取等），在之后的学习中通过多加使用git以实现巩固目的。
+日后目标：Qt学习，阅读《C++ Primer》</description>
+    </item>
+    
     <item>
       <title>C&#43;&#43;学习感想</title>
       <link>https://qingbingwei.github.io/post/c&#43;&#43;%E5%AD%A6%E4%B9%A0%E6%84%9F%E6%83%B3/</link>

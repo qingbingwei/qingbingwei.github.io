@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git学习 on 清兵卫的博客</title>
+    <link>https://qingbingwei.github.io/tags/git%E5%AD%A6%E4%B9%A0/</link>
+    <description>Recent content in git学习 on 清兵卫的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 30 Oct 2023 11:37:24 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/git%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git学习</title>
+      <link>https://qingbingwei.github.io/post/git%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 30 Oct 2023 11:37:24 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/git%E5%AD%A6%E4%B9%A0/</guid>
+      <description>对git进行了学习，了解了基本git操作指令与远程仓库相关指令，了解了分支概念及其相关指令（合并，拉取，获取等），在之后的学习中通过多加使用git以实现巩固目的。
+日后目标：Qt学习，阅读《C++ Primer》</description>
+    </item>
+    
+  </channel>
+</rss>
