@@ -6,7 +6,28 @@
     <description>Recent content on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 30 Oct 2023 22:06:01 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 02 Nov 2023 22:14:27 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《C&#43;&#43;Primer》读后感2</title>
+      <link>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F2/</link>
+      <pubDate>Thu, 02 Nov 2023 22:14:27 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F2/</guid>
+      <description>这两天在阅读过程中又遇到了一些问题，同时也学习到了一些新的语法，具体如下:
+1.顶层const与底层const拷贝规则
+其中顶层const不会受到什么影响，但是底层const的限制不能忽视，这是为了防止拷贝对象能够修改底层const指针指向对象 即 const int a = 0; const int *const p1 = &amp;amp;a; int *p2 = p1; //错误 2.constexpr变量
+如果变量为常量表达式，最好声明为constexpr类型 3.constexpr和指针
+限定符constexpr仅对指针有效，对其所指对象无效 4.类型别名
+1.typedef 2.using 注：typedef char *pstring; const char *cstr = 0; 与 const pstring cstr = 0;含义不同 5.auto
+1.auto auto定义变量必须有初始值 2.auto和引用 编译器以引用对象的类型作为auto的类型 设置类型为auto的引用时，初始值中的顶层常量属性仍然保留 3.auto和const auto一般会忽略顶层const（希望推断出则需明确指出p62），保留底层const 6.decltype
+1.decltype 编译器分析表达式得到类型，但不计算 2.decltype与引用 如果表达式内容为解引用操作，将得到引用类型 **** decltype（（variable））结果永远是引用 p63 7.左值和右值
+使用左值地址，使用右值数据 8.预处理与头文件
+9.using与命名空间
+头文件不应包含using声明 **** 10.cin与文件末尾 p78
+11.string与字符串字面值
+可以使用 + 进行追加 注：string类 .</description>
+    </item>
+    
     <item>
       <title>《C&#43;&#43;primer》读后感</title>
       <link>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F/</link>

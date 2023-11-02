@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>《C&#43;&#43;Primer》读后感2 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="《C&#43;&#43;Primer》读后感2"/>
+<meta name="twitter:description" content="这两天在阅读过程中又遇到了一些问题，同时也学习到了一些新的语法，具体如下:
+1.顶层const与底层const拷贝规则
+其中顶层const不会受到什么影响，但是底层const的限制不能忽视，这是为了防止拷贝对象能够修改底层const指针指向对象 即 const int a = 0; const int *const p1 = &amp;a; int *p2 = p1; //错误 2.constexpr变量
+如果变量为常量表达式，最好声明为constexpr类型 3.constexpr和指针
+限定符constexpr仅对指针有效，对其所指对象无效 4.类型别名
+1.typedef 2.using 注：typedef char *pstring; const char *cstr = 0; 与 const pstring cstr = 0;含义不同 5.auto
+1.auto auto定义变量必须有初始值 2.auto和引用 编译器以引用对象的类型作为auto的类型 设置类型为auto的引用时，初始值中的顶层常量属性仍然保留 3.auto和const auto一般会忽略顶层const（希望推断出则需明确指出p62），保留底层const 6.decltype
+1.decltype 编译器分析表达式得到类型，但不计算 2.decltype与引用 如果表达式内容为解引用操作，将得到引用类型 **** decltype（（variable））结果永远是引用 p63 7.左值和右值
+使用左值地址，使用右值数据 8.预处理与头文件
+9.using与命名空间
+头文件不应包含using声明 **** 10.cin与文件末尾 p78
+11.string与字符串字面值
+可以使用 &#43; 进行追加 注：string类 ."/>
+
+    <meta property="og:title" content="《C&#43;&#43;Primer》读后感2" />
+<meta property="og:description" content="这两天在阅读过程中又遇到了一些问题，同时也学习到了一些新的语法，具体如下:
+1.顶层const与底层const拷贝规则
+其中顶层const不会受到什么影响，但是底层const的限制不能忽视，这是为了防止拷贝对象能够修改底层const指针指向对象 即 const int a = 0; const int *const p1 = &amp;a; int *p2 = p1; //错误 2.constexpr变量
+如果变量为常量表达式，最好声明为constexpr类型 3.constexpr和指针
+限定符constexpr仅对指针有效，对其所指对象无效 4.类型别名
+1.typedef 2.using 注：typedef char *pstring; const char *cstr = 0; 与 const pstring cstr = 0;含义不同 5.auto
+1.auto auto定义变量必须有初始值 2.auto和引用 编译器以引用对象的类型作为auto的类型 设置类型为auto的引用时，初始值中的顶层常量属性仍然保留 3.auto和const auto一般会忽略顶层const（希望推断出则需明确指出p62），保留底层const 6.decltype
+1.decltype 编译器分析表达式得到类型，但不计算 2.decltype与引用 如果表达式内容为解引用操作，将得到引用类型 **** decltype（（variable））结果永远是引用 p63 7.左值和右值
+使用左值地址，使用右值数据 8.预处理与头文件
+9.using与命名空间
+头文件不应包含using声明 **** 10.cin与文件末尾 p78
+11.string与字符串字面值
+可以使用 &#43; 进行追加 注：string类 ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-11-02T22:14:27+08:00" />
+<meta property="article:modified_time" content="2023-11-02T22:14:27+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">《C&#43;&#43;Primer》读后感2</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 2, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/">读后感</a>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E9%97%AE%E9%A2%98/">问题</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>这两天在阅读过程中又遇到了一些问题，同时也学习到了一些新的语法，具体如下:</p>
+<p>1.顶层const与底层const拷贝规则</p>
+<pre><code>其中顶层const不会受到什么影响，但是底层const的限制不能忽视，这是为了防止拷贝对象能够修改底层const指针指向对象
+
+即
+
+const int a = 0;
+
+const int *const p1 = &amp;a;
+
+int *p2 = p1; //错误
+</code></pre>
+<p>2.constexpr变量</p>
+<pre><code>如果变量为常量表达式，最好声明为constexpr类型
+</code></pre>
+<p>3.constexpr和指针</p>
+<pre><code>限定符constexpr仅对指针有效，对其所指对象无效
+</code></pre>
+<p>4.类型别名</p>
+<pre><code>1.typedef
+
+2.using
+
+注：typedef char *pstring;
+
+    const char *cstr = 0; 与 const pstring cstr = 0;含义不同
+</code></pre>
+<p>5.auto</p>
+<pre><code>1.auto
+
+    auto定义变量必须有初始值
+
+2.auto和引用
+
+    编译器以引用对象的类型作为auto的类型
+
+    设置类型为auto的引用时，初始值中的顶层常量属性仍然保留
+
+3.auto和const
+
+    auto一般会忽略顶层const（希望推断出则需明确指出p62），保留底层const
+</code></pre>
+<p>6.decltype</p>
+<pre><code>1.decltype
+
+    编译器分析表达式得到类型，但不计算
+
+2.decltype与引用
+
+    如果表达式内容为解引用操作，将得到引用类型
+
+    **** decltype（（variable））结果永远是引用 p63
+</code></pre>
+<p>7.左值和右值</p>
+<pre><code>使用左值地址，使用右值数据
+</code></pre>
+<p>8.预处理与头文件</p>
+<p>9.using与命名空间</p>
+<pre><code>头文件不应包含using声明
+</code></pre>
+<p>**** 10.cin与文件末尾 p78</p>
+<p>11.string与字符串字面值</p>
+<pre><code>可以使用 + 进行追加
+
+注：string类 .size() 函数返回类型为string::size_type(无符号整型)
+</code></pre>
+<p>12.范围for语句</p>
+<pre><code>目前来看可以用于对字符串每个字符执行某某操作
+</code></pre>
+<p>有待继续阅读，阅读让我认识到我对c++的理解还是过于浅薄，我这几天收获颇丰，我已经开始期待阅读完成后对《effective c++》的阅读了。</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
