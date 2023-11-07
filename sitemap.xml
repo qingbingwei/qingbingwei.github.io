@@ -2,22 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://qingbingwei.github.io/post/</loc>
+    <lastmod>2023-11-07T23:01:00+08:00</lastmod>
+  </url><url>
+    <loc>https://qingbingwei.github.io/tags/</loc>
+    <lastmod>2023-11-07T23:01:00+08:00</lastmod>
+  </url><url>
+    <loc>https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2023-11-07T23:01:00+08:00</lastmod>
+  </url><url>
+    <loc>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%A1%BA%E5%BA%8F%E8%A1%A8/</loc>
+    <lastmod>2023-11-07T23:01:00+08:00</lastmod>
+  </url><url>
+    <loc>https://qingbingwei.github.io/</loc>
+    <lastmod>2023-11-07T23:01:00+08:00</lastmod>
+  </url><url>
+    <loc>https://qingbingwei.github.io/tags/%E9%97%AE%E9%A2%98/</loc>
+    <lastmod>2023-11-07T23:01:00+08:00</lastmod>
+  </url><url>
     <loc>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F2/</loc>
     <lastmod>2023-11-02T22:14:27+08:00</lastmod>
   </url><url>
-    <loc>https://qingbingwei.github.io/post/</loc>
-    <lastmod>2023-11-02T22:14:27+08:00</lastmod>
-  </url><url>
-    <loc>https://qingbingwei.github.io/tags/</loc>
-    <lastmod>2023-11-02T22:14:27+08:00</lastmod>
-  </url><url>
-    <loc>https://qingbingwei.github.io/</loc>
-    <lastmod>2023-11-02T22:14:27+08:00</lastmod>
-  </url><url>
     <loc>https://qingbingwei.github.io/tags/%E8%AF%BB%E5%90%8E%E6%84%9F/</loc>
-    <lastmod>2023-11-02T22:14:27+08:00</lastmod>
-  </url><url>
-    <loc>https://qingbingwei.github.io/tags/%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2023-11-02T22:14:27+08:00</lastmod>
   </url><url>
     <loc>https://qingbingwei.github.io/post/c&#43;&#43;primer%E8%AF%BB%E5%90%8E%E6%84%9F/</loc>
