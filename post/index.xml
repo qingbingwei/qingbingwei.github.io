@@ -6,7 +6,24 @@
     <description>Recent content in Posts on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 07 Nov 2023 23:01:00 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 08 Nov 2023 20:13:05 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据结构 链表</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%93%BE%E8%A1%A8/</link>
+      <pubDate>Wed, 08 Nov 2023 20:13:05 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%93%BE%E8%A1%A8/</guid>
+      <description>单链表：
+1.节点（结点）：数据加指向下一个数据的地址（指向下一个数据的指针），组成了了一个节点 2.链表由若干节点组成 3.头指针：存储第一个节点的地址的指针，头指针可以标记一个链表
+两个特殊节点： 1.首元节点：第一个存储真实数据的节点。（非空链表，一定有首元节点） 2.头节点：链表中第一个不存储真实数据的节点（头节点可有可无），如果头节点存在，那么头节点一定是链表的第一个节点
+声明链表==声明节点
+增强可读性，声明头指针 linklist l;
+头节点作用： 1.当不带头节点时，对首元节点的操作需要涉及到头指针，非常特殊； 带头节点时，首元节点与其他节点无异 2.对空链表的操作：带头节点，空链表与非空链表均有节点，统一起来了
+1.增： 不带头节点的链表：在首元节点前插入一个节点，需要改变头指针
+初步代码实现如下： #define _CRT_SECURE_NO_WARNINGS
+#include&amp;lt;iostream&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class Node { public: T date; Node* next; }; template&amp;lt;class T&amp;gt; class LinkList { public: Node&amp;lt;T&amp;gt;* m_head; public: LinkList() { m_head = new Node&amp;lt;T&amp;gt;; if (m_head == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { m_head-&amp;gt;next = nullptr; } } //查找函数 LinkList* Find(LinkList* head, T k) { Node&amp;lt;T&amp;gt;* pt = head-&amp;gt;m_head-&amp;gt;next; while (pt-&amp;gt;next !</description>
+    </item>
+    
     <item>
       <title>数据结构 顺序表</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%A1%BA%E5%BA%8F%E8%A1%A8/</link>
@@ -15,13 +32,7 @@
       <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%A1%BA%E5%BA%8F%E8%A1%A8/</guid>
       <description>今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）
 代码如下（博客显示有点问题，不知道为什么，之后去修复一下）
-#define _CRT_SECURE_NO_WARNINGS
-#include
-#include
-using namespace std;
-template
-class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; }
-void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&amp;gt;size &amp;lt; pa-&amp;gt;length) { pa-&amp;gt;date[size] = ele; pa-&amp;gt;size++; } else { throw runtime_error(&amp;quot;空间已满，是否扩容 Y/N&amp;quot;); } } catch (runtime_error err) { cout &amp;lt;&amp;lt; err.what() &amp;lt;&amp;lt; endl; char ch(0); cin &amp;gt;&amp;gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size + 1]; for (size_t i = 0; i &amp;lt; pa-&amp;gt;length; i++) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !</description>
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;stdexcept&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&amp;gt;size &amp;lt; pa-&amp;gt;length) { pa-&amp;gt;date[size] = ele; pa-&amp;gt;size++; } else { throw runtime_error(&amp;quot;空间已满，是否扩容 Y/N&amp;quot;); } } catch (runtime_error err) { cout &amp;lt;&amp;lt; err.what() &amp;lt;&amp;lt; endl; char ch(0); cin &amp;gt;&amp;gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size + 1]; for (size_t i = 0; i &amp;lt; pa-&amp;gt;length; i++) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !</description>
     </item>
     
     <item>

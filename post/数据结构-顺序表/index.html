@@ -15,24 +15,12 @@
 <meta name="twitter:title" content="数据结构 顺序表"/>
 <meta name="twitter:description" content="今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）
 代码如下（博客显示有点问题，不知道为什么，之后去修复一下）
-#define _CRT_SECURE_NO_WARNINGS
-#include
-#include
-using namespace std;
-template
-class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; }
-void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !"/>
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;stdexcept&gt; using namespace std; template&lt;class T&gt; class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !"/>
 
     <meta property="og:title" content="数据结构 顺序表" />
 <meta property="og:description" content="今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）
 代码如下（博客显示有点问题，不知道为什么，之后去修复一下）
-#define _CRT_SECURE_NO_WARNINGS
-#include
-#include
-using namespace std;
-template
-class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; }
-void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !" />
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;stdexcept&gt; using namespace std; template&lt;class T&gt; class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%A1%BA%E5%BA%8F%E8%A1%A8/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-11-07T23:01:00+08:00" />
@@ -105,179 +93,187 @@ void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容�
     <div class="post-content">
       <p>今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）</p>
 <p>代码如下（博客显示有点问题，不知道为什么，之后去修复一下）</p>
-<p>#define _CRT_SECURE_NO_WARNINGS</p>
-<p>#include<!-- raw HTML omitted --></p>
-<p>#include<!-- raw HTML omitted --></p>
-<p>using namespace std;</p>
-<p>template<!-- raw HTML omitted --></p>
-<p>class ArrayList
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+
+#include&lt;iostream&gt;
+
+#include&lt;stdexcept&gt;
+
+using namespace std;
+
+template&lt;class T&gt;
+
+class ArrayList
 {
 public:
-ArrayList(int Num):size(0) //初始化构造函数
-{
-date = new T[Num];
-length = Num;
-}</p>
-<pre><code>void AddEle(ArrayList* pa,T ele)//增添元素
-{
-	//判断是否超过最大容量
-	try
+	ArrayList(int Num):size(0) //初始化构造函数
 	{
-		if (pa-&gt;size &lt; pa-&gt;length)
-		{
-			pa-&gt;date[size] = ele;
-			pa-&gt;size++;
-		}
-		else
-		{
-			throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;);
-		}
+		date = new T[Num];
+		length = Num; 
 	}
-	catch (runtime_error err)
+
+	void AddEle(ArrayList* pa,T ele)//增添元素
 	{
-		cout &lt;&lt; err.what() &lt;&lt; endl;
-		char ch(0);
-		cin &gt;&gt; ch;
-		if (ch == 'Y' || ch == 'y')
+		//判断是否超过最大容量
+		try
 		{
-			T* date_copy = new T[size + 1];
-			for (size_t i = 0; i &lt; pa-&gt;length; i++)
+			if (pa-&gt;size &lt; pa-&gt;length)
 			{
-				date_copy[i] = date[i];
-			}//将值存储到新空间
-			delete[] date;
-			if (date != nullptr)
-			{
-				date = nullptr;
+				pa-&gt;date[size] = ele;
+				pa-&gt;size++;
 			}
-			date = date_copy;
-			date_copy = nullptr;
-			pa-&gt;length++;
-			date[length - 1] = ele;
-		}
-		else
-		{
-			cout &lt;&lt; &quot;不进行扩容，无法增添新元素&quot; &lt;&lt; endl;
-			return;
-		}
-	}
-}
-int FindEle(ArrayList* pa,T ele)//查找元素
-{
-	for (size_t i = 0; i &lt; pa-&gt;size; i++)
-	{
-		if (pa-&gt;date[i] == ele)
-		{
-			return i;
-		}
-	}
-	return -1;
-}
-void DelEle(ArrayList* pa, T ele)
-{
-	int index = pa-&gt;FindEle(pa, ele);
-	if (index == -1)
-	{
-		cout &lt;&lt; &quot;查无此元素&quot; &lt;&lt; endl;
-	}
-	else
-	{
-		for (size_t i = index + 1; i &lt; pa-&gt;size; i++)
-		{
-			pa-&gt;date[i - 1] = pa-&gt;date[i];
-		}
-		pa-&gt;size--;
-	}
-}
-void InsertEle(ArrayList* pa,T ele,int index_)
-{
-	//判断是否超过最大容量
-	try
-	{
-		if (pa-&gt;size &lt; pa-&gt;length)
-		{
-			for (size_t i = pa-&gt;size; i &gt; index_; i--)
+			else
 			{
-				pa-&gt;date[i] = pa-&gt;date[i - 1];
+				throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;);
 			}
-			pa-&gt;date[index_] = ele;
-			pa-&gt;size++;
 		}
-		else
+		catch (runtime_error err)
 		{
-			throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;);
-		}
-	}
-	catch (runtime_error err)
-	{
-		cout &lt;&lt; err.what() &lt;&lt; endl;
-		char ch(0);
-		cin &gt;&gt; ch;
-		if (ch == 'Y' || ch == 'y')
-		{
-			T* date_copy = new T[size + 1];
-			for (size_t i = 0; i &lt; pa-&gt;length; i++)
+			cout &lt;&lt; err.what() &lt;&lt; endl;
+			char ch(0);
+			cin &gt;&gt; ch;
+			if (ch == 'Y' || ch == 'y')
 			{
-				date_copy[i] = date[i];
-			}//将值存储到新空间
-			delete[] date;
-			if (date != nullptr)
-			{
-				date = nullptr;
+				T* date_copy = new T[size + 1];
+				for (size_t i = 0; i &lt; pa-&gt;length; i++)
+				{
+					date_copy[i] = date[i];
+				}//将值存储到新空间
+				delete[] date;
+				if (date != nullptr)
+				{
+					date = nullptr;
+				}
+				date = date_copy;
+				date_copy = nullptr;
+				pa-&gt;length++;
+				date[length - 1] = ele;
 			}
-			date = date_copy;
-			date_copy = nullptr;
-			pa-&gt;length++;
-			date[length] = ele;
+			else
+			{
+				cout &lt;&lt; &quot;不进行扩容，无法增添新元素&quot; &lt;&lt; endl;
+				return;
+			}
+		}
+	}
+	int FindEle(ArrayList* pa,T ele)//查找元素
+	{
+		for (size_t i = 0; i &lt; pa-&gt;size; i++)
+		{
+			if (pa-&gt;date[i] == ele)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	void DelEle(ArrayList* pa, T ele)
+	{
+		int index = pa-&gt;FindEle(pa, ele);
+		if (index == -1)
+		{
+			cout &lt;&lt; &quot;查无此元素&quot; &lt;&lt; endl;
 		}
 		else
 		{
-			cout &lt;&lt; &quot;不进行扩容，无法增添新元素&quot; &lt;&lt; endl;
-			return;
+			for (size_t i = index + 1; i &lt; pa-&gt;size; i++)
+			{
+				pa-&gt;date[i - 1] = pa-&gt;date[i];
+			}
+			pa-&gt;size--;
 		}
 	}
-}
-void ChangeEle(ArrayList* pa, T ele, int index_)
+	void InsertEle(ArrayList* pa,T ele,int index_)
+	{
+		//判断是否超过最大容量
+		try
+		{
+			if (pa-&gt;size &lt; pa-&gt;length)
+			{
+				for (size_t i = pa-&gt;size; i &gt; index_; i--)
+				{
+					pa-&gt;date[i] = pa-&gt;date[i - 1];
+				}
+				pa-&gt;date[index_] = ele;
+				pa-&gt;size++;
+			}
+			else
+			{
+				throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;);
+			}
+		}
+		catch (runtime_error err)
+		{
+			cout &lt;&lt; err.what() &lt;&lt; endl;
+			char ch(0);
+			cin &gt;&gt; ch;
+			if (ch == 'Y' || ch == 'y')
+			{
+				T* date_copy = new T[size + 1];
+				for (size_t i = 0; i &lt; pa-&gt;length; i++)
+				{
+					date_copy[i] = date[i];
+				}//将值存储到新空间
+				delete[] date;
+				if (date != nullptr)
+				{
+					date = nullptr;
+				}
+				date = date_copy;
+				date_copy = nullptr;
+				pa-&gt;length++;
+				date[length] = ele;
+			}
+			else
+			{
+				cout &lt;&lt; &quot;不进行扩容，无法增添新元素&quot; &lt;&lt; endl;
+				return;
+			}
+		}
+	}
+	void ChangeEle(ArrayList* pa, T ele, int index_)
+	{
+		pa-&gt;date[index_] = ele;
+	}
+
+public:
+
+	T* date; //指针模拟数组
+
+	int length; //理论最大容量
+
+	int size; //实际大小
+
+};
+
+int main()
 {
-	pa-&gt;date[index_] = ele;
-}
-</code></pre>
-<p>public:</p>
-<pre><code>T* date; //指针模拟数组
 
-int length; //理论最大容量
+	ArrayList&lt;int&gt; myarr(10);
 
-int size; //实际大小
-</code></pre>
-<p>};</p>
-<p>int main()
-{</p>
-<pre><code>ArrayList&lt;int&gt; myarr(10);
+	myarr.AddEle(&amp;myarr, 10);
 
-myarr.AddEle(&amp;myarr, 10);
+	myarr.AddEle(&amp;myarr, 10);
 
-myarr.AddEle(&amp;myarr, 10);
+	myarr.AddEle(&amp;myarr, 11);
 
-myarr.AddEle(&amp;myarr, 11);
+	cout &lt;&lt; myarr.FindEle(&amp;myarr, 11) &lt;&lt; endl;
 
-cout &lt;&lt; myarr.FindEle(&amp;myarr, 11) &lt;&lt; endl;
+	myarr.AddEle(&amp;myarr, 10);
 
-myarr.AddEle(&amp;myarr, 10);
+	myarr.AddEle(&amp;myarr, 10);
 
-myarr.AddEle(&amp;myarr, 10);
+	myarr.AddEle(&amp;myarr, 19);
 
-myarr.AddEle(&amp;myarr, 19);
+	myarr.DelEle(&amp;myarr, 11);
 
-myarr.DelEle(&amp;myarr, 11);
+	for (size_t i = 0; i &lt; myarr.length; i++)
+	{
+		cout &lt;&lt; myarr.date[i] &lt;&lt;' ';
+	}
 
-for (size_t i = 0; i &lt; myarr.length; i++)
-{
-	cout &lt;&lt; myarr.date[i] &lt;&lt;' ';
-}
-
-return 0;
-</code></pre>
-<p>}</p>
+	return 0;
+}</code></pre>
 
     </div>
     <div class="post-footer">
