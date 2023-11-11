@@ -14,13 +14,15 @@
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="数据结构 顺序表"/>
 <meta name="twitter:description" content="今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）
+2023.11.11 今天提交链表顺便修复一下之前的bug，扩容时忘了size&#43;&#43;
 代码如下（博客显示有点问题，不知道为什么，之后去修复一下）
-#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;stdexcept&gt; using namespace std; template&lt;class T&gt; class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !"/>
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;stdexcept&gt; using namespace std; template&lt;class T&gt; class ArrayList { public: ArrayList(int Num) :size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa, T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !"/>
 
     <meta property="og:title" content="数据结构 顺序表" />
 <meta property="og:description" content="今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）
+2023.11.11 今天提交链表顺便修复一下之前的bug，扩容时忘了size&#43;&#43;
 代码如下（博客显示有点问题，不知道为什么，之后去修复一下）
-#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;stdexcept&gt; using namespace std; template&lt;class T&gt; class ArrayList { public: ArrayList(int Num):size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa,T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !" />
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;stdexcept&gt; using namespace std; template&lt;class T&gt; class ArrayList { public: ArrayList(int Num) :size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa, T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&gt;size &lt; pa-&gt;length) { pa-&gt;date[size] = ele; pa-&gt;size&#43;&#43;; } else { throw runtime_error(&quot;空间已满，是否扩容 Y/N&quot;); } } catch (runtime_error err) { cout &lt;&lt; err.what() &lt;&lt; endl; char ch(0); cin &gt;&gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size &#43; 1]; for (size_t i = 0; i &lt; pa-&gt;length; i&#43;&#43;) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%A1%BA%E5%BA%8F%E8%A1%A8/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2023-11-07T23:01:00+08:00" />
@@ -92,27 +94,22 @@
     </header>
     <div class="post-content">
       <p>今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）</p>
+<p>2023.11.11 今天提交链表顺便修复一下之前的bug，扩容时忘了size++</p>
 <p>代码如下（博客显示有点问题，不知道为什么，之后去修复一下）</p>
 <pre><code>#define _CRT_SECURE_NO_WARNINGS
-
 #include&lt;iostream&gt;
-
 #include&lt;stdexcept&gt;
-
 using namespace std;
-
 template&lt;class T&gt;
-
 class ArrayList
 {
 public:
-	ArrayList(int Num):size(0) //初始化构造函数
+	ArrayList(int Num) :size(0) //初始化构造函数
 	{
 		date = new T[Num];
-		length = Num; 
+		length = Num;
 	}
-
-	void AddEle(ArrayList* pa,T ele)//增添元素
+	void AddEle(ArrayList* pa, T ele)//增添元素
 	{
 		//判断是否超过最大容量
 		try
@@ -148,6 +145,7 @@ public:
 				date_copy = nullptr;
 				pa-&gt;length++;
 				date[length - 1] = ele;
+				pa-&gt;size++;
 			}
 			else
 			{
@@ -156,7 +154,7 @@ public:
 			}
 		}
 	}
-	int FindEle(ArrayList* pa,T ele)//查找元素
+	int FindEle(ArrayList* pa, T ele)//查找元素
 	{
 		for (size_t i = 0; i &lt; pa-&gt;size; i++)
 		{
@@ -183,7 +181,7 @@ public:
 			pa-&gt;size--;
 		}
 	}
-	void InsertEle(ArrayList* pa,T ele,int index_)
+	void InsertEle(ArrayList* pa, T ele, int index_)
 	{
 		//判断是否超过最大容量
 		try
@@ -222,7 +220,8 @@ public:
 				date = date_copy;
 				date_copy = nullptr;
 				pa-&gt;length++;
-				date[length] = ele;
+				date[length - 1] = ele;
+				pa-&gt;size++;
 			}
 			else
 			{
@@ -235,43 +234,29 @@ public:
 	{
 		pa-&gt;date[index_] = ele;
 	}
-
 public:
-
 	T* date; //指针模拟数组
-
 	int length; //理论最大容量
-
 	int size; //实际大小
-
 };
 
 int main()
 {
-
 	ArrayList&lt;int&gt; myarr(10);
-
 	myarr.AddEle(&amp;myarr, 10);
-
-	myarr.AddEle(&amp;myarr, 10);
-
 	myarr.AddEle(&amp;myarr, 11);
-
+	myarr.AddEle(&amp;myarr, 12);
+	myarr.AddEle(&amp;myarr, 13);
+	myarr.AddEle(&amp;myarr, 14);
+	myarr.InsertEle(&amp;myarr, 15, 5);
+	myarr.AddEle(&amp;myarr, 16);
+	myarr.AddEle(&amp;myarr, 17);
 	cout &lt;&lt; myarr.FindEle(&amp;myarr, 11) &lt;&lt; endl;
-
-	myarr.AddEle(&amp;myarr, 10);
-
-	myarr.AddEle(&amp;myarr, 10);
-
-	myarr.AddEle(&amp;myarr, 19);
-
-	myarr.DelEle(&amp;myarr, 11);
-
-	for (size_t i = 0; i &lt; myarr.length; i++)
+	myarr.DelEle(&amp;myarr, 16);
+	for (size_t i = 0; i &lt; myarr.size; i++)
 	{
-		cout &lt;&lt; myarr.date[i] &lt;&lt;' ';
+		cout &lt;&lt; myarr.date[i] &lt;&lt; ' ';
 	}
-
 	return 0;
 }</code></pre>
 
