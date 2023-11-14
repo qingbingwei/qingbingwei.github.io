@@ -6,7 +6,19 @@
     <description>Recent content in Posts on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 11 Nov 2023 18:15:45 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 14 Nov 2023 17:13:49 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据结构_栈</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%88/</link>
+      <pubDate>Tue, 14 Nov 2023 17:13:49 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%88/</guid>
+      <description>今天成功实现了栈，可能因为栈比较简单，没花太多时间，毕竟就是一种特殊的表，比上次链表好多了，这次写链栈快多了。
+代码如下
+顺序栈
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class m_stack { public: m_stack(int n) { size = n; data = new T[n]; if (data == nullptr) { cerr &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } top = -1;//初始化栈顶指针 } void m_push(T k) { if (this-&amp;gt;top == this-&amp;gt;size - 1) { cout &amp;lt;&amp;lt; &amp;quot;栈满&amp;quot; &amp;lt;&amp;lt; endl; } else { this-&amp;gt;top++; this-&amp;gt;data[top] = k; //若top初始值为0 /* *if(s.top == s.size) { } else { s.</description>
+    </item>
+    
     <item>
       <title>数据结构 双链表及循环链表</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%8F%8C%E9%93%BE%E8%A1%A8%E5%8F%8A%E5%BE%AA%E7%8E%AF%E9%93%BE%E8%A1%A8/</link>
