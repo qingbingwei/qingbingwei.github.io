@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 队列 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 队列"/>
+<meta name="twitter:description" content="学习完了线性结构的最后一个类型了，接下来似乎就是很难实现的分支结构了，一个红黑树似乎会有上千行代码的样子，不知道到时候要写多久。
+实现了顺序队列，链式队列，循环队列，顺序双端队列，链式双端队列，同时对优先队列有了一定了解
+代码实现如下：
+顺序队列：
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; template&lt;class T&gt; class m_queue { public: m_queue(int n) { size = n; data = new T[size]; if (data == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } front = 0; rear = 0; //指向最后一个元素下一个位置 } void En_queue(T k) { //判满(牺牲一个位置) if (rear == size - 1) { cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl; } else { data[rear] = k; cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl; rear&#43;&#43;; } } void Del_queue() { int x(0);//记录出队元素 //判空 if (front == rear) { cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl; } else { x = data[front]; cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl; front&#43;&#43;; } } void m_empty() { if (front == rear) { cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl; } } void m_full() { if (rear == size) { cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl; } } public: int size;//队列大小 T* data; int front; //队头指针 int rear; //队尾指针 }; int main() { m_queue&lt;int&gt; q(5); q."/>
+
+    <meta property="og:title" content="数据结构 队列" />
+<meta property="og:description" content="学习完了线性结构的最后一个类型了，接下来似乎就是很难实现的分支结构了，一个红黑树似乎会有上千行代码的样子，不知道到时候要写多久。
+实现了顺序队列，链式队列，循环队列，顺序双端队列，链式双端队列，同时对优先队列有了一定了解
+代码实现如下：
+顺序队列：
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; template&lt;class T&gt; class m_queue { public: m_queue(int n) { size = n; data = new T[size]; if (data == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } front = 0; rear = 0; //指向最后一个元素下一个位置 } void En_queue(T k) { //判满(牺牲一个位置) if (rear == size - 1) { cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl; } else { data[rear] = k; cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl; rear&#43;&#43;; } } void Del_queue() { int x(0);//记录出队元素 //判空 if (front == rear) { cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl; } else { x = data[front]; cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl; front&#43;&#43;; } } void m_empty() { if (front == rear) { cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl; } } void m_full() { if (rear == size) { cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl; } } public: int size;//队列大小 T* data; int front; //队头指针 int rear; //队尾指针 }; int main() { m_queue&lt;int&gt; q(5); q." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-11-18T11:14:33+08:00" />
+<meta property="article:modified_time" content="2023-11-18T11:14:33+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 队列</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Nov 18, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          5 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>学习完了线性结构的最后一个类型了，接下来似乎就是很难实现的分支结构了，一个红黑树似乎会有上千行代码的样子，不知道到时候要写多久。</p>
+<p>实现了顺序队列，链式队列，循环队列，顺序双端队列，链式双端队列，同时对优先队列有了一定了解</p>
+<p>代码实现如下：</p>
+<p>顺序队列：</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+
+#include&lt;iostream&gt;
+
+using namespace std;
+template&lt;class T&gt;
+class m_queue
+{
+public:
+    m_queue(int n)
+    {
+        size = n;
+        data = new T[size];
+        if (data == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        front = 0;
+        rear = 0; //指向最后一个元素下一个位置
+    }
+    void En_queue(T k)
+    {
+        //判满(牺牲一个位置)
+        if (rear == size - 1)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            data[rear] = k;
+            cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+            rear++;
+        }
+    }
+    void Del_queue()
+    {
+        int x(0);//记录出队元素
+        //判空
+        if (front == rear)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            x = data[front];
+            cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+            front++;
+        }
+    }
+    void m_empty()
+    {
+        if (front == rear)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+    }
+    void m_full()
+    {
+        if (rear == size)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+    }
+public:
+    int size;//队列大小
+    T* data;
+    int front; //队头指针
+    int rear; //队尾指针
+};
+int main()
+{
+    m_queue&lt;int&gt; q(5);
+    q.En_queue(10);
+    q.En_queue(9);
+    q.En_queue(8);
+    q.En_queue(7);
+    q.En_queue(6);
+    q.En_queue(6);
+    q.Del_queue();
+    q.Del_queue();
+    q.Del_queue();
+    return 0;
+}
+</code></pre>
+<p>链式队列：</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+template&lt;class T&gt;
+class q_node
+{
+public:
+    T data;
+    q_node&lt;T&gt;* next;
+};
+template&lt;class T&gt;
+class Link_queue
+{
+public:
+    Link_queue()
+    {
+        head = new q_node&lt;T&gt;;
+        rear = head;
+        if (head == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            head-&gt;next = nullptr;
+            rear-&gt;next = nullptr;
+        }
+    }
+    void En_queue(T k)
+    {
+        q_node&lt;T&gt;* s = new q_node&lt;T&gt;;
+        if (s == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+
+        }
+        else
+        {
+            s-&gt;data = k;
+            s-&gt;next = nullptr; //新节点插入队尾
+            rear-&gt;next = s;
+            rear = s;
+            cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+        }
+    }
+    void Del_queue()
+    {
+        //出队时需要注意是否时首元节点出队
+        T x(0);//保存出队元素
+        //判空
+        //1.head-&gt;next == nullptr
+        //2.head == rear
+        if (head-&gt;next == nullptr)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            q_node&lt;T&gt;* p = head-&gt;next;
+            x = p-&gt;data;
+            head-&gt;next = head-&gt;next-&gt;next;
+            if (head-&gt;next == nullptr)//删除唯一节点时避免队尾指针成为野指针
+            {
+                rear = head;
+            }
+            delete p;
+            p = nullptr;
+            cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+        }
+    }
+    void m_empty()
+    {
+        if (head-&gt;next == nullptr)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+    }
+public:
+    q_node&lt;T&gt;* head;//指向头节点的指针
+    q_node&lt;T&gt;* rear;//指向队尾元素所在节点的指针
+};
+int main()
+{
+    Link_queue&lt;int&gt; q;
+    q.En_queue(3);
+    q.En_queue(4);
+    q.En_queue(5);
+    q.En_queue(6);
+    q.En_queue(7);
+    q.En_queue(8);
+    q.En_queue(9);
+    q.Del_queue();
+    return 0;
+}
+</code></pre>
+<p>循环队列：</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+template&lt;class T&gt;
+class m_queue
+{
+public:
+    m_queue(int n)
+    {
+        size = n;
+        data = new T[n];
+        if (data == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            rear = 0; //指向队尾元素下一个位置
+            front = 0;
+        }
+    }
+    void enqueue(T k)
+    {
+        //判满(牺牲一个空间与判空区分)
+        if ((rear + 1) % size == front)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            data[rear] = k;
+            cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+            rear = (rear + 1) % size;
+        }
+    }
+    void dequeue()
+    {
+        int x; //用于保存出队元素
+        //判空
+        if (front == rear)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            x = data[front];
+            front = (front + 1) % size;
+            cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+        }
+    }
+    void m_empty()
+    {
+        if (front == rear)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+    }
+    void m_full()
+    {
+        if ((rear + 1) % size == front)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+    }
+public:
+    T *data;
+    int front; //队头指针
+    int rear; //队尾指针
+    int size; //队列大小
+};
+int main()
+{
+    m_queue&lt;int&gt; q(10);
+    q.enqueue(10);
+    q.enqueue(11);
+    q.enqueue(12);
+    q.enqueue(13);
+    q.enqueue(14);
+    q.enqueue(15);
+    q.enqueue(16);
+    q.enqueue(17);
+    q.enqueue(18);
+    q.enqueue(19);
+    q.dequeue();
+    q.dequeue();
+    return 0;
+}
+</code></pre>
+<p>顺序双端队列：</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+template&lt;class T&gt;
+class dequeue
+{
+public:
+    dequeue(int n)
+    {
+        length = n;
+        data = new T[length];
+        if (data == nullptr)
+        {
+            cout &lt;&lt; &quot;分配失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            size = 0;
+            left = 0;
+            right = 0;
+        }
+    }
+    //规定0位置存储右端入队第一个元素
+    void En_queue_left(T k)
+    {
+        //判满
+        if (size == length)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //防止左指针为负数
+            left = (left - 1 + length) % length;
+            data[left] = k;
+            cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+            size++;
+        }
+    }
+    void Del_queue_left()
+    {
+        //判空
+        if (size == 0)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+            return;
+        }
+        T x(0);//存储出队元素
+        x = data[left];
+        left = (left + 1 + length) % length;
+        cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+        size--;
+    }
+    void En_queue_right(T k)
+    {
+        
+        //判满
+        if (size == length)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //右指针指向最后一个元素下一个位置
+            data = k;
+            right = (right + 1) % length;
+            size++;
+        }
+
+    }
+    void Del_queue_right()
+    {
+        //判空
+        if (size == 0)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+            return;
+        }
+        T x(0);//存储出队元素
+        right = (right - 1 + length) % length;
+        x = data[right];//因为0位置存储右端入队第一个元素，所以right指向右端元素下一个位置
+        cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+        size--;
+    }
+    void m_empty()
+    {
+        if (size == 0)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+            return;
+        }
+    }
+    void m_full()
+    {
+        if (size == length)
+        {
+            cout &lt;&lt; &quot;队满&quot; &lt;&lt; endl;
+        }
+        return;
+    }
+public:
+    T* data;
+    int left;
+    int right;
+    int size;//队列实际大小
+    int length;//队列长度
+};
+int main()
+{
+    dequeue&lt;int&gt; dq(10);
+    dq.En_queue_left(10);
+    dq.En_queue_left(11);
+    dq.En_queue_left(12);
+    dq.Del_queue_right();
+    dq.Del_queue_right();
+    dq.Del_queue_right();
+    return 0;
+}
+</code></pre>
+<p>链式双端队列：</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+
+#include&lt;iostream&gt;
+#include&lt;cassert&gt;
+using namespace std;
+template&lt;class T&gt;
+class q_Node
+{
+public:
+    T date;
+    q_Node* next;
+    q_Node* pre;
+};
+template&lt;class T&gt;
+class LinkDequeue
+{
+public:
+    q_Node&lt;T&gt;* right;
+    q_Node&lt;T&gt;* left;
+public:
+    LinkDequeue()
+    {
+        left = new q_Node&lt;T&gt;;
+        if (left == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            right = left;
+            right-&gt;next = nullptr;
+            right-&gt;pre = nullptr;
+            left-&gt;next = nullptr;
+            left-&gt;pre = nullptr;
+        }
+    }
+    //规定第一次入队时，中间节点固定存放右边第一次入队元素
+    void En_deque_left(T k)
+    {
+        q_Node&lt;T&gt;* s = new q_Node&lt;T&gt;;
+        s-&gt;date = k;
+        s-&gt;pre = left-&gt;pre;
+        s-&gt;next = left;
+        left-&gt;pre = s;
+        left = s;
+        cout &lt;&lt; left-&gt;date &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+    }
+    void Del_deque_left()
+    {
+        //判空
+        if (left == right)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //存储出队节点
+            q_Node&lt;T&gt;* q = left;
+            left = left-&gt;next;
+            left-&gt;pre = nullptr;
+            cout &lt;&lt; q-&gt;date &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+            delete q;
+            q = nullptr;
+        }
+    }
+    void En_deque_right(T k)
+    {
+        q_Node&lt;T&gt;* s = new q_Node&lt;T&gt;;
+        right-&gt;date = k;
+        cout &lt;&lt; right-&gt;date &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+        s-&gt;pre = right;
+        s-&gt;next = right-&gt;next;
+        right-&gt;next = s;
+        right = s;
+    }
+    void Del_deque_right()
+    {
+        //判空
+        if (left == right)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //存储出队元素
+            q_Node&lt;T&gt;* s = right;
+            right = right-&gt;pre;
+            right-&gt;next = nullptr;
+            //从逻辑上实现出队
+            cout &lt;&lt; right-&gt;date &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+            delete s;
+            s = nullptr;
+        }
+    }
+    void m_empty()
+    {
+        if (left == right)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+        }
+    }
+};
+int main()
+{
+    LinkDequeue&lt;int&gt; dq;
+    dq.En_deque_left(6);
+    dq.En_deque_left(5);
+    dq.En_deque_left(4);
+    dq.En_deque_right(3);
+    dq.Del_deque_left();
+    dq.Del_deque_left();
+    dq.Del_deque_right();
+    dq.Del_deque_right();
+    return 0;
+}</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

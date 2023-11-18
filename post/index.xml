@@ -6,7 +6,20 @@
     <description>Recent content in Posts on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 14 Nov 2023 17:13:49 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 18 Nov 2023 11:14:33 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据结构 队列</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/</link>
+      <pubDate>Sat, 18 Nov 2023 11:14:33 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/</guid>
+      <description>学习完了线性结构的最后一个类型了，接下来似乎就是很难实现的分支结构了，一个红黑树似乎会有上千行代码的样子，不知道到时候要写多久。
+实现了顺序队列，链式队列，循环队列，顺序双端队列，链式双端队列，同时对优先队列有了一定了解
+代码实现如下：
+顺序队列：
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class m_queue { public: m_queue(int n) { size = n; data = new T[size]; if (data == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } front = 0; rear = 0; //指向最后一个元素下一个位置 } void En_queue(T k) { //判满(牺牲一个位置) if (rear == size - 1) { cout &amp;lt;&amp;lt; &amp;quot;队满&amp;quot; &amp;lt;&amp;lt; endl; } else { data[rear] = k; cout &amp;lt;&amp;lt; k &amp;lt;&amp;lt; &amp;quot;入队&amp;quot; &amp;lt;&amp;lt; endl; rear++; } } void Del_queue() { int x(0);//记录出队元素 //判空 if (front == rear) { cout &amp;lt;&amp;lt; &amp;quot;队空&amp;quot; &amp;lt;&amp;lt; endl; } else { x = data[front]; cout &amp;lt;&amp;lt; x &amp;lt;&amp;lt; &amp;quot;出队&amp;quot; &amp;lt;&amp;lt; endl; front++; } } void m_empty() { if (front == rear) { cout &amp;lt;&amp;lt; &amp;quot;队空&amp;quot; &amp;lt;&amp;lt; endl; } } void m_full() { if (rear == size) { cout &amp;lt;&amp;lt; &amp;quot;队满&amp;quot; &amp;lt;&amp;lt; endl; } } public: int size;//队列大小 T* data; int front; //队头指针 int rear; //队尾指针 }; int main() { m_queue&amp;lt;int&amp;gt; q(5); q.</description>
+    </item>
+    
     <item>
       <title>数据结构_栈</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%88/</link>
