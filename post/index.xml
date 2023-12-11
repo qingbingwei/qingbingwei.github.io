@@ -6,7 +6,21 @@
     <description>Recent content in Posts on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 22 Nov 2023 20:07:38 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Dec 2023 11:36:02 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据结构 排序二叉树</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+      <pubDate>Mon, 11 Dec 2023 11:36:02 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%8F%89%E6%A0%91/</guid>
+      <description>又一次被树折磨，这一次是排序二叉树，似乎能够理解为什么set容器能够实现插入后自动排序了，也去查了一下资料，set底层确实是以二叉树实现的。
+一点点注意事项： 如果序列本身为升序或者降序，会形成斜树（即链表，起不到优化作用） BST + 限制 = AVL树
+接下来就是AVL树（二叉平衡树）了，准备坐大牢，已经在思考红黑树会有多坐牢了，不过学完树之后似乎只剩图和串了，之后就要开始算法坐大牢了&amp;hellip;&amp;hellip;
+日常： 快放假了，但是一堆期末考试在等着我，估计了一下约莫有八九门的样子，希望别挂科（应该不会，感觉学的还是挺好的，就是历史闭卷有点难绷），距离四级还有六天，似乎注定要裸考了，乐
+代码实现：
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class BST_Node { public: T data; BST_Node&amp;lt;T&amp;gt;* left; BST_Node&amp;lt;T&amp;gt;* right; public: BST_Node() { left = nullptr; right = nullptr; } }; template&amp;lt;class T&amp;gt; class BST { public: BST_Node&amp;lt;T&amp;gt;* root; public: BST(T k) { root = new BST_Node&amp;lt;T&amp;gt;; if (root == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;建树失败&amp;quot; &amp;lt;&amp;lt; endl; } else { root-&amp;gt;data = k; } } //非递归实现插入 BST_Node&amp;lt;T&amp;gt;* Insert_non_recursion(T k) { BST_Node&amp;lt;T&amp;gt;* s = new BST_Node&amp;lt;T&amp;gt;; if (s == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;插入失败&amp;quot; &amp;lt;&amp;lt; endl; } else { s-&amp;gt;data = k; s-&amp;gt;left = nullptr; s-&amp;gt;right = nullptr; //通过p进行遍历，pre指向p父亲节点 BST_Node&amp;lt;T&amp;gt;* p = root; BST_Node&amp;lt;T&amp;gt;* pre = nullptr; while (p !</description>
+    </item>
+    
     <item>
       <title>数据结构 树</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91/</link>

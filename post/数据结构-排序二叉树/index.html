@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 排序二叉树 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 排序二叉树"/>
+<meta name="twitter:description" content="又一次被树折磨，这一次是排序二叉树，似乎能够理解为什么set容器能够实现插入后自动排序了，也去查了一下资料，set底层确实是以二叉树实现的。
+一点点注意事项： 如果序列本身为升序或者降序，会形成斜树（即链表，起不到优化作用） BST &#43; 限制 = AVL树
+接下来就是AVL树（二叉平衡树）了，准备坐大牢，已经在思考红黑树会有多坐牢了，不过学完树之后似乎只剩图和串了，之后就要开始算法坐大牢了&hellip;&hellip;
+日常： 快放假了，但是一堆期末考试在等着我，估计了一下约莫有八九门的样子，希望别挂科（应该不会，感觉学的还是挺好的，就是历史闭卷有点难绷），距离四级还有六天，似乎注定要裸考了，乐
+代码实现：
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; template&lt;class T&gt; class BST_Node { public: T data; BST_Node&lt;T&gt;* left; BST_Node&lt;T&gt;* right; public: BST_Node() { left = nullptr; right = nullptr; } }; template&lt;class T&gt; class BST { public: BST_Node&lt;T&gt;* root; public: BST(T k) { root = new BST_Node&lt;T&gt;; if (root == nullptr) { cout &lt;&lt; &quot;建树失败&quot; &lt;&lt; endl; } else { root-&gt;data = k; } } //非递归实现插入 BST_Node&lt;T&gt;* Insert_non_recursion(T k) { BST_Node&lt;T&gt;* s = new BST_Node&lt;T&gt;; if (s == nullptr) { cout &lt;&lt; &quot;插入失败&quot; &lt;&lt; endl; } else { s-&gt;data = k; s-&gt;left = nullptr; s-&gt;right = nullptr; //通过p进行遍历，pre指向p父亲节点 BST_Node&lt;T&gt;* p = root; BST_Node&lt;T&gt;* pre = nullptr; while (p !"/>
+
+    <meta property="og:title" content="数据结构 排序二叉树" />
+<meta property="og:description" content="又一次被树折磨，这一次是排序二叉树，似乎能够理解为什么set容器能够实现插入后自动排序了，也去查了一下资料，set底层确实是以二叉树实现的。
+一点点注意事项： 如果序列本身为升序或者降序，会形成斜树（即链表，起不到优化作用） BST &#43; 限制 = AVL树
+接下来就是AVL树（二叉平衡树）了，准备坐大牢，已经在思考红黑树会有多坐牢了，不过学完树之后似乎只剩图和串了，之后就要开始算法坐大牢了&hellip;&hellip;
+日常： 快放假了，但是一堆期末考试在等着我，估计了一下约莫有八九门的样子，希望别挂科（应该不会，感觉学的还是挺好的，就是历史闭卷有点难绷），距离四级还有六天，似乎注定要裸考了，乐
+代码实现：
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; template&lt;class T&gt; class BST_Node { public: T data; BST_Node&lt;T&gt;* left; BST_Node&lt;T&gt;* right; public: BST_Node() { left = nullptr; right = nullptr; } }; template&lt;class T&gt; class BST { public: BST_Node&lt;T&gt;* root; public: BST(T k) { root = new BST_Node&lt;T&gt;; if (root == nullptr) { cout &lt;&lt; &quot;建树失败&quot; &lt;&lt; endl; } else { root-&gt;data = k; } } //非递归实现插入 BST_Node&lt;T&gt;* Insert_non_recursion(T k) { BST_Node&lt;T&gt;* s = new BST_Node&lt;T&gt;; if (s == nullptr) { cout &lt;&lt; &quot;插入失败&quot; &lt;&lt; endl; } else { s-&gt;data = k; s-&gt;left = nullptr; s-&gt;right = nullptr; //通过p进行遍历，pre指向p父亲节点 BST_Node&lt;T&gt;* p = root; BST_Node&lt;T&gt;* pre = nullptr; while (p !" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%8F%89%E6%A0%91/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-12-11T11:36:02+08:00" />
+<meta property="article:modified_time" content="2023-12-11T11:36:02+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 排序二叉树</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 11, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>又一次被树折磨，这一次是排序二叉树，似乎能够理解为什么set容器能够实现插入后自动排序了，也去查了一下资料，set底层确实是以二叉树实现的。</p>
+<p>一点点注意事项：
+如果序列本身为升序或者降序，会形成斜树（即链表，起不到优化作用）
+BST + 限制 = AVL树</p>
+<p>接下来就是AVL树（二叉平衡树）了，准备坐大牢，已经在思考红黑树会有多坐牢了，不过学完树之后似乎只剩图和串了，之后就要开始算法坐大牢了&hellip;&hellip;</p>
+<p>日常：
+快放假了，但是一堆期末考试在等着我，估计了一下约莫有八九门的样子，希望别挂科（应该不会，感觉学的还是挺好的，就是历史闭卷有点难绷），距离四级还有六天，似乎注定要裸考了，乐</p>
+<p>代码实现：</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+template&lt;class T&gt;
+class BST_Node
+{
+public:
+    T data;
+    BST_Node&lt;T&gt;* left;
+    BST_Node&lt;T&gt;* right;
+public:
+    BST_Node()
+    {
+        left = nullptr;
+        right = nullptr;
+    }
+};
+template&lt;class T&gt;
+class BST
+{
+public:
+    BST_Node&lt;T&gt;* root;
+public:
+    BST(T k)
+    {
+        root = new BST_Node&lt;T&gt;;
+        if (root == nullptr)
+        {
+            cout &lt;&lt; &quot;建树失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            root-&gt;data = k;
+        }
+    }
+    //非递归实现插入
+    BST_Node&lt;T&gt;* Insert_non_recursion(T k)
+    {
+        BST_Node&lt;T&gt;* s = new BST_Node&lt;T&gt;;
+        if (s == nullptr)
+        {
+            cout &lt;&lt; &quot;插入失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            s-&gt;data = k;
+            s-&gt;left = nullptr;
+            s-&gt;right = nullptr;
+            //通过p进行遍历，pre指向p父亲节点
+            BST_Node&lt;T&gt;* p = root;
+            BST_Node&lt;T&gt;* pre = nullptr;
+            while (p != nullptr)
+            {
+                if (k &lt; p-&gt;data)
+                {
+                    pre = p;
+                    p = p-&gt;left;
+                }
+                else
+                {
+                    pre = p;
+                    p = p-&gt;right;
+                }
+            }
+            if (k &lt; pre-&gt;data)
+            {
+                pre-&gt;left = s;
+            }
+            else
+            {
+                pre-&gt;right = s;
+            }
+            return root;
+        }
+    }
+    //递归实现插入(必须要有返回值)
+    //往 以ro为根节点的树中插入数据x 
+    //if(x&lt;ro-&gt;data)  以ro-&gt;left为根节点的子树中插入数据x 
+    //if(x&gt;ro-&gt;data)  以ro-&gt;right为根节点的子树中插入数据x
+    //递归出口：  if(ro==NULL)创建新结点s,return s; 
+    BST_Node&lt;T&gt;* Insert(BST_Node&lt;T&gt;* ro,T k)
+    {
+        if (ro == nullptr)
+        {
+            BST_Node&lt;T&gt;* s = new BST_Node&lt;T&gt;;
+            s-&gt;data = k;
+            s-&gt;left = nullptr;
+            s-&gt;right = nullptr;
+            return s;
+        }
+        if (k &lt; ro-&gt;data)
+        {
+            //ro-&gt;left接收返回值
+            ro-&gt;left = Insert(ro-&gt;left, k);
+            //把变化后的子树的根节点返回
+            return ro;
+        }
+        else
+        {
+            //ro-&gt;right接收返回值
+            ro-&gt;right = Insert(ro-&gt;right, k);
+            //把变化后的子树的根节点返回
+            return ro;
+        }
+    }
+    //查找
+    void Find(T k)
+    {
+        BST_Node&lt;T&gt;* p = root;
+        while (p != nullptr &amp;&amp; p-&gt;data != k)
+        {
+            if (k &lt; p-&gt;data)
+            {
+                p = p-&gt;left;
+            }
+            else
+            {
+                p = p-&gt;right;
+            }
+        }
+        if (p == nullptr)
+        {
+            cout &lt;&lt; &quot;不存在&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            cout &lt;&lt; &quot;存在&quot; &lt;&lt; endl;
+        }
+    }
+    //递归实现中序遍历
+    void mid_Order(BST_Node&lt;T&gt;* ro)
+    {
+        if (ro == nullptr)
+        {
+            return;
+        }
+        if (ro-&gt;left != nullptr)
+        {
+            mid_Order(ro-&gt;left);
+        }
+        cout &lt;&lt; ro-&gt;data &lt;&lt; ' ';
+        if (ro-&gt;right != nullptr)
+        {
+            mid_Order(ro-&gt;right);
+        }
+    }
+    //找以ro为根节点的树中最靠右节点
+    BST_Node&lt;T&gt;* Find_p(BST_Node&lt;T&gt;* ro)
+    {
+        BST_Node&lt;T&gt;* p = ro;
+        while (p-&gt;right != nullptr)
+        {
+            p = p-&gt;right;
+        }
+        return p;
+    }
+    BST_Node&lt;T&gt;* Del(BST_Node&lt;T&gt;* ro,T k)
+    {
+        //删除后让谁顶替
+        //分三种情况
+        //1.所在节点度为0（叶子节点）
+        //直接删除，该位置置空
+        //2.所在节点度为1
+        //找到该节点并删除，让其唯一的一个孩子顶替该节点位置
+        //(情况一可以看成情况二，只需写一份代码)
+        //3.所在节点度为2
+        //找到该节点并删除，用该节点的右子树中最靠左节点
+        //或左子树最靠右节点代替删除节点
+        //（将问题进行转换）找到该节点，把其数据域改为左子树最靠右节点数据域的值，对左子树进行递归，删除左子树最右节点
+        
+        //原问题：在以root为根的树中删除数据k
+        if (ro-&gt;data &gt; k)
+        {
+            //问题转换成，在以ro-&gt;left为根的子树中删除数据k
+            ro-&gt;left = Del(ro-&gt;left, k);
+            //return ro;转换为最后返回ro
+        }
+        else if (ro-&gt;data &lt; k)
+        {
+            //问题转换成，在以ro-&gt;right为根的子树中删除数据k
+            ro-&gt;right = Del(ro-&gt;right, k);
+            //return ro;转换为最后返回ro
+        }
+        else
+        {
+            //即ro-&gt;data == k
+            //判断该节点的度
+
+            //有两个孩子
+            if (ro-&gt;left != nullptr &amp;&amp; ro-&gt;right != nullptr)
+            {
+                //找到root左子树最靠右节点p
+                BST_Node&lt;T&gt;* p = Find_p(ro-&gt;left);
+                ro-&gt;data = p-&gt;data;
+                //问题转换成，在以ro-&gt;left为根的子树中删除数据p-&gt;data
+                ro-&gt;left = Del(ro-&gt;left, p-&gt;data);
+                //return ro;转换为最后返回ro
+            }
+            else
+            {
+                //只有一个孩子(若度为0则将其右孩子视为存在，将度为1和度为0的情况统一起来)
+                BST_Node&lt;T&gt;* ch = nullptr;//记录孩子
+                if (ro-&gt;left != nullptr)
+                {
+                    ch = ro-&gt;left;
+                }
+                else
+                {
+                    ch = ro-&gt;right;
+                }
+                delete ro;
+                ro = nullptr;
+                return ch;
+            }
+        }
+        return ro;
+    }
+};
+int main()
+{
+    BST&lt;int&gt; bstree(85);
+    for (int i = 0; i &lt; 10; ++i)
+    {
+        bstree.Insert(bstree.root, i);
+    }
+    for (int i = 100; i &lt; 110; ++i)
+    {
+        bstree.Insert_non_recursion(i);
+    }
+    bstree.mid_Order(bstree.root);
+    bstree.Del(bstree.root, 85);
+    bstree.Del(bstree.root, 100);
+    cout &lt;&lt; endl;
+    bstree.mid_Order(bstree.root);
+    return 0;
+}
+//如果序列本身为升序或者降序，会形成斜树（即链表，起不到优化作用）
+//BST + 限制 = AVL树</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
