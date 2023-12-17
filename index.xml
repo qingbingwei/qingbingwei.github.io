@@ -6,7 +6,26 @@
     <description>Recent content on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Dec 2023 11:36:02 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Dec 2023 22:25:55 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据结构 平衡二叉树</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
+      <pubDate>Mon, 11 Dec 2023 22:25:55 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/</guid>
+      <description>开始学习AVL树了，目前简单了解了其相关概念
+平衡因子：
+基本旋转方式：
+1.左单旋 记失衡节点为x x右孩子为y x-&amp;gt;right = y-&amp;gt;left y-&amp;gt;left = x 2.右单旋 记失衡节点为x x左孩子为y x-&amp;gt;left = y-&amp;gt;right y-&amp;gt;right = x 最小失衡子树：在新插入的节点向上查找，以第一个平衡因子的绝对值超过一的节点为根节点的子树 插入：
+1.进行BST插入 2.算插入节点的所有祖先节点的平衡因子 节点x高度x-&amp;gt;h = max(x-&amp;gt;left-&amp;gt;h,x-&amp;gt;right-&amp;gt;h) + 1 节点平衡因子:x-&amp;gt;left-&amp;gt;h - x-&amp;gt;right-&amp;gt;h(左右子树高度差的绝对值) 3.插入导致失衡情况，进行旋转（优先调整最小失衡子树） 判断失衡：
+1.先找出x-&amp;gt;left和x-&amp;gt;right中高度较高的 2.再去高度子树里面去看根节点的哪边的子树高 4.调用对应调整函数
+假设最小失衡子树根节点为A 1.LL 在A节点左孩子的左子树插入节点破坏平衡 调整策略：对A进行一次右旋 2.LR 在A节点左孩子的右子树插入节点破坏平衡 调整策略：（1）以A-&amp;gt;left为中心进行左旋，转换成为了LL (2)按照LL情况进行操作 3.RR 在A节点右孩子的右子树插入节点破坏平衡 调整策略：对A进行一次左旋 4.RL 在A节点右孩子的左子树插入节点破坏平衡 调整策略：（1）以A-&amp;gt;right为中心进行右旋，转换为RR (2)按照RR情况进行操作 删除操作
+1.执行二叉排序树删除 2.判断是否失衡 在x节点的一边子树中删除了一个节点，就等价于在其另一边子树插入了一个节点导致的失衡---&amp;gt;删除的失衡类型及调整方式和插入的一模一样 左删除 相当于 右边插入：RR RL 右删除 相当于 左边插入：LL LR 终于完成了AVL树了，接下来就学习一下哈夫曼树（似乎是另一条路线的样子）和时间复杂度了
+日常：麻了，四级好像要寄了，算了一下，似乎430~440的样子（作文翻译全按及格算的），希望能过 下周二考工程师职业素养期末，坐大牢，本来说周末复习的，装一个远行星号装了一上午，下午还有文明经典，属实难绷
+代码实现如下
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;algorithm&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class AVL_Node { public: T data; AVL_Node&amp;lt;T&amp;gt;* left = nullptr; AVL_Node&amp;lt;T&amp;gt;* right = nullptr; int h = 1;//记录节点高度 }; template&amp;lt;class T&amp;gt; class AVL_Tree { public: AVL_Tree() { root = new AVL_Node&amp;lt;T&amp;gt;; if (root == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { root-&amp;gt;left = nullptr; root-&amp;gt;right = nullptr; } } AVL_Tree(T k) { root = new AVL_Node&amp;lt;T&amp;gt;; if (root == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { root-&amp;gt;left = nullptr; root-&amp;gt;right = nullptr; root-&amp;gt;data = k; } } AVL_Node&amp;lt;T&amp;gt;* AVL_Insert(AVL_Node&amp;lt;T&amp;gt;* ro, T k) { if (ro == nullptr) { AVL_Node&amp;lt;T&amp;gt;* s = new AVL_Node&amp;lt;T&amp;gt;; s-&amp;gt;data = k; return s; } else if (k &amp;lt; ro-&amp;gt;data) { ro-&amp;gt;left = AVL_Insert(ro-&amp;gt;left, k); //高度可能变化,判断是否失衡 if (Get_h(ro-&amp;gt;left) - Get_h(ro-&amp;gt;right) &amp;gt; 1) { AVL_Node&amp;lt;T&amp;gt;* l = ro-&amp;gt;left;//用于判断失衡类型 //也可以通过子树高度判断 //if (Get_h(l-&amp;gt;left) &amp;gt; Get_h(l-&amp;gt;right)) if (k &amp;lt; l-&amp;gt;data) { //LL ro = LL_rotation(ro); } else { //LR ro = LR_rotation(ro); } } //返回变化后子树根节点并且改变高度(因为都要进行，所以可以一起挪到函数末尾)	} else { ro-&amp;gt;right = AVL_Insert(ro-&amp;gt;right, k); //高度可能变化,判断是否失衡 if (Get_h(ro-&amp;gt;right) - Get_h(ro-&amp;gt;left) &amp;gt; 1) { AVL_Node&amp;lt;T&amp;gt;* r = ro-&amp;gt;right;//用于判断失衡类型 //也可以通过子树高度判断 //if(Get_h(r-&amp;gt;right) &amp;gt; Get_h(r-&amp;gt;left)) if (k &amp;gt; r-&amp;gt;data) { //RR ro = RR_rotation(ro); } else { //RL ro = RL_rotation(ro); } } //返回变化后子树根节点并且改变高度(因为都要进行，所以可以一起挪到函数末尾) } ro-&amp;gt;h = max(Get_h(ro-&amp;gt;left), Get_h(ro-&amp;gt;right)) + 1; return ro; } int Get_h(AVL_Node&amp;lt;T&amp;gt;* x) { if (x == nullptr) { return 0; } else { return x-&amp;gt;h; } } AVL_Node&amp;lt;T&amp;gt;* LL_rotation(AVL_Node&amp;lt;T&amp;gt;* ro) { AVL_Node&amp;lt;T&amp;gt;* y = ro-&amp;gt;left; ro-&amp;gt;left = y-&amp;gt;right; y-&amp;gt;right = ro; //高度可能改变 ro-&amp;gt;h = max(Get_h(ro-&amp;gt;left), Get_h(ro-&amp;gt;right)) + 1; y-&amp;gt;h = max(Get_h(y-&amp;gt;left), Get_h(y-&amp;gt;right)) + 1; return y; } AVL_Node&amp;lt;T&amp;gt;* LR_rotation(AVL_Node&amp;lt;T&amp;gt;* ro) { ro-&amp;gt;left = RR_rotation(ro-&amp;gt;left); ro = LL_rotation(ro); return ro; } AVL_Node&amp;lt;T&amp;gt;* RR_rotation(AVL_Node&amp;lt;T&amp;gt;* ro) { AVL_Node&amp;lt;T&amp;gt;* y = ro-&amp;gt;right; ro-&amp;gt;right = y-&amp;gt;left; y-&amp;gt;left = ro; //高度可能改变 ro-&amp;gt;h = max(Get_h(ro-&amp;gt;left), Get_h(ro-&amp;gt;right)) + 1; y-&amp;gt;h = max(Get_h(y-&amp;gt;left), Get_h(y-&amp;gt;right)) + 1; return y; } AVL_Node&amp;lt;T&amp;gt;* RL_rotation(AVL_Node&amp;lt;T&amp;gt;* ro) { ro-&amp;gt;right =LL_rotation(ro-&amp;gt;right); ro = RR_rotation(ro); return ro; } void mid_order(AVL_Node&amp;lt;T&amp;gt;* ro) { if (ro == nullptr) { return; } if (ro-&amp;gt;left !</description>
+    </item>
+    
     <item>
       <title>数据结构 排序二叉树</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
