@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 归并和计数排序 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 归并和计数排序"/>
+<meta name="twitter:description" content="1.2-路归并排序：先将所有的数据完全分开，然后两两合并，在合并过程中将其排好序，最终得到一个完整的有序表。 时间复杂度：O(nlogn) 是否稳定：稳定 为非就地排序 2.基于统计的排序 1.计数排序：统计一下每个数出现的次数，然后直接按次数输出 //以空间换时间 时间复杂度：O(n) 是否稳定：稳定 缺点： 1.无法对负整数和浮点数排序 优化：引入偏移量便可以对负整数进行排序 对浮点数全部乘以10^n,便可以对浮点数排序 2.极其浪费空间内存 2.桶排序:桶编号规则人为确定，可以n/10，也可以n/100,将数据放入桶后，对每个桶进行排序 //以空间换时间 时间复杂度：O(nlogn) 3.基数排序：类似于将桶排序与计数排序结合，从待排序数组当中，元素的最低有效位到最⾼有效位,逐位进⾏⽐较排序；此外，基数排序使⽤计数排序作为⼀个排序的⼦过程。 时间复杂度:O(n * log以b为底n),b为进制数 为非就地排序 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;vector&gt; using namespace std; //将区间[left,mid][mid&#43;1,right]数据合并 void Merge(vector&lt;int&gt;(&amp;v), int left, int mid, int right) { int i(left); int j(mid &#43; 1); //临时存储 vector&lt;int&gt; v2(v); int k(0); while (i &lt;= mid &amp;&amp; j &lt;= right) { if (v[i] &lt;= v[j]) { v2[k] = v[i]; &#43;&#43;i; &#43;&#43;k; } else { v2[k] = v[j]; &#43;&#43;j; &#43;&#43;k; } } while (i &lt;= mid) { v2[k] = v[i]; &#43;&#43;i; &#43;&#43;k; } while (j &lt;= right) { v2[k] = v[j]; &#43;&#43;j; &#43;&#43;k; } for (int q = 0; q &lt; k; &#43;&#43;q) { v[left &#43; q] = v2[q]; } } //将区间[left,right]数据二分 void Merge_Sort(vector&lt;int&gt;(&amp;v),int left,int right) { //元素大于等于两个 if (left &lt; right) { int mid((left &#43; right) / 2); //left---mid Merge_Sort(v, left, mid); //mid &#43; 1---right Merge_Sort(v, mid &#43; 1, right); //合并函数,mid为合并的位置 Merge(v, left, mid, right); } } void Count_Sort(vector&lt;int&gt;(&amp;v)) { vector&lt;int&gt; count; int max(-1); for (auto a : v) { if (a &gt; max) { max = a; } } count."/>
+
+    <meta property="og:title" content="数据结构 归并和计数排序" />
+<meta property="og:description" content="1.2-路归并排序：先将所有的数据完全分开，然后两两合并，在合并过程中将其排好序，最终得到一个完整的有序表。 时间复杂度：O(nlogn) 是否稳定：稳定 为非就地排序 2.基于统计的排序 1.计数排序：统计一下每个数出现的次数，然后直接按次数输出 //以空间换时间 时间复杂度：O(n) 是否稳定：稳定 缺点： 1.无法对负整数和浮点数排序 优化：引入偏移量便可以对负整数进行排序 对浮点数全部乘以10^n,便可以对浮点数排序 2.极其浪费空间内存 2.桶排序:桶编号规则人为确定，可以n/10，也可以n/100,将数据放入桶后，对每个桶进行排序 //以空间换时间 时间复杂度：O(nlogn) 3.基数排序：类似于将桶排序与计数排序结合，从待排序数组当中，元素的最低有效位到最⾼有效位,逐位进⾏⽐较排序；此外，基数排序使⽤计数排序作为⼀个排序的⼦过程。 时间复杂度:O(n * log以b为底n),b为进制数 为非就地排序 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;vector&gt; using namespace std; //将区间[left,mid][mid&#43;1,right]数据合并 void Merge(vector&lt;int&gt;(&amp;v), int left, int mid, int right) { int i(left); int j(mid &#43; 1); //临时存储 vector&lt;int&gt; v2(v); int k(0); while (i &lt;= mid &amp;&amp; j &lt;= right) { if (v[i] &lt;= v[j]) { v2[k] = v[i]; &#43;&#43;i; &#43;&#43;k; } else { v2[k] = v[j]; &#43;&#43;j; &#43;&#43;k; } } while (i &lt;= mid) { v2[k] = v[i]; &#43;&#43;i; &#43;&#43;k; } while (j &lt;= right) { v2[k] = v[j]; &#43;&#43;j; &#43;&#43;k; } for (int q = 0; q &lt; k; &#43;&#43;q) { v[left &#43; q] = v2[q]; } } //将区间[left,right]数据二分 void Merge_Sort(vector&lt;int&gt;(&amp;v),int left,int right) { //元素大于等于两个 if (left &lt; right) { int mid((left &#43; right) / 2); //left---mid Merge_Sort(v, left, mid); //mid &#43; 1---right Merge_Sort(v, mid &#43; 1, right); //合并函数,mid为合并的位置 Merge(v, left, mid, right); } } void Count_Sort(vector&lt;int&gt;(&amp;v)) { vector&lt;int&gt; count; int max(-1); for (auto a : v) { if (a &gt; max) { max = a; } } count." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%BD%92%E5%B9%B6%E5%92%8C%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-04T17:45:25+08:00" />
+<meta property="article:modified_time" content="2024-02-04T17:45:25+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 归并和计数排序</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 4, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>1.2-路归并排序：先将所有的数据完全分开，然后两两合并，在合并过程中将其排好序，最终得到一个完整的有序表。
+时间复杂度：O(nlogn)
+是否稳定：稳定
+为非就地排序
+2.基于统计的排序
+    1.计数排序：统计一下每个数出现的次数，然后直接按次数输出
+    //以空间换时间
+    时间复杂度：O(n)
+    是否稳定：稳定
+
+    缺点：
+        1.无法对负整数和浮点数排序
+        优化：引入偏移量便可以对负整数进行排序
+        对浮点数全部乘以10^n,便可以对浮点数排序
+        2.极其浪费空间内存
+        
+    2.桶排序:桶编号规则人为确定，可以n/10，也可以n/100,将数据放入桶后，对每个桶进行排序
+    //以空间换时间
+    时间复杂度：O(nlogn)
+    3.基数排序：类似于将桶排序与计数排序结合，从待排序数组当中，元素的最低有效位到最⾼有效位,逐位进⾏⽐较排序；此外，基数排序使⽤计数排序作为⼀个排序的⼦过程。
+    时间复杂度:O(n * log以b为底n),b为进制数
+    为非就地排序
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+#include&lt;vector&gt;
+using namespace std;
+//将区间[left,mid][mid+1,right]数据合并
+void Merge(vector&lt;int&gt;(&amp;v), int left, int mid, int right)
+{
+    int i(left);
+    int j(mid + 1);
+    //临时存储
+    vector&lt;int&gt; v2(v);
+    int k(0);
+    while (i &lt;= mid &amp;&amp; j &lt;= right)
+    {
+        if (v[i] &lt;= v[j])
+        {
+            v2[k] = v[i];
+            ++i;
+            ++k;
+        }
+        else
+        {
+            v2[k] = v[j];
+            ++j;
+            ++k;
+        }
+    }
+    while (i &lt;= mid)
+    {
+        v2[k] = v[i];
+        ++i;
+        ++k;
+    }
+    while (j &lt;= right)
+    {
+        v2[k] = v[j];
+        ++j;
+        ++k;
+    }
+    for (int q = 0; q &lt; k; ++q)
+    {
+        v[left + q] = v2[q];
+    }
+}
+//将区间[left,right]数据二分
+void Merge_Sort(vector&lt;int&gt;(&amp;v),int left,int right)
+{
+    //元素大于等于两个
+    if (left &lt; right)
+    {
+        int mid((left + right) / 2);
+        //left---mid
+        Merge_Sort(v, left, mid);
+        //mid + 1---right
+        Merge_Sort(v, mid + 1, right);
+        //合并函数,mid为合并的位置
+        Merge(v, left, mid, right);
+    }
+}
+void Count_Sort(vector&lt;int&gt;(&amp;v))
+{
+    vector&lt;int&gt; count;
+    int max(-1);
+    for (auto a : v)
+    {
+        if (a &gt; max)
+        {
+            max = a;
+        }
+    }
+    count.resize(max + 1);
+    for (int i = 0; i &lt; v.size(); ++i)
+    {
+        count[v[i]]++;
+    }
+    for (int i = 0; i &lt; count.size(); ++i)
+    {
+        while (count[i] != 0)
+        {
+            cout &lt;&lt; i &lt;&lt; ' ';
+            count[i]--;
+        }
+    }
+}
+int main()
+{
+    vector&lt;int&gt; v(10);
+    int n(0);
+    cin &gt;&gt; n;
+    v.resize(n);
+    for (auto&amp; a : v)
+    {
+        cin &gt;&gt; a;
+    }
+    //Merge_Sort(v,0,v.size()-1);
+    Count_Sort(v);
+    /*for (auto a : v)
+    {
+        cout &lt;&lt; a &lt;&lt; ' ';
+    }*/
+    return 0;
+}
+/*
+7
+5
+3
+6
+7
+1
+2
+4
+*/</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

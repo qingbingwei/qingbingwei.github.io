@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 拓扑排序 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 拓扑排序"/>
+<meta name="twitter:description" content="注：有向无环图（DAG图） AOV网：用顶点表示活动，用弧表示活动之间的优先关系的有向图称为顶点表示活动的网 注：AOV网一定是有向无环图 拓扑序列：对于一个有n个顶点的有向图，顶点序列v1,v2...vn若满足从顶点vi到vj有一条路径，则顶点序列中vi必在vj之前，这样的一个顶点序列为一个拓扑序列 拓扑排序：对一个有向无环图构造拓扑排序的过程（同时还可以判断图内部是否成环） 1.在有向图中选一个没有前驱的顶点并输出 2.从图中删除该顶点和所有以他为尾的弧 重复上述两步，直至全部顶点均已输出，或者当前图不存在无前驱的顶点为止，后一种情况说明有向图中存在环 应用：拓扑序列，关键路径 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; //引入一个栈，用于保存所有入度为零的的点的下标 class Stack_Node { public: int data; Stack_Node* next; }; class m_Stack { public: Stack_Node* head; public: m_Stack() { head = new Stack_Node; if (head == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { head-&gt;next = nullptr; } } void m_push(int k) { Stack_Node* s = new Stack_Node; s-&gt;data = k; s-&gt;next = head-&gt;next; head-&gt;next = s; } int m_pop() { if (head-&gt;next == nullptr) { cout &lt;&lt; &quot;栈空&quot; &lt;&lt; endl; return -1; } else { int ret(0); Stack_Node* p = head-&gt;next; head-&gt;next = p-&gt;next; ret = p-&gt;data; delete p; p = nullptr; return ret; } } }; //邻接表存有向图 class List_Node { public: int data;//邻接点下标 List_Node* next; }; class Graph_Node { public: char data;//顶点编号 List_Node* first;//出边链表头指针 }; class Graph { public: int size1;//点的个数 int size2;//边的个数 Graph_Node* g;//邻接表 int* ind;//入度数组 char* topo;//拓扑序列 public: Graph(int sz1,int sz2):size1(sz1),size2(sz2) { g = new Graph_Node[sz1]; ind = new int[sz1]; topo = new char[sz1]; if (g == nullptr || ind == nullptr || topo == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { //初始化点 for (int i = 0; i &lt; sz1; &#43;&#43;i) { cin &gt;&gt; g[i]."/>
+
+    <meta property="og:title" content="数据结构 拓扑排序" />
+<meta property="og:description" content="注：有向无环图（DAG图） AOV网：用顶点表示活动，用弧表示活动之间的优先关系的有向图称为顶点表示活动的网 注：AOV网一定是有向无环图 拓扑序列：对于一个有n个顶点的有向图，顶点序列v1,v2...vn若满足从顶点vi到vj有一条路径，则顶点序列中vi必在vj之前，这样的一个顶点序列为一个拓扑序列 拓扑排序：对一个有向无环图构造拓扑排序的过程（同时还可以判断图内部是否成环） 1.在有向图中选一个没有前驱的顶点并输出 2.从图中删除该顶点和所有以他为尾的弧 重复上述两步，直至全部顶点均已输出，或者当前图不存在无前驱的顶点为止，后一种情况说明有向图中存在环 应用：拓扑序列，关键路径 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; //引入一个栈，用于保存所有入度为零的的点的下标 class Stack_Node { public: int data; Stack_Node* next; }; class m_Stack { public: Stack_Node* head; public: m_Stack() { head = new Stack_Node; if (head == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { head-&gt;next = nullptr; } } void m_push(int k) { Stack_Node* s = new Stack_Node; s-&gt;data = k; s-&gt;next = head-&gt;next; head-&gt;next = s; } int m_pop() { if (head-&gt;next == nullptr) { cout &lt;&lt; &quot;栈空&quot; &lt;&lt; endl; return -1; } else { int ret(0); Stack_Node* p = head-&gt;next; head-&gt;next = p-&gt;next; ret = p-&gt;data; delete p; p = nullptr; return ret; } } }; //邻接表存有向图 class List_Node { public: int data;//邻接点下标 List_Node* next; }; class Graph_Node { public: char data;//顶点编号 List_Node* first;//出边链表头指针 }; class Graph { public: int size1;//点的个数 int size2;//边的个数 Graph_Node* g;//邻接表 int* ind;//入度数组 char* topo;//拓扑序列 public: Graph(int sz1,int sz2):size1(sz1),size2(sz2) { g = new Graph_Node[sz1]; ind = new int[sz1]; topo = new char[sz1]; if (g == nullptr || ind == nullptr || topo == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { //初始化点 for (int i = 0; i &lt; sz1; &#43;&#43;i) { cin &gt;&gt; g[i]." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-27T20:09:41+08:00" />
+<meta property="article:modified_time" content="2024-01-27T20:09:41+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 拓扑排序</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 27, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>注：有向无环图（DAG图）
+AOV网：用顶点表示活动，用弧表示活动之间的优先关系的有向图称为顶点表示活动的网
+
+注：AOV网一定是有向无环图
+
+拓扑序列：对于一个有n个顶点的有向图，顶点序列v1,v2...vn若满足从顶点vi到vj有一条路径，则顶点序列中vi必在vj之前，这样的一个顶点序列为一个拓扑序列
+
+拓扑排序：对一个有向无环图构造拓扑排序的过程（同时还可以判断图内部是否成环）
+    1.在有向图中选一个没有前驱的顶点并输出
+    2.从图中删除该顶点和所有以他为尾的弧
+    重复上述两步，直至全部顶点均已输出，或者当前图不存在无前驱的顶点为止，后一种情况说明有向图中存在环
+
+应用：拓扑序列，关键路径
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+//引入一个栈，用于保存所有入度为零的的点的下标
+class Stack_Node
+{
+public:
+    int data;
+    Stack_Node* next;
+};
+class m_Stack
+{
+public:
+    Stack_Node* head;
+public:
+    m_Stack()
+    {
+        head = new Stack_Node;
+        if (head == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            head-&gt;next = nullptr;
+        }
+    }
+    void m_push(int k)
+    {
+        Stack_Node* s = new Stack_Node;
+        s-&gt;data = k;
+        s-&gt;next = head-&gt;next;
+        head-&gt;next = s;
+    }
+    int m_pop()
+    {
+        if (head-&gt;next == nullptr)
+        {
+            cout &lt;&lt; &quot;栈空&quot; &lt;&lt; endl;
+            return -1;
+        }
+        else
+        {
+            int ret(0);
+            Stack_Node* p = head-&gt;next;
+            head-&gt;next = p-&gt;next;
+            ret = p-&gt;data;
+            delete p;
+            p = nullptr;
+            return ret;
+        }
+    }
+};
+
+
+//邻接表存有向图
+class List_Node
+{
+public:
+    int data;//邻接点下标
+    List_Node* next;
+};
+class Graph_Node
+{
+public:
+    char data;//顶点编号
+    List_Node* first;//出边链表头指针
+};
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    Graph_Node* g;//邻接表
+    int* ind;//入度数组
+    char* topo;//拓扑序列
+public:
+    Graph(int sz1,int sz2):size1(sz1),size2(sz2)
+    {
+        g = new Graph_Node[sz1];
+        ind = new int[sz1];
+        topo = new char[sz1];
+        if (g == nullptr || ind == nullptr || topo == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //初始化点
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                cin &gt;&gt; g[i].data;
+                g[i].first = nullptr;
+                ind[i] = 0;
+                topo[i] = 0;
+            }
+            //输入边
+            char x(0);
+            char y(0);
+            int xi(0);
+            int yi(0);
+            for (int i = 0; i &lt; sz2; ++i)
+            {
+                cin &gt;&gt; x &gt;&gt; y;
+
+                //找x,y对应下标
+                xi = find(x);
+                yi = find(y);
+
+                //y为x邻接点
+                List_Node* s = new List_Node;
+                s-&gt;data = yi;
+                //进行头插
+                s-&gt;next = g[xi].first;
+                g[xi].first = s;
+                //统计y入度
+                ind[yi]++;
+            }
+        }
+    }
+    int find(char k)
+    {
+        for (int i = 0; i &lt; size1; ++i)
+        {
+            if (g[i].data == k)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    bool topo_sort()
+    {
+        bool flag = false;//判断能否找到拓扑序列
+        //引入一个栈，用于保存所有入度为零的的点的下标
+        m_Stack s;
+        for (int i = 0; i &lt; size1; ++i)
+        {
+            if (ind[i] == 0)
+            {	
+                s.m_push(i);
+            }
+        }
+        int v_i(0);//出栈点的下标
+        //j为topo数组下标
+        for (int i = 0,j = 0; i &lt; size1; ++i,++j)
+        {
+            v_i = s.m_pop();
+            if (v_i == -1)
+            {
+                flag = false;//找不到拓扑序列
+                break;
+            }
+            //删除（并没有真正删除，只是入度减一）
+            topo[j] = g[v_i].data;
+            List_Node* p = g[v_i].first;
+            int a(0);//存储入度数组下标
+            while (p != nullptr)
+            {
+                a = p-&gt;data;
+                ind[a]--;
+                if (ind[a] == 0)
+                {
+                    s.m_push(a);
+                }
+                p = p-&gt;next;
+            }
+            if (i == size1 - 1)
+            {
+                flag = true;
+            }
+        }
+        if (flag == false)
+        {
+            cout &lt;&lt; &quot;该图带环，无拓扑序列&quot; &lt;&lt; endl;
+            return flag;
+        }
+        else
+        {
+            cout &lt;&lt; &quot;该图拓扑序列为：&quot; &lt;&lt; endl;
+            for (int i = 0; i &lt; size1; ++i)
+            {
+                cout &lt;&lt; topo[i] &lt;&lt; ' ';
+            }
+            return flag;
+        }
+    }
+};
+int main()
+{
+    Graph g(6, 8);
+    g.topo_sort();
+    return 0;
+}
+/*
+6 8
+A B C D E F
+A B
+A C
+A D
+C B
+C E
+F D
+F E
+D E
+*/</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

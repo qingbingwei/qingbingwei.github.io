@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>MySQL数据库的常用函数 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="MySQL数据库的常用函数"/>
+<meta name="twitter:description" content="-- 创建数据库 CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 使用数据库 USE exercise; -- 创建一个员工表 CREATE TABLE IF NOT EXISTS emp( id BIGINT(20) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;员工编号&#39;, name VARCHAR(20) NOT NULL COMMENT &#39;姓名&#39;, sex VARCHAR(2) DEFAULT &#39;男&#39; COMMENT &#39;性别&#39;, age TINYINT(3) UNSIGNED NOT NULL COMMENT &#39;年龄&#39;, dept VARCHAR(20) NOT NULL COMMENT &#39;所属部门&#39;, salary DOUBLE(10, 2) NOT NULL COMMENT &#39;薪资&#39; )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;员工表&#39;; -- 插入测试数据 INSERT INTO emp(id, name ,sex, age, dept, salary) VALUES(DEFAULT, &#39;张三&#39;, &#39;男&#39;,22, &#39;研发部&#39;, 13000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;李刚&#39;, &#39;男&#39;, 24, &#39;研发部&#39;,14000); INSERT INTO emp VALUES(DEFAULT, &#39;金凤&#39;, &#39;女&#39;, 23, &#39;财务部&#39;, 8000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;肖青&#39;, &#39;女&#39;, 26, &#39;财务部&#39;,9000), (&#39;张华&#39;, &#39;男&#39;, 28, &#39;研发部&#39;, 15000),(&#39;董钰&#39;, &#39;女&#39;, 24, &#39;研发部&#39;, 12000); INSERT INTO emp VALUES(DEFAULT, &#39;吴梅&#39;, &#39;女&#39;, 24, &#39;测试部&#39;, 9000),(DEFAULT, &#39;王玲&#39;,&#39;女&#39;, 26, &#39;测试部&#39;, 9500); -- 吴梅因工作出色而被提升为测试主管，薪资调整为11000 UPDATE emp SET salary=11000 WHERE name=&#39;吴梅&#39;; -- 研发部金凤离职 DELETE FROM emp WHERE name=&#39;金凤&#39;; -- 从员工表中查询出平均年龄小于25的部门 SELECT dept FROM emp GROUP BY dept HAVING AVG(age)&lt;25; -- 从员工表中统计研发部的最高薪资、最低薪资、平均薪资和总薪资 SELECT MAX(salary),MIN(salary),AVG(salary),SUM(salary) FROM emp WHERE dept=&#39;研发部&#39;; -- 从员工表中统计各个部门的员工数量 SELECT dept, COUNT(*) FROM emp GROUP BY dept; -- 从员工表中查询薪资在10000以上的员工信息并按薪资从高到低排列 SELECT * FROM emp WHERE salary&gt;10000 ORDER BY salary DESC; -- 从员工表中分页查询员工信息，每页显示5条员工信息，按薪资从高到低排列，查询第2页员工信息 SELECT * FROM emp ORDER BY salary DESC LIMIT 5,5; --MySQL修改root密码 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;新密码&#39;; MySQL常用函数: 1."/>
+
+    <meta property="og:title" content="MySQL数据库的常用函数" />
+<meta property="og:description" content="-- 创建数据库 CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 使用数据库 USE exercise; -- 创建一个员工表 CREATE TABLE IF NOT EXISTS emp( id BIGINT(20) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;员工编号&#39;, name VARCHAR(20) NOT NULL COMMENT &#39;姓名&#39;, sex VARCHAR(2) DEFAULT &#39;男&#39; COMMENT &#39;性别&#39;, age TINYINT(3) UNSIGNED NOT NULL COMMENT &#39;年龄&#39;, dept VARCHAR(20) NOT NULL COMMENT &#39;所属部门&#39;, salary DOUBLE(10, 2) NOT NULL COMMENT &#39;薪资&#39; )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;员工表&#39;; -- 插入测试数据 INSERT INTO emp(id, name ,sex, age, dept, salary) VALUES(DEFAULT, &#39;张三&#39;, &#39;男&#39;,22, &#39;研发部&#39;, 13000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;李刚&#39;, &#39;男&#39;, 24, &#39;研发部&#39;,14000); INSERT INTO emp VALUES(DEFAULT, &#39;金凤&#39;, &#39;女&#39;, 23, &#39;财务部&#39;, 8000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;肖青&#39;, &#39;女&#39;, 26, &#39;财务部&#39;,9000), (&#39;张华&#39;, &#39;男&#39;, 28, &#39;研发部&#39;, 15000),(&#39;董钰&#39;, &#39;女&#39;, 24, &#39;研发部&#39;, 12000); INSERT INTO emp VALUES(DEFAULT, &#39;吴梅&#39;, &#39;女&#39;, 24, &#39;测试部&#39;, 9000),(DEFAULT, &#39;王玲&#39;,&#39;女&#39;, 26, &#39;测试部&#39;, 9500); -- 吴梅因工作出色而被提升为测试主管，薪资调整为11000 UPDATE emp SET salary=11000 WHERE name=&#39;吴梅&#39;; -- 研发部金凤离职 DELETE FROM emp WHERE name=&#39;金凤&#39;; -- 从员工表中查询出平均年龄小于25的部门 SELECT dept FROM emp GROUP BY dept HAVING AVG(age)&lt;25; -- 从员工表中统计研发部的最高薪资、最低薪资、平均薪资和总薪资 SELECT MAX(salary),MIN(salary),AVG(salary),SUM(salary) FROM emp WHERE dept=&#39;研发部&#39;; -- 从员工表中统计各个部门的员工数量 SELECT dept, COUNT(*) FROM emp GROUP BY dept; -- 从员工表中查询薪资在10000以上的员工信息并按薪资从高到低排列 SELECT * FROM emp WHERE salary&gt;10000 ORDER BY salary DESC; -- 从员工表中分页查询员工信息，每页显示5条员工信息，按薪资从高到低排列，查询第2页员工信息 SELECT * FROM emp ORDER BY salary DESC LIMIT 5,5; --MySQL修改root密码 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;新密码&#39;; MySQL常用函数: 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-08T10:57:15+08:00" />
+<meta property="article:modified_time" content="2024-02-08T10:57:15+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">MySQL数据库的常用函数</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 8, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>-- 创建数据库
+CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+-- 使用数据库
+USE exercise;
+-- 创建一个员工表
+CREATE TABLE IF NOT EXISTS emp(
+    id BIGINT(20) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT '员工编号',
+    name VARCHAR(20) NOT NULL COMMENT '姓名',
+    sex VARCHAR(2) DEFAULT '男' COMMENT '性别',
+    age TINYINT(3) UNSIGNED NOT NULL COMMENT '年龄',
+    dept VARCHAR(20) NOT NULL COMMENT '所属部门',
+    salary DOUBLE(10, 2) NOT NULL COMMENT '薪资'
+)ENGINE=InnoDB CHARSET=UTF8 COMMENT='员工表';
+-- 插入测试数据
+INSERT INTO emp(id, name ,sex, age, dept, salary) VALUES(DEFAULT, '张三', '男',22, '研发部', 13000);
+INSERT INTO emp(name ,sex, age, dept, salary) VALUES('李刚', '男', 24, '研发部',14000);
+INSERT INTO emp VALUES(DEFAULT, '金凤', '女', 23, '财务部', 8000);
+INSERT INTO emp(name ,sex, age, dept, salary) VALUES('肖青', '女', 26, '财务部',9000), ('张华', '男', 28, '研发部', 15000),('董钰', '女', 24, '研发部', 12000);
+INSERT INTO emp VALUES(DEFAULT, '吴梅', '女', 24, '测试部', 9000),(DEFAULT, '王玲','女', 26, '测试部', 9500);
+-- 吴梅因工作出色而被提升为测试主管，薪资调整为11000
+UPDATE emp SET salary=11000 WHERE name='吴梅';
+-- 研发部金凤离职
+DELETE FROM emp WHERE name='金凤';
+-- 从员工表中查询出平均年龄小于25的部门
+SELECT dept FROM emp GROUP BY dept HAVING AVG(age)&lt;25;
+-- 从员工表中统计研发部的最高薪资、最低薪资、平均薪资和总薪资
+SELECT MAX(salary),MIN(salary),AVG(salary),SUM(salary) FROM emp WHERE dept='研发部';
+-- 从员工表中统计各个部门的员工数量
+SELECT dept, COUNT(*) FROM emp GROUP BY dept; 
+-- 从员工表中查询薪资在10000以上的员工信息并按薪资从高到低排列
+SELECT * FROM emp WHERE salary&gt;10000 ORDER BY salary DESC;
+-- 从员工表中分页查询员工信息，每页显示5条员工信息，按薪资从高到低排列，查询第2页员工信息
+SELECT * FROM emp ORDER BY salary DESC LIMIT 5,5;
+
+--MySQL修改root密码
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';
+
+MySQL常用函数:
+1.常用数学函数
+ABS(X):返回x绝对值
+FLOOR(X):返回不大于x的最大整数
+CEIL(X):返回不小于x的最小整数
+TRUNCATE(X,D):返回数值x保留到小数点后D位的值，截断时不进行四舍五入
+ROUND(X):返回离x最近的整数，截断时进行四舍五入
+ROUND(X,D):返回数值x保留到小数点后D位的值，截断时进行四舍五入
+RAND():返回0~1的随机数
+MOD(N,M):返回N除以M以后的余数
+2.常用字符串函数
+CHAR_LENGTH(str):计算字符串字符个数
+LENGTH(str):返回字符串字节数
+CONCAT(s1,s2...):字符串拼接，其中任意一个为NULL则返回值为NULL
+LOWER(str):将str中字母转换为小写
+UPPER(str):将str中字母转换为大写
+LEFT(str,n):返回从左边开始n个字符
+RIGHT(str,n):返回从右边开始n个字符
+LTRIM(s):去除左边空格
+RTRIM(s):去除右边空格
+TRIM(s):去除两端空格
+REPLACE(s,s1,s2):返回一个字符串，用s2替代s中所有s1
+SUBSTRING(s,n,len):从s中返回一个第n个字符开始，长度为len的字符串
+
+-- 查询计科和软工各有多少人
+SELECT LEFT(class,2), COUNT(*) FROM stu GROUP BY LEFT(class,2);
+-- 查询名字有4个字的学生信息
+SELECT * FROM stu WHERE CHAR_LENGTH(`name`)=4;
+-- 查询成绩能够被10整除的考试信息
+SELECT * FROM score WHERE MOD(score,10)=0;
+
+3.常用日期和时间函数
+CURDATE():返回当前日期 CURRENT_DATE()
+CURTIME():返回当前时间 CURRENT_TIME()
+NOW():返回当前日期和时间
+CURRENT_TIMESTAMP():返回当前日期和时间
+SYSDATE():返回当前日期和时间
+YEAR(d):返回d中的年份值
+MONTH(d):返回d是哪个月
+WEEK():返回d是哪一周
+DAYOFYEAR(d):返回给定日期是当年的第几天
+DAYOFMONTH(d):返回给定日期是当月的第几天
+DAYOFWEEK(d):返回给定日期是d当周的第几天
+HOUR(d):返回d的小时数
+MINUTE(d):返回d的分钟数
+SECOND(d):返回d的秒数
+ADDDATE(d,n):返回起始日期加上n天的日期，n可为负数
+TIMESTAMPDIFF(INTERVAL expr type,d1,d2):返回d1，d2时间差
+-- 求年份差，TIMESTAMPDIFF(YEAR,d1,d2);
+DATE_FORMAT(d,f):返回给定日期格式的字符串
+-- 十二小时用h，DATE_FORMAT(d,'%Y-%m-%d %h:%i:%s');
+-- 二十四小时用h，DATE_FORMAT(d,'%Y-%m-%d %H:%i:%s');
+
+-- 查询年龄在20岁以上的学生信息
+SELECT * FROM stu WHERE TIMESTAMPDIFF(YEAR,birthday,NOW())&gt;20;
+-- 查询今天过生日的学生信息
+SELECT * FROM stu WHERE MONTH(birthday)=MONTH(NOW()) AND DAYOFMONTH(birthday)=DAYOFMONTH(NOW());
+-- 查询本周过生日的学生信息
+-- 起始时间 RIGHT(DATE_FORMAT(ADDDATE(NOW(),-DAYOFWEEK(NOW())),'%Y-%m-%d'),5)
+-- 截止日期 RIGHT(DATE_FORMAT(ADDDATE(NOW(),7-DAYOFWEEK(NOW())),'%Y-%m-%d'),5)
+SELECT * FROM stu WHERE RIGHT(birthday) &gt; RIGHT(DATE_FORMAT(ADDDATE(NOW(),-DAYOFWEEK(NOW())),'%Y-%m-%d'),5)
+AND RIGHT(birthday) &lt; RIGHT(DATE_FORMAT(ADDDATE(NOW(),7-DAYOFWEEK(NOW())),'%Y-%m-%d'),5);
+
+4.条件判断函数
+1.IF函数:
+(1)IF(条件, 表达式1, 表达式2):如果条件满足,则使用表达式1,否则使用表达式2
+-- 将学生成绩展示为及格和不及格
+SELECT id,stu_name,course, IF(score&gt;=60,'及格','不及格') score FROM score;
+-- 注：IF后score为别名
+
+(2)IFNULL(字段, 表达式):如果字段值为空，则使用表达式，否则，使用字段值
+-- 将未参加考试的学生成绩展示为缺考
+SELECT id,stu_name,course, IFNULL(score,'缺考') score FROM score;
+
+2.CASE...WHEN 语句
+(1)CASE WHEN 条件1 THEN 表达式1 [WHEN 条件2 THEN 表达式2 ...] ELSE 表达式n END:
+如果条件1满足，则使用表达式1；【如果条件2满足，则使用表达式2， ... 】否则，使用表达式n。-- 类似于多重if...else
+-- 行转列:查询每位学生的各课程成绩
+SELECT
+    stu_name,
+    course,
+    MAX(CASE WHEN (course = 'Java') THEN score ELSE 0 END) Java,
+    MAX(CASE WHEN (course = 'Html') THEN score ELSE 0 END) Html,
+    MAX(CASE WHEN (course = 'Jsp') THEN score ELSE 0 END) Jsp,
+    MAX(CASE WHEN (course = 'Spring') THEN score ELSE 0 END) Spring
+FROM score
+GROUP BY stu_name;
+
+(2)CASE 表达式 WHEN 值1 THEN 表达式1 [WHEN 值2 THEN 表达式2 ...] ELSE 表达式n END:
+如果表达式的执行结果为值1，则使用表达式1；【执行结果为值2，则使用表达式2， ... 】否则，使用表
+达式n。-- 类似于switch
+-- 行转列:查询每位学生的各课程成绩
+SELECT
+    stu_name,
+    course,
+    MAX(CASE course WHEN 'Java' THEN score ELSE 0 END) Java,
+    MAX(CASE course WHEN 'Html' THEN score ELSE 0 END) Html,
+    MAX(CASE course WHEN 'Jsp' THEN score ELSE 0 END) Jsp,
+    MAX(CASE course WHEN 'Spring' THEN score ELSE 0 END) Spring
+FROM score
+GROUP BY stu_name;
+-- 查询各班级性别人数
+SELECT
+class,
+SUM(CASE sex WHEN 0 THEN 1 ELSE 0 END) '男',
+SUM(CASE sex WHEN 1 THEN 1 ELSE 0 END) '女', 
+SUM(CASE sex WHEN 2 THEN 1 ELSE 0 END) '其他'
+FROM stu
+GROUP BY class;
+5.系统信息函数
+VERSION():获取数据库版本号
+CONNECTION_ID():获取服务器连接数
+DATABASE()/SCHEMA():获取当前数据库名称
+USER()/SYSTEM_USER()/SESSION_USER():获取当前用户名
+CURRENT_USER()/CURRENT_USER:获取当前用户名
+-- 注:CURRENT_USER不是函数
+6.数字格式化函数
+FORMAT(X,D):返回数值x保留到小数点后D位的值，截断时进行四舍五入</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

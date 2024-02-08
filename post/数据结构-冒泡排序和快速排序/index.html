@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 冒泡排序和快速排序 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 冒泡排序和快速排序"/>
+<meta name="twitter:description" content="交换：根据数据之间的比较，把每个数据都放在自己应该的位置 （1）冒泡排序：通过不断的比较两个相邻的元素，若这两个元素是乱序的，则交换位置。从而实现每趟都把最大的数据交换到最后面 时间复杂度：O(n^2) 是否稳定：稳定 为就地排序 （2）快速排序：首先选定一个基准数（比较的标准），把比基准数x小的数据放在x前面，比基准数x大的数据放在后面。排好一趟后，x把序列划分为了两部分，这两部分还都是乱序的，再分别对这两部分进行快速排序。//递归 选择基准数（排序区间[l.r]）:理论上谁都可以 (1)选择排序区间第一个 a[l]----为例 1.两个下标i=l,j=r;相对遍历 2.先用j找一个比x小的数，放在i位置，i&#43;&#43; 3.再用i找一个比x大的数，放在j位置，j-- 4.不断循环，直到i==j为止，此时i/j位置就是x的位置 5.然后再对x前后两个区域进行递归调用 (2)选择排序区间最后一个 a[r] (3)选择排序区间中间位置 a[(l&#43;r)/2] 时间复杂度：O(nlogn) 是否稳定：不稳定 为就地排序 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;vector&gt; using namespace std; //left和right分别为排序区间范围 void Quick_Sort(vector&lt;int&gt;(&amp;v), int left, int right) { int i(left); int j(right); //递归出口,即排序区间只有一个元素时不进行排序 if (left &lt; right) { int x(v[i]); //排序 while (i &lt; j) { while (i &lt; j &amp;&amp; v[j] &gt; x) { j--; } if (i &lt; j) { v[i] = v[j]; i&#43;&#43;; } while (i &lt; j &amp;&amp; v[i] &lt; x) { i&#43;&#43;; } if (i &lt; j) { v[j] = v[i]; j--; } } v[i] = x; //递归调用，以v[i] = x为基准 Quick_Sort(v, left, i - 1); Quick_Sort(v, i &#43; 1, right); } //选取区间第一个作为基准数 } void Quick_Sort_2(vector&lt;int&gt;(&amp;v),int left,int right) { int i(left); int j(right); //递归出口,即排序区间只有一个元素时不进行排序 if (left &lt; right) { int x(v[j]); //排序 while (i &lt; j) { while (i &lt; j &amp;&amp; v[i] &lt; x) { i&#43;&#43;; } if (i &lt; j) { v[j] = v[i]; j--; } while (i &lt; j &amp;&amp; v[j] &gt; x) { j--; } if (i &lt; j) { v[i] = v[j]; i&#43;&#43;; } } v[i] = x; //递归调用，以v[i] = x为基准 Quick_Sort(v,left,i-1); Quick_Sort(v,i&#43;1,right); } //选取区间最后一个作为基准数 } void Bubble_Sort(vector&lt;int&gt;(&amp;v)) { int tmp(0); //枚举趟数 for (int i = 0; i &lt; v."/>
+
+    <meta property="og:title" content="数据结构 冒泡排序和快速排序" />
+<meta property="og:description" content="交换：根据数据之间的比较，把每个数据都放在自己应该的位置 （1）冒泡排序：通过不断的比较两个相邻的元素，若这两个元素是乱序的，则交换位置。从而实现每趟都把最大的数据交换到最后面 时间复杂度：O(n^2) 是否稳定：稳定 为就地排序 （2）快速排序：首先选定一个基准数（比较的标准），把比基准数x小的数据放在x前面，比基准数x大的数据放在后面。排好一趟后，x把序列划分为了两部分，这两部分还都是乱序的，再分别对这两部分进行快速排序。//递归 选择基准数（排序区间[l.r]）:理论上谁都可以 (1)选择排序区间第一个 a[l]----为例 1.两个下标i=l,j=r;相对遍历 2.先用j找一个比x小的数，放在i位置，i&#43;&#43; 3.再用i找一个比x大的数，放在j位置，j-- 4.不断循环，直到i==j为止，此时i/j位置就是x的位置 5.然后再对x前后两个区域进行递归调用 (2)选择排序区间最后一个 a[r] (3)选择排序区间中间位置 a[(l&#43;r)/2] 时间复杂度：O(nlogn) 是否稳定：不稳定 为就地排序 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;vector&gt; using namespace std; //left和right分别为排序区间范围 void Quick_Sort(vector&lt;int&gt;(&amp;v), int left, int right) { int i(left); int j(right); //递归出口,即排序区间只有一个元素时不进行排序 if (left &lt; right) { int x(v[i]); //排序 while (i &lt; j) { while (i &lt; j &amp;&amp; v[j] &gt; x) { j--; } if (i &lt; j) { v[i] = v[j]; i&#43;&#43;; } while (i &lt; j &amp;&amp; v[i] &lt; x) { i&#43;&#43;; } if (i &lt; j) { v[j] = v[i]; j--; } } v[i] = x; //递归调用，以v[i] = x为基准 Quick_Sort(v, left, i - 1); Quick_Sort(v, i &#43; 1, right); } //选取区间第一个作为基准数 } void Quick_Sort_2(vector&lt;int&gt;(&amp;v),int left,int right) { int i(left); int j(right); //递归出口,即排序区间只有一个元素时不进行排序 if (left &lt; right) { int x(v[j]); //排序 while (i &lt; j) { while (i &lt; j &amp;&amp; v[i] &lt; x) { i&#43;&#43;; } if (i &lt; j) { v[j] = v[i]; j--; } while (i &lt; j &amp;&amp; v[j] &gt; x) { j--; } if (i &lt; j) { v[i] = v[j]; i&#43;&#43;; } } v[i] = x; //递归调用，以v[i] = x为基准 Quick_Sort(v,left,i-1); Quick_Sort(v,i&#43;1,right); } //选取区间最后一个作为基准数 } void Bubble_Sort(vector&lt;int&gt;(&amp;v)) { int tmp(0); //枚举趟数 for (int i = 0; i &lt; v." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-31T11:42:51+08:00" />
+<meta property="article:modified_time" content="2024-01-31T11:42:51+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 冒泡排序和快速排序</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 31, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>交换：根据数据之间的比较，把每个数据都放在自己应该的位置
+
+（1）冒泡排序：通过不断的比较两个相邻的元素，若这两个元素是乱序的，则交换位置。从而实现每趟都把最大的数据交换到最后面
+
+时间复杂度：O(n^2)
+是否稳定：稳定
+为就地排序
+（2）快速排序：首先选定一个基准数（比较的标准），把比基准数x小的数据放在x前面，比基准数x大的数据放在后面。排好一趟后，x把序列划分为了两部分，这两部分还都是乱序的，再分别对这两部分进行快速排序。//递归
+
+选择基准数（排序区间[l.r]）:理论上谁都可以
+(1)选择排序区间第一个 a[l]----为例
+    1.两个下标i=l,j=r;相对遍历
+    2.先用j找一个比x小的数，放在i位置，i++
+    3.再用i找一个比x大的数，放在j位置，j--
+    4.不断循环，直到i==j为止，此时i/j位置就是x的位置
+    5.然后再对x前后两个区域进行递归调用
+
+(2)选择排序区间最后一个 a[r]
+(3)选择排序区间中间位置 a[(l+r)/2]
+
+时间复杂度：O(nlogn)
+是否稳定：不稳定
+为就地排序
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+#include&lt;vector&gt;
+using namespace std;
+//left和right分别为排序区间范围
+void Quick_Sort(vector&lt;int&gt;(&amp;v), int left, int right)
+{
+    int i(left);
+    int j(right);
+    //递归出口,即排序区间只有一个元素时不进行排序
+    if (left &lt; right)
+    {
+        int x(v[i]);
+        //排序
+        while (i &lt; j)
+        {
+            
+            while (i &lt; j &amp;&amp; v[j] &gt; x)
+            {
+                j--;
+            }
+            if (i &lt; j)
+            {
+                v[i] = v[j];
+                i++;
+            }
+            while (i &lt; j &amp;&amp; v[i] &lt; x)
+            {
+                i++;
+            }
+            if (i &lt; j)
+            {
+                v[j] = v[i];
+                j--;
+            }
+        }
+        v[i] = x;
+
+        //递归调用，以v[i] = x为基准
+        Quick_Sort(v, left, i - 1);
+        Quick_Sort(v, i + 1, right);
+    }
+    //选取区间第一个作为基准数
+}
+void Quick_Sort_2(vector&lt;int&gt;(&amp;v),int left,int right)
+{
+    int i(left);
+    int j(right);
+    //递归出口,即排序区间只有一个元素时不进行排序
+    if (left &lt; right)
+    {
+        int x(v[j]);
+        //排序
+        while (i &lt; j)
+        {
+            while (i &lt; j &amp;&amp; v[i] &lt; x)
+            {
+                i++;
+            }
+            if (i &lt; j)
+            {
+                v[j] = v[i];
+                j--;
+            }
+            while (i &lt; j &amp;&amp; v[j] &gt; x)
+            {
+                j--;
+            }
+            if (i &lt; j)
+            {
+                v[i] = v[j];
+                i++;
+            }
+            
+        }
+        v[i] = x;
+
+        //递归调用，以v[i] = x为基准
+        Quick_Sort(v,left,i-1);
+        Quick_Sort(v,i+1,right);
+    }
+    
+    //选取区间最后一个作为基准数
+}
+void Bubble_Sort(vector&lt;int&gt;(&amp;v))
+{
+    int tmp(0);
+    //枚举趟数
+    for (int i = 0; i &lt; v.size() - 1; ++i)
+    {
+        //记录乱序区是否发生交换
+        bool flag(false);
+        //遍历乱序区
+        for (int j = 0; j &lt; v.size() - 1 - i; ++j)
+        {
+            if (v[j] &gt; v[j + 1])
+            {
+                flag = true;
+                tmp = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = tmp;
+            }
+        }
+        if (flag == false)
+        {
+            break;
+        }
+    }
+}
+int main()
+{
+    vector&lt;int&gt; v;
+    int n(0);
+    cin &gt;&gt; n;
+    v.resize(n);
+    for (auto&amp; a : v)
+    {
+        cin &gt;&gt; a;
+    }
+    Quick_Sort_2(v,0,v.size()-1);
+    for (auto a : v)
+    {
+        cout &lt;&lt; a &lt;&lt; ' ';
+    }
+    return 0;
+}
+/*
+6
+30
+20
+10
+60
+50
+40
+*/</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

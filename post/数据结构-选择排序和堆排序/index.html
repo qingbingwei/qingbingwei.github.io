@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 选择排序和堆排序 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 选择排序和堆排序"/>
+<meta name="twitter:description" content="选择：每次选出一个合法（最大/最小）的数据放到其最终应该在的位置 1.（简单）选择排序：每趟从待排序区中，选择一个最小的数，放到待排序区的第一个位置，从而实现升序排列。 时间复杂度：O(n^2) 是否稳定：不稳定 为就地排序 2.对选择排序进行优化----&gt;堆排序 对于一棵完全二叉树，进行编号，编号规则为：根节点为1，然后从上到下，从左到右。除根节点外，节点i的父亲节点编号为i/2(向下取整)。除叶子节点外，节点i的左孩子节点编号为2*i，右节点为2*i&#43;1（可直接用数组存储） 堆(Heap):是一类基于完全二叉树的特殊数据结构 1.大顶堆：在大顶堆中，根节点的值必须大于等于其孩子节点的值，且所有子树均满足 2.小顶堆：在小顶堆中，根节点的值必须小于等于其孩子节点的值，且所有子树均满足 1.建堆：用一个数组保存 （1）自我初始化：在原数组基础上进行初始化 从子树入手，由小及大去调整每棵子树（不包含叶子节点）： 对于每棵子树，我们向下调整： 让根节点和其左右孩子作比较，最小值和根节点交换，继续向下调整子树 （2）通过插入建堆 数组中每多一个数据就调整一次，新插入的数据放在最后，如果其比父亲大或者新插入的数据是根节点就不用调整，否则就向上调整 堆排序： （1）建堆 （2）循环n次，每次输出最小数----&gt;a[0] （3）删掉a[0]----&gt;让堆中最后一个节点替换a[0],然后重新对a[0]向下调整 时间复杂度：O(nlogn) 是否稳定：不稳定 为就地排序 堆的应用： 1.优先队列：基于堆 2.1亿个数，选出前一百个最大的数，不能使用大顶堆，使用小顶堆 a[100]---&gt;堆 先读入100个数，建立小顶堆 接下来，当读入一个数x时，如果x&lt;=a[0],直接读入下一个数 否则a[0]=x,向下调整小顶堆 最后留下来的小顶堆就是答案 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;vector&gt; using namespace std; //i为根节点下标 void Down_Adjust(vector&lt;int&gt;(&amp;v), int i,int size) { int parent(i);//根节点下标 int l_child(2 * i);//左孩子下标 int tmp(0); //因为调整后可能子树不再是小顶堆，所以循环向下调整 while (parent * 2 &lt;= size) { l_child = 2 * parent; if (l_child &#43; 1 &lt;= size &amp;&amp; v[l_child &#43; 1] &lt; v[l_child]) { l_child = l_child &#43; 1; } //此时，l_child是值较小的孩子 if (v[parent] &lt; v[l_child]) { break; } else { tmp = v[l_child]; v[l_child] = v[parent]; v[parent] = tmp; parent = l_child; } } } void Up_Adjust(vector&lt;int&gt;(&amp;v),int i) { int tmp(0); int child(i); int parent(0); //不是根节点就继续调整 while (child &gt; 1) { parent = child / 2; if (v[parent] &lt; v[child]) { break; } else { tmp = v[parent]; v[parent] = v[child]; v[child] = tmp; child = parent; } } } void Heap_Sort(vector&lt;int&gt;(&amp;v)) { //1."/>
+
+    <meta property="og:title" content="数据结构 选择排序和堆排序" />
+<meta property="og:description" content="选择：每次选出一个合法（最大/最小）的数据放到其最终应该在的位置 1.（简单）选择排序：每趟从待排序区中，选择一个最小的数，放到待排序区的第一个位置，从而实现升序排列。 时间复杂度：O(n^2) 是否稳定：不稳定 为就地排序 2.对选择排序进行优化----&gt;堆排序 对于一棵完全二叉树，进行编号，编号规则为：根节点为1，然后从上到下，从左到右。除根节点外，节点i的父亲节点编号为i/2(向下取整)。除叶子节点外，节点i的左孩子节点编号为2*i，右节点为2*i&#43;1（可直接用数组存储） 堆(Heap):是一类基于完全二叉树的特殊数据结构 1.大顶堆：在大顶堆中，根节点的值必须大于等于其孩子节点的值，且所有子树均满足 2.小顶堆：在小顶堆中，根节点的值必须小于等于其孩子节点的值，且所有子树均满足 1.建堆：用一个数组保存 （1）自我初始化：在原数组基础上进行初始化 从子树入手，由小及大去调整每棵子树（不包含叶子节点）： 对于每棵子树，我们向下调整： 让根节点和其左右孩子作比较，最小值和根节点交换，继续向下调整子树 （2）通过插入建堆 数组中每多一个数据就调整一次，新插入的数据放在最后，如果其比父亲大或者新插入的数据是根节点就不用调整，否则就向上调整 堆排序： （1）建堆 （2）循环n次，每次输出最小数----&gt;a[0] （3）删掉a[0]----&gt;让堆中最后一个节点替换a[0],然后重新对a[0]向下调整 时间复杂度：O(nlogn) 是否稳定：不稳定 为就地排序 堆的应用： 1.优先队列：基于堆 2.1亿个数，选出前一百个最大的数，不能使用大顶堆，使用小顶堆 a[100]---&gt;堆 先读入100个数，建立小顶堆 接下来，当读入一个数x时，如果x&lt;=a[0],直接读入下一个数 否则a[0]=x,向下调整小顶堆 最后留下来的小顶堆就是答案 #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;vector&gt; using namespace std; //i为根节点下标 void Down_Adjust(vector&lt;int&gt;(&amp;v), int i,int size) { int parent(i);//根节点下标 int l_child(2 * i);//左孩子下标 int tmp(0); //因为调整后可能子树不再是小顶堆，所以循环向下调整 while (parent * 2 &lt;= size) { l_child = 2 * parent; if (l_child &#43; 1 &lt;= size &amp;&amp; v[l_child &#43; 1] &lt; v[l_child]) { l_child = l_child &#43; 1; } //此时，l_child是值较小的孩子 if (v[parent] &lt; v[l_child]) { break; } else { tmp = v[l_child]; v[l_child] = v[parent]; v[parent] = tmp; parent = l_child; } } } void Up_Adjust(vector&lt;int&gt;(&amp;v),int i) { int tmp(0); int child(i); int parent(0); //不是根节点就继续调整 while (child &gt; 1) { parent = child / 2; if (v[parent] &lt; v[child]) { break; } else { tmp = v[parent]; v[parent] = v[child]; v[child] = tmp; child = parent; } } } void Heap_Sort(vector&lt;int&gt;(&amp;v)) { //1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E5%92%8C%E5%A0%86%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-02T19:58:39+08:00" />
+<meta property="article:modified_time" content="2024-02-02T19:58:39+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 选择排序和堆排序</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 2, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>选择：每次选出一个合法（最大/最小）的数据放到其最终应该在的位置
+1.（简单）选择排序：每趟从待排序区中，选择一个最小的数，放到待排序区的第一个位置，从而实现升序排列。
+时间复杂度：O(n^2)
+是否稳定：不稳定
+为就地排序
+
+2.对选择排序进行优化----&gt;堆排序
+
+对于一棵完全二叉树，进行编号，编号规则为：根节点为1，然后从上到下，从左到右。除根节点外，节点i的父亲节点编号为i/2(向下取整)。除叶子节点外，节点i的左孩子节点编号为2*i，右节点为2*i+1（可直接用数组存储）
+
+堆(Heap):是一类基于完全二叉树的特殊数据结构
+
+1.大顶堆：在大顶堆中，根节点的值必须大于等于其孩子节点的值，且所有子树均满足
+2.小顶堆：在小顶堆中，根节点的值必须小于等于其孩子节点的值，且所有子树均满足
+
+1.建堆：用一个数组保存 
+（1）自我初始化：在原数组基础上进行初始化
+    从子树入手，由小及大去调整每棵子树（不包含叶子节点）：
+    对于每棵子树，我们向下调整：
+    让根节点和其左右孩子作比较，最小值和根节点交换，继续向下调整子树
+（2）通过插入建堆
+    数组中每多一个数据就调整一次，新插入的数据放在最后，如果其比父亲大或者新插入的数据是根节点就不用调整，否则就向上调整
+
+堆排序：
+（1）建堆
+（2）循环n次，每次输出最小数----&gt;a[0]
+（3）删掉a[0]----&gt;让堆中最后一个节点替换a[0],然后重新对a[0]向下调整
+
+时间复杂度：O(nlogn)
+是否稳定：不稳定
+为就地排序
+
+
+堆的应用：
+1.优先队列：基于堆
+2.1亿个数，选出前一百个最大的数，不能使用大顶堆，使用小顶堆
+a[100]---&gt;堆
+先读入100个数，建立小顶堆
+接下来，当读入一个数x时，如果x&lt;=a[0],直接读入下一个数
+否则a[0]=x,向下调整小顶堆
+最后留下来的小顶堆就是答案
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+#include&lt;vector&gt;
+using namespace std;
+//i为根节点下标
+void Down_Adjust(vector&lt;int&gt;(&amp;v), int i,int size)
+{
+    int parent(i);//根节点下标
+    int l_child(2 * i);//左孩子下标
+    int tmp(0);
+    //因为调整后可能子树不再是小顶堆，所以循环向下调整
+    while (parent * 2 &lt;= size)
+    {
+        l_child = 2 * parent;
+        if (l_child + 1 &lt;= size &amp;&amp; v[l_child + 1] &lt; v[l_child])
+        {
+            l_child = l_child + 1;
+        }
+        //此时，l_child是值较小的孩子
+        if (v[parent] &lt; v[l_child])
+        {
+            break;
+        }
+        else
+        {
+            tmp = v[l_child];
+            v[l_child] = v[parent];
+            v[parent] = tmp;
+            parent = l_child;
+        }
+    }
+}
+void Up_Adjust(vector&lt;int&gt;(&amp;v),int i)
+{
+    int tmp(0);
+    int child(i);
+    int parent(0);
+    //不是根节点就继续调整
+    while (child &gt; 1)
+    {
+        parent = child / 2;
+        if (v[parent] &lt; v[child])
+        {
+            break;
+        }
+        else
+        {
+            tmp = v[parent];
+            v[parent] = v[child];
+            v[child] = tmp;
+            child = parent;
+        }
+    }
+}
+void Heap_Sort(vector&lt;int&gt;(&amp;v))
+{
+    //1.建堆
+    //(1)自我初始化
+
+    /*for (int i = (v.size() - 1) / 2; i &gt;= 1; --i)//枚举每一个子树根节点
+    {
+        Down_Adjust(v, i,v.size() - 1);
+    }*/
+    for (int i = 1; i &lt; v.size(); ++i)
+    {
+        cout &lt;&lt; v[1] &lt;&lt; ' ';
+        //每次“删除”最后一个节点
+        v[1] = v[v.size() - i];
+        Down_Adjust(v, 1, v.size() - 1 - i);
+    }
+}
+void Selection_Sort(vector&lt;int&gt;(&amp;v))
+{
+    //排n-1趟
+    for (int i = 0; i &lt; v.size() - 1; ++i)
+    {
+        int min_i(i);//最小数下标
+        int tmp(0);
+        for (int j = i; j &lt; v.size(); ++j)
+        {
+            if (v[j] &lt; v[min_i])
+            {
+                min_i = j;
+            }
+        }
+        tmp = v[i];
+        v[i] = v[min_i];
+        v[min_i] = tmp;
+    }
+}
+int main()
+{
+    vector&lt;int&gt; v;
+    int n(0);
+    cin &gt;&gt; n;
+    //下标从1开始，方便建堆
+    v.resize(n+1);
+    //(2)插入建堆
+    for (int i = 1;i&lt;v.size();++i)
+    {
+        cin &gt;&gt; v[i];
+        Up_Adjust(v,i);
+    }
+    Heap_Sort(v);
+    /*for (auto a : v)
+    {
+        cout &lt;&lt; a &lt;&lt; ' ';
+    }*/
+    return 0;
+}
+/*
+6
+6
+2
+3
+5
+1
+4
+*/</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

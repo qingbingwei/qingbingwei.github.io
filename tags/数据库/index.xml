@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on 清兵卫的博客</title>
+    <link>https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on 清兵卫的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 08 Feb 2024 10:59:30 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据库设计</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Thu, 08 Feb 2024 10:59:30 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/</guid>
+      <description>-- 1.创建存储过程的语法 CREATE PROCEDURE 存储过程的名称(IN|OUT 参数名1 参数类型1,...,IN|OUT 参数名n 参数类型n) BEGIN END -- 2.创建函数的语法 CREATE FUNCTION 存储过程的名称(参数名1 参数类型1,..., 参数名n 参数类型n) RETURNS 数据类型 -- 函数类型 DETERMINISTIC | NO SQL | READ SQL DATA | CONTAINS SQL BEGIN RETURN 结果; END -- 3.创建触发器的语法 CREATE TRIGGER 触发器名称 BEFORE|AFTER INSERT|UPDATE|DELETE ON 表名 FOR EACH ROW BEGIN END -- 4.创建视图的语法 CREATE OR REPLACE VIEW 视图名称 AS SELECT 语句; 设计数据库 1.什么是实体: 实体就是软件开发过程中所涉及到的事物，通常都是一类数据对象的个体。 2.什么是数据库设计: 数据库设计就是将实体与实体之间的关系进行规划和结构化的过程 3.为什么要进行数据库设计: 当存储的数据比较少的时候，当然不需要对数据库进行设计。 但是，当对数据的需求量越来越大时，对数据库的设计就很有必要性了！ 如果数据库的设计不当，会造成数据冗余、修改复杂、操作数据异常等问题。 而好的数据库设计，则可以减少不必要的数据冗余，通过合理的数据规划提高系统的性能 4.</description>
+    </item>
+    
+    <item>
+      <title>存储过程、函数和触发器</title>
+      <link>https://qingbingwei.github.io/post/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%87%BD%E6%95%B0%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
+      <pubDate>Thu, 08 Feb 2024 10:58:45 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%87%BD%E6%95%B0%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
+      <description>1.查询有哪些分类 1.内连接： 衔接的多表必须保证数据一一对应才可能展示结果 2.左外连接：衔接的主表（LEFT JOIN 左边的表为主表）为准，从表中没有的数据以NULL形式展示 3.右外连接：衔接的主表（RIGHT JOIN 右边的表为主表）为准，从表中没有的数据以NULL形式展示 2.子查询有哪些分类 1.在 SELECT . FROM 之间：执行时机就是查询出结果后执行 2.在 FROM . WHERE 之间：执行时机是一开始就先执行 3.在 WHERE 之后：执行时机是筛选数据时执行 变量: 在MySQL中，变量分为四种类型，即局部变量、用户变量、会话变量和全局变量。 其中局部变量和用户变量在实际应用中使用较多，会话变量和全局变量使用较少，因此作为了解即可。 1.全局变量: MySQL全局变量会影响服务器整体操作，当服务启动时，它将所有全局变量初始化为默认值。 要想更改全局变量，必须具有管理员权限。 其作用域为服务器的整个生命周期。 -- 显示所有的全局变量 SHOW GLOBAL VARIABLES; -- 设置全局变量的值的两种方式 SET GLOBAL sql_warnings = ON; -- GLOBAL不能省略 SET @@GLOBAL.sql_warnings = OFF; -- 查询全局变量的值的两种方式 SELECT @@GLOBAL.sql_warnings; SHOW GLOBAL VARIABLES LIKE &#39;%sql_warnings%&#39;; 2.会话变量: MySQL会话变量是服务器为每个连接的客户端维护的一系列变量。 其作用域仅限于当前连接，因此，会话变量是独立的。 -- 显示所有的会话变量 SHOW SESSION VARIABLES; -- 设置会话变量的值的三种方式 SET SESSION auto_increment_increment = 1; SET @@SESSION.</description>
+    </item>
+    
+    <item>
+      <title>MySQL联表查询</title>
+      <link>https://qingbingwei.github.io/post/mysql%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Thu, 08 Feb 2024 10:58:15 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/mysql%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <description>-- 求字符串的字符数 SELECT CHAR_LENGTH(&#39;abc&#39;); -- 将字符串&amp;quot;超用心&amp;quot;和&amp;quot;在线教育&amp;quot;拼接成新的字符串 SELECT CONCAT(&#39;超用心&#39;,&#39;在线教育&#39;); -- 求&amp;quot;&amp;quot;到现在一共有多少天 SELECT TIMESTAMPDIFF(DAY,&#39;2019-05-04&#39;,NOW()); -- 如果字段score的值大于90，则展示为优秀，否则展示为良好 SELECT IF(score&amp;gt;90,&#39;优秀&#39;,&#39;良好&#39;) FROM stu; 1.表与表之间的关系: 数据库通过主外键关联关系来体现表与表之间的关联关系。 2.主外键关联关系 学生表和班级表并没有任何关系，然而实际上学生和班级是存在归属关系。 可以在学生表中添加一个字段，表名该学生所属班级，该字段值使用的是班级表中的主键，在学生表中称之为外键。 这样学生表中的所属班级（外键）与班级表中的编号（主键）就产生关联关系，这种关联关系称为主外键关联关系。 3.主外键关联关系的定义 DROP TABLE IF EXISTS class; CREATE TABLE class( id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;班级编号&#39;, name VARCHAR(30) NOT NULL COMMENT &#39;班级名称&#39;, grade VARCHAR(30) NOT NULL COMMENT &#39;年级&#39;, )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;班级表&#39;; DROP TABLE IF EXISTS stu; CREATE TABLE stu( number BIGINT(20) AUTO_INCREMENT NOT NULL COMMENT &#39;学号&#39;, name VARCHAR(30) NOT NULL COMMENT &#39;姓名&#39;, sex VARCHAR(2) NOT NULL DEFAULT &#39;男&#39; COMMENT &#39;性别&#39;, age TINYINT(3) NOT NULL DEFAULT 0 COMMENT &#39;年龄&#39;, class_id INT(11) NOT NULL COMMENT &#39;所属班级&#39;, -- 指定number为主键 PRIMARY KEY(number), -- 指定class_id外键,关联的是class表中id字段 FOREIGN KEY(class_id) REFERENCES class(id) )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;学生表&#39;; 4.</description>
+    </item>
+    
+    <item>
+      <title>MySQL数据库的常用函数</title>
+      <link>https://qingbingwei.github.io/post/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 08 Feb 2024 10:57:15 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <description>-- 创建数据库 CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 使用数据库 USE exercise; -- 创建一个员工表 CREATE TABLE IF NOT EXISTS emp( id BIGINT(20) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;员工编号&#39;, name VARCHAR(20) NOT NULL COMMENT &#39;姓名&#39;, sex VARCHAR(2) DEFAULT &#39;男&#39; COMMENT &#39;性别&#39;, age TINYINT(3) UNSIGNED NOT NULL COMMENT &#39;年龄&#39;, dept VARCHAR(20) NOT NULL COMMENT &#39;所属部门&#39;, salary DOUBLE(10, 2) NOT NULL COMMENT &#39;薪资&#39; )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;员工表&#39;; -- 插入测试数据 INSERT INTO emp(id, name ,sex, age, dept, salary) VALUES(DEFAULT, &#39;张三&#39;, &#39;男&#39;,22, &#39;研发部&#39;, 13000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;李刚&#39;, &#39;男&#39;, 24, &#39;研发部&#39;,14000); INSERT INTO emp VALUES(DEFAULT, &#39;金凤&#39;, &#39;女&#39;, 23, &#39;财务部&#39;, 8000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;肖青&#39;, &#39;女&#39;, 26, &#39;财务部&#39;,9000), (&#39;张华&#39;, &#39;男&#39;, 28, &#39;研发部&#39;, 15000),(&#39;董钰&#39;, &#39;女&#39;, 24, &#39;研发部&#39;, 12000); INSERT INTO emp VALUES(DEFAULT, &#39;吴梅&#39;, &#39;女&#39;, 24, &#39;测试部&#39;, 9000),(DEFAULT, &#39;王玲&#39;,&#39;女&#39;, 26, &#39;测试部&#39;, 9500); -- 吴梅因工作出色而被提升为测试主管，薪资调整为11000 UPDATE emp SET salary=11000 WHERE name=&#39;吴梅&#39;; -- 研发部金凤离职 DELETE FROM emp WHERE name=&#39;金凤&#39;; -- 从员工表中查询出平均年龄小于25的部门 SELECT dept FROM emp GROUP BY dept HAVING AVG(age)&amp;lt;25; -- 从员工表中统计研发部的最高薪资、最低薪资、平均薪资和总薪资 SELECT MAX(salary),MIN(salary),AVG(salary),SUM(salary) FROM emp WHERE dept=&#39;研发部&#39;; -- 从员工表中统计各个部门的员工数量 SELECT dept, COUNT(*) FROM emp GROUP BY dept; -- 从员工表中查询薪资在10000以上的员工信息并按薪资从高到低排列 SELECT * FROM emp WHERE salary&amp;gt;10000 ORDER BY salary DESC; -- 从员工表中分页查询员工信息，每页显示5条员工信息，按薪资从高到低排列，查询第2页员工信息 SELECT * FROM emp ORDER BY salary DESC LIMIT 5,5; --MySQL修改root密码 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;新密码&#39;; MySQL常用函数: 1.</description>
+    </item>
+    
+    <item>
+      <title>数据库的增删改查</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/</link>
+      <pubDate>Thu, 08 Feb 2024 10:56:40 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/</guid>
+      <description>-- 创建数据库 CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 使用数据库 USE exercise; -- 创建数据表 CREATE TABLE IF NOT EXISTS stu_course( `number` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;课程编号&#39;, name VARCHAR(20) NOT NULL COMMENT &#39;课程名称&#39;, score DOUBLE(5,2) NOT NULL COMMENT &#39;学分&#39; ) ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;课程表&#39;; -- 修改数据表 ALTER TABLE stu_course RENAME AS course; -- 增加字段 ALTER TABLE course ADD `time` INT(3) NOT NULL COMMENT &#39;学时&#39;; -- 修改字段 ALTER TABLE course MODIFY score DOUBLE(3,1) NOT NULL COMMENT &#39;学分&#39;; DML语句（Data Mainpulation Language）:数据操作语言，对数据操作，而非数据表 INSERT语句 -- 需要注意，VALUES后的字段值必须与表名后的字段名一一对应 INSERT INTO 表名(字段名1,字段名2.</description>
+    </item>
+    
+    <item>
+      <title>数据库</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Fri, 02 Feb 2024 12:15:50 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>数据库类型： 1.关系型数据库:MySQL，Oracle，SQL Server,SQLite，DB2 2.非关系型数据库:Redis，MongoDB 数据库管理系统:Database Management System(DBMS): 主要用于科学组织和存储数据，高效获取和维护数据(如Navicat) 结构化查询语言： 1.结构化查询语句，Structured Query Language，简称SQL,分为如下四大类： （1）数据定义语言(DDL):数据库，数据表的创建，修改和删除 CREATE,ALTER,DROP （2）数据操作语言(DML):数据的增加，修改和删除 INSERT,UPDATE,DELETE （3）数据查询语言(DQL):数据的查询 SELECT （4）数据控制语言(DCL):用户授权，事物的提交和回滚 GRANT,COMMIT,ROLLBACK -- 创建数据库 CREATE DATABASE IF NOT EXISTS lesson DEFAULT CHARACTER SET GBK COLLATE GBK_CHINESE_CI; -- 修改数据库 ALTER DATABASE lesson CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 删除数据库 DROP DATABASE IF EXISTS lesson; -- 查看数据库 SHOW DATABASES; -- 使用数据库 USE lesson; -- 列类型 decimal(m,d) //字符串类型浮点数 m为数据总位数,d为小数点后位数,m-d为整数最大位数(可以小于) (1)数值类型 tinyint smallint mediumint int bigint float double decimal (2)日期时间类型 DATE YYYY-MM-dd ，日期格式 1000-01-01 ~ 9999-12-31 TIME HH:mm:ss ，时间格式 -838:59:59.</description>
+    </item>
+    
+  </channel>
+</rss>

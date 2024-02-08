@@ -6,7 +6,218 @@
     <description>Recent content in Posts on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 11 Dec 2023 22:25:55 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 08 Feb 2024 10:59:30 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>数据库设计</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/</link>
+      <pubDate>Thu, 08 Feb 2024 10:59:30 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1/</guid>
+      <description>-- 1.创建存储过程的语法 CREATE PROCEDURE 存储过程的名称(IN|OUT 参数名1 参数类型1,...,IN|OUT 参数名n 参数类型n) BEGIN END -- 2.创建函数的语法 CREATE FUNCTION 存储过程的名称(参数名1 参数类型1,..., 参数名n 参数类型n) RETURNS 数据类型 -- 函数类型 DETERMINISTIC | NO SQL | READ SQL DATA | CONTAINS SQL BEGIN RETURN 结果; END -- 3.创建触发器的语法 CREATE TRIGGER 触发器名称 BEFORE|AFTER INSERT|UPDATE|DELETE ON 表名 FOR EACH ROW BEGIN END -- 4.创建视图的语法 CREATE OR REPLACE VIEW 视图名称 AS SELECT 语句; 设计数据库 1.什么是实体: 实体就是软件开发过程中所涉及到的事物，通常都是一类数据对象的个体。 2.什么是数据库设计: 数据库设计就是将实体与实体之间的关系进行规划和结构化的过程 3.为什么要进行数据库设计: 当存储的数据比较少的时候，当然不需要对数据库进行设计。 但是，当对数据的需求量越来越大时，对数据库的设计就很有必要性了！ 如果数据库的设计不当，会造成数据冗余、修改复杂、操作数据异常等问题。 而好的数据库设计，则可以减少不必要的数据冗余，通过合理的数据规划提高系统的性能 4.</description>
+    </item>
+    
+    <item>
+      <title>存储过程、函数和触发器</title>
+      <link>https://qingbingwei.github.io/post/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%87%BD%E6%95%B0%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/</link>
+      <pubDate>Thu, 08 Feb 2024 10:58:45 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%87%BD%E6%95%B0%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/</guid>
+      <description>1.查询有哪些分类 1.内连接： 衔接的多表必须保证数据一一对应才可能展示结果 2.左外连接：衔接的主表（LEFT JOIN 左边的表为主表）为准，从表中没有的数据以NULL形式展示 3.右外连接：衔接的主表（RIGHT JOIN 右边的表为主表）为准，从表中没有的数据以NULL形式展示 2.子查询有哪些分类 1.在 SELECT . FROM 之间：执行时机就是查询出结果后执行 2.在 FROM . WHERE 之间：执行时机是一开始就先执行 3.在 WHERE 之后：执行时机是筛选数据时执行 变量: 在MySQL中，变量分为四种类型，即局部变量、用户变量、会话变量和全局变量。 其中局部变量和用户变量在实际应用中使用较多，会话变量和全局变量使用较少，因此作为了解即可。 1.全局变量: MySQL全局变量会影响服务器整体操作，当服务启动时，它将所有全局变量初始化为默认值。 要想更改全局变量，必须具有管理员权限。 其作用域为服务器的整个生命周期。 -- 显示所有的全局变量 SHOW GLOBAL VARIABLES; -- 设置全局变量的值的两种方式 SET GLOBAL sql_warnings = ON; -- GLOBAL不能省略 SET @@GLOBAL.sql_warnings = OFF; -- 查询全局变量的值的两种方式 SELECT @@GLOBAL.sql_warnings; SHOW GLOBAL VARIABLES LIKE &#39;%sql_warnings%&#39;; 2.会话变量: MySQL会话变量是服务器为每个连接的客户端维护的一系列变量。 其作用域仅限于当前连接，因此，会话变量是独立的。 -- 显示所有的会话变量 SHOW SESSION VARIABLES; -- 设置会话变量的值的三种方式 SET SESSION auto_increment_increment = 1; SET @@SESSION.</description>
+    </item>
+    
+    <item>
+      <title>MySQL联表查询</title>
+      <link>https://qingbingwei.github.io/post/mysql%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/</link>
+      <pubDate>Thu, 08 Feb 2024 10:58:15 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/mysql%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/</guid>
+      <description>-- 求字符串的字符数 SELECT CHAR_LENGTH(&#39;abc&#39;); -- 将字符串&amp;quot;超用心&amp;quot;和&amp;quot;在线教育&amp;quot;拼接成新的字符串 SELECT CONCAT(&#39;超用心&#39;,&#39;在线教育&#39;); -- 求&amp;quot;&amp;quot;到现在一共有多少天 SELECT TIMESTAMPDIFF(DAY,&#39;2019-05-04&#39;,NOW()); -- 如果字段score的值大于90，则展示为优秀，否则展示为良好 SELECT IF(score&amp;gt;90,&#39;优秀&#39;,&#39;良好&#39;) FROM stu; 1.表与表之间的关系: 数据库通过主外键关联关系来体现表与表之间的关联关系。 2.主外键关联关系 学生表和班级表并没有任何关系，然而实际上学生和班级是存在归属关系。 可以在学生表中添加一个字段，表名该学生所属班级，该字段值使用的是班级表中的主键，在学生表中称之为外键。 这样学生表中的所属班级（外键）与班级表中的编号（主键）就产生关联关系，这种关联关系称为主外键关联关系。 3.主外键关联关系的定义 DROP TABLE IF EXISTS class; CREATE TABLE class( id INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;班级编号&#39;, name VARCHAR(30) NOT NULL COMMENT &#39;班级名称&#39;, grade VARCHAR(30) NOT NULL COMMENT &#39;年级&#39;, )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;班级表&#39;; DROP TABLE IF EXISTS stu; CREATE TABLE stu( number BIGINT(20) AUTO_INCREMENT NOT NULL COMMENT &#39;学号&#39;, name VARCHAR(30) NOT NULL COMMENT &#39;姓名&#39;, sex VARCHAR(2) NOT NULL DEFAULT &#39;男&#39; COMMENT &#39;性别&#39;, age TINYINT(3) NOT NULL DEFAULT 0 COMMENT &#39;年龄&#39;, class_id INT(11) NOT NULL COMMENT &#39;所属班级&#39;, -- 指定number为主键 PRIMARY KEY(number), -- 指定class_id外键,关联的是class表中id字段 FOREIGN KEY(class_id) REFERENCES class(id) )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;学生表&#39;; 4.</description>
+    </item>
+    
+    <item>
+      <title>MySQL数据库的常用函数</title>
+      <link>https://qingbingwei.github.io/post/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</link>
+      <pubDate>Thu, 08 Feb 2024 10:57:15 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/</guid>
+      <description>-- 创建数据库 CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 使用数据库 USE exercise; -- 创建一个员工表 CREATE TABLE IF NOT EXISTS emp( id BIGINT(20) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;员工编号&#39;, name VARCHAR(20) NOT NULL COMMENT &#39;姓名&#39;, sex VARCHAR(2) DEFAULT &#39;男&#39; COMMENT &#39;性别&#39;, age TINYINT(3) UNSIGNED NOT NULL COMMENT &#39;年龄&#39;, dept VARCHAR(20) NOT NULL COMMENT &#39;所属部门&#39;, salary DOUBLE(10, 2) NOT NULL COMMENT &#39;薪资&#39; )ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;员工表&#39;; -- 插入测试数据 INSERT INTO emp(id, name ,sex, age, dept, salary) VALUES(DEFAULT, &#39;张三&#39;, &#39;男&#39;,22, &#39;研发部&#39;, 13000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;李刚&#39;, &#39;男&#39;, 24, &#39;研发部&#39;,14000); INSERT INTO emp VALUES(DEFAULT, &#39;金凤&#39;, &#39;女&#39;, 23, &#39;财务部&#39;, 8000); INSERT INTO emp(name ,sex, age, dept, salary) VALUES(&#39;肖青&#39;, &#39;女&#39;, 26, &#39;财务部&#39;,9000), (&#39;张华&#39;, &#39;男&#39;, 28, &#39;研发部&#39;, 15000),(&#39;董钰&#39;, &#39;女&#39;, 24, &#39;研发部&#39;, 12000); INSERT INTO emp VALUES(DEFAULT, &#39;吴梅&#39;, &#39;女&#39;, 24, &#39;测试部&#39;, 9000),(DEFAULT, &#39;王玲&#39;,&#39;女&#39;, 26, &#39;测试部&#39;, 9500); -- 吴梅因工作出色而被提升为测试主管，薪资调整为11000 UPDATE emp SET salary=11000 WHERE name=&#39;吴梅&#39;; -- 研发部金凤离职 DELETE FROM emp WHERE name=&#39;金凤&#39;; -- 从员工表中查询出平均年龄小于25的部门 SELECT dept FROM emp GROUP BY dept HAVING AVG(age)&amp;lt;25; -- 从员工表中统计研发部的最高薪资、最低薪资、平均薪资和总薪资 SELECT MAX(salary),MIN(salary),AVG(salary),SUM(salary) FROM emp WHERE dept=&#39;研发部&#39;; -- 从员工表中统计各个部门的员工数量 SELECT dept, COUNT(*) FROM emp GROUP BY dept; -- 从员工表中查询薪资在10000以上的员工信息并按薪资从高到低排列 SELECT * FROM emp WHERE salary&amp;gt;10000 ORDER BY salary DESC; -- 从员工表中分页查询员工信息，每页显示5条员工信息，按薪资从高到低排列，查询第2页员工信息 SELECT * FROM emp ORDER BY salary DESC LIMIT 5,5; --MySQL修改root密码 ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;新密码&#39;; MySQL常用函数: 1.</description>
+    </item>
+    
+    <item>
+      <title>数据库的增删改查</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/</link>
+      <pubDate>Thu, 08 Feb 2024 10:56:40 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5/</guid>
+      <description>-- 创建数据库 CREATE DATABASE IF NOT EXISTS exercise DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 使用数据库 USE exercise; -- 创建数据表 CREATE TABLE IF NOT EXISTS stu_course( `number` INT(11) AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT &#39;课程编号&#39;, name VARCHAR(20) NOT NULL COMMENT &#39;课程名称&#39;, score DOUBLE(5,2) NOT NULL COMMENT &#39;学分&#39; ) ENGINE=InnoDB CHARSET=UTF8 COMMENT=&#39;课程表&#39;; -- 修改数据表 ALTER TABLE stu_course RENAME AS course; -- 增加字段 ALTER TABLE course ADD `time` INT(3) NOT NULL COMMENT &#39;学时&#39;; -- 修改字段 ALTER TABLE course MODIFY score DOUBLE(3,1) NOT NULL COMMENT &#39;学分&#39;; DML语句（Data Mainpulation Language）:数据操作语言，对数据操作，而非数据表 INSERT语句 -- 需要注意，VALUES后的字段值必须与表名后的字段名一一对应 INSERT INTO 表名(字段名1,字段名2.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 归并和计数排序</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%BD%92%E5%B9%B6%E5%92%8C%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Sun, 04 Feb 2024 17:45:25 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%BD%92%E5%B9%B6%E5%92%8C%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F/</guid>
+      <description>1.2-路归并排序：先将所有的数据完全分开，然后两两合并，在合并过程中将其排好序，最终得到一个完整的有序表。 时间复杂度：O(nlogn) 是否稳定：稳定 为非就地排序 2.基于统计的排序 1.计数排序：统计一下每个数出现的次数，然后直接按次数输出 //以空间换时间 时间复杂度：O(n) 是否稳定：稳定 缺点： 1.无法对负整数和浮点数排序 优化：引入偏移量便可以对负整数进行排序 对浮点数全部乘以10^n,便可以对浮点数排序 2.极其浪费空间内存 2.桶排序:桶编号规则人为确定，可以n/10，也可以n/100,将数据放入桶后，对每个桶进行排序 //以空间换时间 时间复杂度：O(nlogn) 3.基数排序：类似于将桶排序与计数排序结合，从待排序数组当中，元素的最低有效位到最⾼有效位,逐位进⾏⽐较排序；此外，基数排序使⽤计数排序作为⼀个排序的⼦过程。 时间复杂度:O(n * log以b为底n),b为进制数 为非就地排序 #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;vector&amp;gt; using namespace std; //将区间[left,mid][mid+1,right]数据合并 void Merge(vector&amp;lt;int&amp;gt;(&amp;amp;v), int left, int mid, int right) { int i(left); int j(mid + 1); //临时存储 vector&amp;lt;int&amp;gt; v2(v); int k(0); while (i &amp;lt;= mid &amp;amp;&amp;amp; j &amp;lt;= right) { if (v[i] &amp;lt;= v[j]) { v2[k] = v[i]; ++i; ++k; } else { v2[k] = v[j]; ++j; ++k; } } while (i &amp;lt;= mid) { v2[k] = v[i]; ++i; ++k; } while (j &amp;lt;= right) { v2[k] = v[j]; ++j; ++k; } for (int q = 0; q &amp;lt; k; ++q) { v[left + q] = v2[q]; } } //将区间[left,right]数据二分 void Merge_Sort(vector&amp;lt;int&amp;gt;(&amp;amp;v),int left,int right) { //元素大于等于两个 if (left &amp;lt; right) { int mid((left + right) / 2); //left---mid Merge_Sort(v, left, mid); //mid + 1---right Merge_Sort(v, mid + 1, right); //合并函数,mid为合并的位置 Merge(v, left, mid, right); } } void Count_Sort(vector&amp;lt;int&amp;gt;(&amp;amp;v)) { vector&amp;lt;int&amp;gt; count; int max(-1); for (auto a : v) { if (a &amp;gt; max) { max = a; } } count.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 选择排序和堆排序</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E5%92%8C%E5%A0%86%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Fri, 02 Feb 2024 19:58:39 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E5%92%8C%E5%A0%86%E6%8E%92%E5%BA%8F/</guid>
+      <description>选择：每次选出一个合法（最大/最小）的数据放到其最终应该在的位置 1.（简单）选择排序：每趟从待排序区中，选择一个最小的数，放到待排序区的第一个位置，从而实现升序排列。 时间复杂度：O(n^2) 是否稳定：不稳定 为就地排序 2.对选择排序进行优化----&amp;gt;堆排序 对于一棵完全二叉树，进行编号，编号规则为：根节点为1，然后从上到下，从左到右。除根节点外，节点i的父亲节点编号为i/2(向下取整)。除叶子节点外，节点i的左孩子节点编号为2*i，右节点为2*i+1（可直接用数组存储） 堆(Heap):是一类基于完全二叉树的特殊数据结构 1.大顶堆：在大顶堆中，根节点的值必须大于等于其孩子节点的值，且所有子树均满足 2.小顶堆：在小顶堆中，根节点的值必须小于等于其孩子节点的值，且所有子树均满足 1.建堆：用一个数组保存 （1）自我初始化：在原数组基础上进行初始化 从子树入手，由小及大去调整每棵子树（不包含叶子节点）： 对于每棵子树，我们向下调整： 让根节点和其左右孩子作比较，最小值和根节点交换，继续向下调整子树 （2）通过插入建堆 数组中每多一个数据就调整一次，新插入的数据放在最后，如果其比父亲大或者新插入的数据是根节点就不用调整，否则就向上调整 堆排序： （1）建堆 （2）循环n次，每次输出最小数----&amp;gt;a[0] （3）删掉a[0]----&amp;gt;让堆中最后一个节点替换a[0],然后重新对a[0]向下调整 时间复杂度：O(nlogn) 是否稳定：不稳定 为就地排序 堆的应用： 1.优先队列：基于堆 2.1亿个数，选出前一百个最大的数，不能使用大顶堆，使用小顶堆 a[100]---&amp;gt;堆 先读入100个数，建立小顶堆 接下来，当读入一个数x时，如果x&amp;lt;=a[0],直接读入下一个数 否则a[0]=x,向下调整小顶堆 最后留下来的小顶堆就是答案 #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;vector&amp;gt; using namespace std; //i为根节点下标 void Down_Adjust(vector&amp;lt;int&amp;gt;(&amp;amp;v), int i,int size) { int parent(i);//根节点下标 int l_child(2 * i);//左孩子下标 int tmp(0); //因为调整后可能子树不再是小顶堆，所以循环向下调整 while (parent * 2 &amp;lt;= size) { l_child = 2 * parent; if (l_child + 1 &amp;lt;= size &amp;amp;&amp;amp; v[l_child + 1] &amp;lt; v[l_child]) { l_child = l_child + 1; } //此时，l_child是值较小的孩子 if (v[parent] &amp;lt; v[l_child]) { break; } else { tmp = v[l_child]; v[l_child] = v[parent]; v[parent] = tmp; parent = l_child; } } } void Up_Adjust(vector&amp;lt;int&amp;gt;(&amp;amp;v),int i) { int tmp(0); int child(i); int parent(0); //不是根节点就继续调整 while (child &amp;gt; 1) { parent = child / 2; if (v[parent] &amp;lt; v[child]) { break; } else { tmp = v[parent]; v[parent] = v[child]; v[child] = tmp; child = parent; } } } void Heap_Sort(vector&amp;lt;int&amp;gt;(&amp;amp;v)) { //1.</description>
+    </item>
+    
+    <item>
+      <title>数据库</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+      <pubDate>Fri, 02 Feb 2024 12:15:50 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93/</guid>
+      <description>数据库类型： 1.关系型数据库:MySQL，Oracle，SQL Server,SQLite，DB2 2.非关系型数据库:Redis，MongoDB 数据库管理系统:Database Management System(DBMS): 主要用于科学组织和存储数据，高效获取和维护数据(如Navicat) 结构化查询语言： 1.结构化查询语句，Structured Query Language，简称SQL,分为如下四大类： （1）数据定义语言(DDL):数据库，数据表的创建，修改和删除 CREATE,ALTER,DROP （2）数据操作语言(DML):数据的增加，修改和删除 INSERT,UPDATE,DELETE （3）数据查询语言(DQL):数据的查询 SELECT （4）数据控制语言(DCL):用户授权，事物的提交和回滚 GRANT,COMMIT,ROLLBACK -- 创建数据库 CREATE DATABASE IF NOT EXISTS lesson DEFAULT CHARACTER SET GBK COLLATE GBK_CHINESE_CI; -- 修改数据库 ALTER DATABASE lesson CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 删除数据库 DROP DATABASE IF EXISTS lesson; -- 查看数据库 SHOW DATABASES; -- 使用数据库 USE lesson; -- 列类型 decimal(m,d) //字符串类型浮点数 m为数据总位数,d为小数点后位数,m-d为整数最大位数(可以小于) (1)数值类型 tinyint smallint mediumint int bigint float double decimal (2)日期时间类型 DATE YYYY-MM-dd ，日期格式 1000-01-01 ~ 9999-12-31 TIME HH:mm:ss ，时间格式 -838:59:59.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 冒泡排序和快速排序</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Wed, 31 Jan 2024 11:42:51 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F%E5%92%8C%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/</guid>
+      <description>交换：根据数据之间的比较，把每个数据都放在自己应该的位置 （1）冒泡排序：通过不断的比较两个相邻的元素，若这两个元素是乱序的，则交换位置。从而实现每趟都把最大的数据交换到最后面 时间复杂度：O(n^2) 是否稳定：稳定 为就地排序 （2）快速排序：首先选定一个基准数（比较的标准），把比基准数x小的数据放在x前面，比基准数x大的数据放在后面。排好一趟后，x把序列划分为了两部分，这两部分还都是乱序的，再分别对这两部分进行快速排序。//递归 选择基准数（排序区间[l.r]）:理论上谁都可以 (1)选择排序区间第一个 a[l]----为例 1.两个下标i=l,j=r;相对遍历 2.先用j找一个比x小的数，放在i位置，i++ 3.再用i找一个比x大的数，放在j位置，j-- 4.不断循环，直到i==j为止，此时i/j位置就是x的位置 5.然后再对x前后两个区域进行递归调用 (2)选择排序区间最后一个 a[r] (3)选择排序区间中间位置 a[(l+r)/2] 时间复杂度：O(nlogn) 是否稳定：不稳定 为就地排序 #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;vector&amp;gt; using namespace std; //left和right分别为排序区间范围 void Quick_Sort(vector&amp;lt;int&amp;gt;(&amp;amp;v), int left, int right) { int i(left); int j(right); //递归出口,即排序区间只有一个元素时不进行排序 if (left &amp;lt; right) { int x(v[i]); //排序 while (i &amp;lt; j) { while (i &amp;lt; j &amp;amp;&amp;amp; v[j] &amp;gt; x) { j--; } if (i &amp;lt; j) { v[i] = v[j]; i++; } while (i &amp;lt; j &amp;amp;&amp;amp; v[i] &amp;lt; x) { i++; } if (i &amp;lt; j) { v[j] = v[i]; j--; } } v[i] = x; //递归调用，以v[i] = x为基准 Quick_Sort(v, left, i - 1); Quick_Sort(v, i + 1, right); } //选取区间第一个作为基准数 } void Quick_Sort_2(vector&amp;lt;int&amp;gt;(&amp;amp;v),int left,int right) { int i(left); int j(right); //递归出口,即排序区间只有一个元素时不进行排序 if (left &amp;lt; right) { int x(v[j]); //排序 while (i &amp;lt; j) { while (i &amp;lt; j &amp;amp;&amp;amp; v[i] &amp;lt; x) { i++; } if (i &amp;lt; j) { v[j] = v[i]; j--; } while (i &amp;lt; j &amp;amp;&amp;amp; v[j] &amp;gt; x) { j--; } if (i &amp;lt; j) { v[i] = v[j]; i++; } } v[i] = x; //递归调用，以v[i] = x为基准 Quick_Sort(v,left,i-1); Quick_Sort(v,i+1,right); } //选取区间最后一个作为基准数 } void Bubble_Sort(vector&amp;lt;int&amp;gt;(&amp;amp;v)) { int tmp(0); //枚举趟数 for (int i = 0; i &amp;lt; v.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 插入排序</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Mon, 29 Jan 2024 22:00:10 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/</guid>
+      <description>排序：基本概念 1.基于插入： （1）直接插入排序 （2）希尔（shell）排序算法 2.基于交换： （1）冒泡排序 （2）快速排序 3.基于选择： （1）简单选择排序 （2）堆排序 4.其他： （1）归并排序 （2）基于计数的排序 如何判断排序好坏： 1.就地排序/非就地排序（反映空间复杂度） （1）如果在排序过程中，只使用到了存储数据的空间，没有使用其他额外空间，称为是就地排序 2.内部排序/外部排序 （1）待排序数据能够一次性放到内存中----&amp;gt;内部排序 （2）待排序数据不能够一次性放到内存中----&amp;gt;外部排序 注：目前只有归并排序是外部排序 3.稳定排序/不稳定排序 （1）排序前后相同数据的相对位置没有发生变化----&amp;gt;稳定的 （2）排序前后相同数据的相对位置发生变化----&amp;gt;不稳定的 4.时间复杂度 （1）直接插入排序：在添加新的数据时，我们使用顺序查找（遍历）的方式，找到其要插入的位置，将其插入 //（将数据分为有序区与待排序区，基本所有排序算法都会将数据分为这两个区域） 时间复杂度：O(n^2) 注：第一版代码不稳定，略加优化后稳定，时间复杂度不变 是否稳定：稳定 为就地排序 -折半插入排序 //优化：将直接插入排序中顺序查找换成二分查找，时间复杂度不变，为稳定排序 -2路插入排序 //优化：在折半插入排序基础上，引入一个循环数组，将排序过程中移动次数减少，时间复杂度不变，为非就地排序 注：在使用直接插入排序时，如果表中记录只有个别是无序的，多数保持有序，这种情况下算法的效率也会比较高，此外，如果需要排序数据总量较少，算法效率同样会很高。下述希尔排序便是基于这两点进行改进。 （2）希尔（shell）排序算法（缩小增量排序算法）：在直接插入排序算法的基础上，对待排序数据进行分组，先对每组进行排序，然后不断缩小组数，不断排序，最终缩小为一组。 分组：分成组数与数据下标增量相同，如0--3四个数据，分为0 2，1 3 增量的选择：对n个数据进行排序，依次分为 n/2，n/4，n/8...1组 ----&amp;gt;希尔增量序列 时间复杂度：最坏为O(n^2) 是否稳定：不稳定 为就地排序 //上述为取希尔增量序列时的情况 注：直接插入排序就是增量为一的希尔排序 #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;vector&amp;gt; using namespace std; //直接插入排序（不稳定） void Insert_Sort(vector&amp;lt;int&amp;gt;(&amp;amp;v)) { //保存待排序数据 int tmp(0); //保存待排序数据应该所处位置下标 int ind(0); //第一趟可以不排 for (int i = 1; i &amp;lt; v.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 关键路径</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84/</link>
+      <pubDate>Mon, 29 Jan 2024 20:36:40 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%85%B3%E9%94%AE%E8%B7%AF%E5%BE%84/</guid>
+      <description>AOV网：在DAG中，用顶点表示活动，用弧表示活动之间的优先关系的有向图称为顶点表示活动的网----&amp;gt;工程中小项目次序 AOE网：在DAG中，用顶点表示事件，用带权有向边表示活动，边权表示活动持续时间 ----&amp;gt;工程中小项目次序，每个小项目多久做完，整个工程多久做完 事件：刹那间发生的一件事情 活动：一个完整流程，可能由很多事件组成，有开始和结束 关键路径：整个项目工程中，耗时最长的路径称为关键路径，关键路径上的活动称为关键活动。----&amp;gt;注：关键路径不唯一，我们需要关注所有关键路径 关键路径：从起点到终点，最长的路径（们），由关键活动组成。 关键活动：最早开始时间 == 最晚开始时间 ETE == LTE 非关键活动：最早开始时间 != 最晚开始时间 ETE != LTE （1）事件最早发生时间（ETV） 1.起点事件start最早发生时间 == 0 ETV[start] == 0 2.其余事件的最早发生时间基于拓扑序列去算 ETV[j] = max(ETV[j],ETV[i]+wi) i------&amp;gt;j （2）事件最晚发生时间（LTV） 1.终点事件end的最晚发生时间 LTV[end] = ETV[end] (若未给出的话则按左式计算) 2.其余事件最晚发生时间基于逆拓扑序列计算 LTV[i] = min(LTV[i],LTV[j]-wj) i------&amp;gt;j 3.起点事件start最晚发生时间 == 0 LTV[start] == 0 == ETV[start] （3）活动最早开始时间（ETE/ES） 1.ETE==该边起点事件的ETV ETE = ETV[i] （4）活动最晚开始时间（LTE/LS） 注：保证终点事件在DDL之前按时发生 1.LTE==该边终点事件LTV - 该边权值 注：终点事件最早发生时间就是工程完成时间 时间复杂度：O(n+m) 注：n为点数，m为边数 #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; //引入一个栈，用于保存所有入度为零的的点的下标 class Stack_Node { public: int data; Stack_Node* next; }; class m_stack { public: Stack_Node* head; public: m_stack() { head = new Stack_Node; if (head == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { head-&amp;gt;next = nullptr; } } void m_push(int k) { Stack_Node* p = new Stack_Node; p-&amp;gt;data = k; p-&amp;gt;next = head-&amp;gt;next; head-&amp;gt;next = p; } int m_pop() { if (head-&amp;gt;next == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;栈空&amp;quot; &amp;lt;&amp;lt; endl; return -1; } Stack_Node* p = head-&amp;gt;next; int ret = p-&amp;gt;data; head-&amp;gt;next = p-&amp;gt;next; delete p; p = nullptr; return ret; } }; class List_Node { public: int data; int wi;//权值 List_Node* next; }; class Graph_Node { public: char vi; List_Node* first; }; class Graph { public: int size1;//点的个数 int size2;//边的个数 Graph_Node* g;//邻接表 int* ind;//入度数组 int* topo;//拓扑序列,改为记录下标便于计算 int* etv;//事件最早发生时间 int* ltv;//事件最晚发生时间 public: Graph(int sz1,int sz2):size1(sz1),size2(sz2) { g = new Graph_Node[sz1]; ind = new int[sz1]; topo = new int[sz1]; etv = new int[sz1]; ltv = new int[sz1]; if (g == nullptr || ind == nullptr || topo == nullptr|| etv == nullptr || ltv == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { //初始化点 for (int i = 0; i &amp;lt; sz1; ++i) { cin &amp;gt;&amp;gt; g[i].</description>
+    </item>
+    
+    <item>
+      <title>数据结构 拓扑排序</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</link>
+      <pubDate>Sat, 27 Jan 2024 20:09:41 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</guid>
+      <description>注：有向无环图（DAG图） AOV网：用顶点表示活动，用弧表示活动之间的优先关系的有向图称为顶点表示活动的网 注：AOV网一定是有向无环图 拓扑序列：对于一个有n个顶点的有向图，顶点序列v1,v2...vn若满足从顶点vi到vj有一条路径，则顶点序列中vi必在vj之前，这样的一个顶点序列为一个拓扑序列 拓扑排序：对一个有向无环图构造拓扑排序的过程（同时还可以判断图内部是否成环） 1.在有向图中选一个没有前驱的顶点并输出 2.从图中删除该顶点和所有以他为尾的弧 重复上述两步，直至全部顶点均已输出，或者当前图不存在无前驱的顶点为止，后一种情况说明有向图中存在环 应用：拓扑序列，关键路径 #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; //引入一个栈，用于保存所有入度为零的的点的下标 class Stack_Node { public: int data; Stack_Node* next; }; class m_Stack { public: Stack_Node* head; public: m_Stack() { head = new Stack_Node; if (head == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { head-&amp;gt;next = nullptr; } } void m_push(int k) { Stack_Node* s = new Stack_Node; s-&amp;gt;data = k; s-&amp;gt;next = head-&amp;gt;next; head-&amp;gt;next = s; } int m_pop() { if (head-&amp;gt;next == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;栈空&amp;quot; &amp;lt;&amp;lt; endl; return -1; } else { int ret(0); Stack_Node* p = head-&amp;gt;next; head-&amp;gt;next = p-&amp;gt;next; ret = p-&amp;gt;data; delete p; p = nullptr; return ret; } } }; //邻接表存有向图 class List_Node { public: int data;//邻接点下标 List_Node* next; }; class Graph_Node { public: char data;//顶点编号 List_Node* first;//出边链表头指针 }; class Graph { public: int size1;//点的个数 int size2;//边的个数 Graph_Node* g;//邻接表 int* ind;//入度数组 char* topo;//拓扑序列 public: Graph(int sz1,int sz2):size1(sz1),size2(sz2) { g = new Graph_Node[sz1]; ind = new int[sz1]; topo = new char[sz1]; if (g == nullptr || ind == nullptr || topo == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { //初始化点 for (int i = 0; i &amp;lt; sz1; ++i) { cin &amp;gt;&amp;gt; g[i].</description>
+    </item>
+    
+    <item>
+      <title>数据结构 最短路径</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</link>
+      <pubDate>Sat, 27 Jan 2024 10:19:17 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</guid>
+      <description>注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&amp;gt;贪心 多源最短路径算法 2.Floyd算法----&amp;gt;动态规划 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { for (int i = 0; i &amp;lt; sz1; ++i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } } //初始化 for (int i = 0; i &amp;lt; sz1; ++i) { for (int j = 0; j &amp;lt; sz1; ++j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &amp;lt; sz2; ++i) { cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y &amp;gt;&amp;gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &amp;gt;&amp;gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &amp;lt; size1; ++i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &amp;lt; size1 - 1; ++i) { min_n = 999999; for (int j = 0; j &amp;lt; size1; ++j) { if (visit[j] == false &amp;amp;&amp;amp; dist[j] &amp;lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &amp;lt; size1; ++j) { if (visit[j] == false &amp;amp;&amp;amp; dist[j] &amp;gt; (dist[k] + graph[k][j])) { dist[j] = dist[k] + graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 最小生成树</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/</link>
+      <pubDate>Wed, 24 Jan 2024 16:32:01 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/</guid>
+      <description>生成树：一个连通图的生成树时一个极小连通子图，包含n个顶点，但只有构成一棵树的n-1条边 注：包含n个顶点的无向完全图最多包含n^(n-2)棵生成树 注：只有无向图才有生成树（且必须为连通图），有向图对应概念为树型生成图 生成树的属性： 1.一个连通图可以有多个生成树 2.一个连通图的所有生成树都包含相同的顶点个数和边数 3.生成树当中不存在环 4.移除生成树中的任意一条边都会导致图的不连通 5.在生成树中添加一条边会构成环 6.对于包含n个顶点的连通图，生成树包含n个顶点和n-1条边 7.对于包含n个顶点的无向完全图最多包含包含n^(n-2)棵生成树 最小生成树：一个带权图的生成树，该生成树边权之和最小，则称该生成树为最小生成树 注：只有无向连通带权图才有最小生成树，且最小生成树不一定唯一 1.Kruskal算法----&amp;gt;从边出发 //基于贪心和并查集 1.选择权值尽可能小的n-1条边----&amp;gt;排序：选择排序算法 2.选边时，选的每一条边都得是连接未连通的两个节点才行，否则成环---&amp;gt;通过并查集判断一条边的两个点是否属于同一个集合，若不属于，则该边可选，并合并两个不同集合 时间复杂度：主要分为两块 选择排序O(m^2)+并查集O(m)----&amp;gt;O(m^2) 注：即Kruskal算法时间复杂度取决于排序算法时间复杂度，比如使用快速排序将会变为mlogm （m为边的数目） 2.Prim算法-----&amp;gt;从点出发 //基于贪心 点到生成树的距离dist： 1.已经在生成树中的点：0 2.不在生成树中的点：该点与生成树中任意若干点直接相连，其每条连接边对应的权值就是dist 注：不考虑间接相连，间接相连dist视为无穷大 点分为两类： 1.已经选中的点，已经构成一部分生成树 2.还未选中的点 选择n次： 第一次：任意选择一个点 接下来n-1一次：选则第二类中点，该点dist最小，同时通过选中的点更新与其相连的点到生成树的dist 思路： 维护一个点到生成树的最小距离dist[],初始化为无穷大 维护一个标记数组visit[] 1.任选一个点作为起点，把起点x加入到生成树中：visit[x]=1,dist[x]=0 2.更新x邻接点到生成树最小距离 3.执行n-1次循环（1）找到visit[]==0且dist[]最小的点下（2）把起点x加入到生成树中：visit[x]=1,dist[x]=0 (3)更新x邻接点到生成树最小距离 时间复杂度：O(n^2) 注：n为点的个数 注：点多边多（稠密图）Prim算法，点多边少（稀疏图）Kruskal算法 Kruskal算法: #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; //并查集 class Tree_Node { public: int fi; int data;//注：本图所有点编号与其下标对应 }; class Tree { public: Tree_Node* pN; int size; public: Tree(int sz) :size(sz) { pN = new Tree_Node[size]; for (int i = 0; i &amp;lt; size; ++i) { pN[i].</description>
+    </item>
+    
+    <item>
+      <title>数据结构 图</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9B%BE/</link>
+      <pubDate>Wed, 27 Dec 2023 19:57:55 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9B%BE/</guid>
+      <description>图的概念： 逻辑结构：多对多 graph 图 g vertex 顶点 v edge 边\弧 e 图G是由两个集合V和E构成，G = (V,E),其中V是顶点的有限非空集合，E是V中顶点偶对的有限集，这些顶点偶对称为边（弧） 重边：两个顶点不只有一条边 自边：顶点自身形成一条边 图的分类： 不同的维度： 1.方向性：有向图和无向图 2.环：带环图和无环图 //环：从一个点x出发，沿着边走，最终可以回到x 注：有向无环图（DAG） 3.边权：无权图 带权图 图的基本术语： 1.简单图：若不存在顶点到自身的边，且同一条边不重复出现，则称这样的图为简单图 2.无向图：在图中，如果代表边的顶点偶对是无序的，则为无向图 3.有向图：在图中，如果代表边的顶点偶对是有序的，则为有向图 //有向边（弧） //起点：弧尾 //终点：弧头 //注：无向图可以看成有向图 4.完全图：图中每两个顶点都有一条边 //完全有向图：n（n-1）条边 //完全无向图：n（n-1）/2条边 5.端点，邻接点； 端点：边的两个顶点 邻接点：上述两个顶点互为邻接点 6.顶点的度，入度和出度 //对于无向图而言 度：该点所连的边数 //对于有向图而言 入度；入边的个数 出度：出边的个数 度：出度+入度（一定为偶数） 7.子集：与子树类似 8.路径，路径长度： 路径：顶点序列 路径长度：边的数目 简单路径：一条路径上除开始点和结束点可以相同外，其余顶点均不相同（路径中不含环） 9.回路，环 欧拉环路：经过图中各边一次且恰好一次的环路 哈密尔顿环路：经过图中各顶点一次且恰好一次的环路 10.连通，连通图和连通分量（针对无向图） 1.连通：如果顶点x和y之间存在可以相互抵达的路径，则称两个顶点连通 2.连通图：图中任意两个顶点都连通 3.连通分量：无向图中的极大连通子图称为图的连通分量 注：连通图只有一个极大连通子图（自身） 非连通图有多个极大连通子图 注:极大连通子图（连通分量） 极小连通子图（图的生成树）：在保证各点连通的情况下，边最少 11.强连通图和强连通分量（针对有向图，含义同上） 12.稠密图和稀疏图 一个图接近完全图时，称为稠密图，当一个图含有较少边数时，称为稀疏图，一般以nlogn作为分界线（n为节点个数） 13.权和网 边上带有权的图称为带权图，也称之为网 //注：自边权值看作零，两个点之间没有连接权值看作无穷大 14.连通图的生成树（针对无向图） 连通图的生成树是一个极小的连通子图 图的存储： 1.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 时间复杂度</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</link>
+      <pubDate>Wed, 27 Dec 2023 19:57:28 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>数据结构 树,二叉树和森林的转换</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E6%A3%AE%E6%9E%97%E7%9A%84%E8%BD%AC%E6%8D%A2/</link>
+      <pubDate>Wed, 20 Dec 2023 19:41:57 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%A0%91%E4%BA%8C%E5%8F%89%E6%A0%91%E5%92%8C%E6%A3%AE%E6%9E%97%E7%9A%84%E8%BD%AC%E6%8D%A2/</guid>
+      <description>扩展补充一下树,二叉树和森林的转换
+1.普通树转换为二叉树 1.加线，在所有兄弟节点之间加一条连线 2.断线，只保留每个节点第一个孩子（从左到右）
+2.二叉树转换为普通树 上述过程的逆过程
+3.森林转换为二叉树 1.先把森林中每棵树转换为二叉树 2.加线，第一棵二叉树不动，从第二棵树开始，依次把后一棵二叉树根节点作为前一棵二叉树的根节点的右孩子
+4.二叉树转换为森林 上述过程逆过程
+注：如何判断一棵二叉树是由森林还是普通的树转换而来呢？ 根据二叉树根节点是否有右孩子来判断： 1.由普通树转换而来没有右孩子 2.由森林转换而来的有右孩子</description>
+    </item>
+    
+    <item>
+      <title>数据结构 哈夫曼树</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91/</link>
+      <pubDate>Wed, 20 Dec 2023 16:49:51 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91/</guid>
+      <description>1.节点i的路径长度：从根节点到节点i的路径上所经过边数
+2.树的路径长度：所有节点的路径长度之和
+内部路径长度：所有内部节点路径长度之和
+外部路径长度（有时会把树的路径长度当作外部路径长度）：所有叶子节点路径长度之和
+3.节点i的带权路径长度：节点i的路径长度*节点i权值
+4.树的带权路径长度（WPL）：所有叶子节点的带权路径长度之和
+给出n个节点（都带有权值），可以再自行加入若干节点（不确定），用这n个节点全部做叶子节点，自行加入的节点做内部节点去建立一棵二叉树，其中WPL最小的一棵二叉树称为哈夫曼树（最优二叉树）
+注：哈夫曼树WPL的值唯一
+但WPL的值最小的哈夫曼树不唯一
+如何构建哈夫曼树？
+给定n个节点（带权值且只做叶子节点）
+1.一开始认为n个节点为n棵树
+2.每次找根节点权值最小的两棵树（x，y），再新加入一个节点z做x和y的父亲，新的根节点权值为（x，y），此时将x，y两棵树合并出一棵新树，这棵树的根节点为z
+哈夫曼树应用：通过编码进行数据压缩
+哈夫曼编码&amp;mdash;&amp;gt;变长编码，压缩空间
+定长编码：ASCII编码（8bit），Unicode编码（16bit）
+缺陷：浪费空间
+变长编码：比定长编码省空间
+可以使用哈夫曼树来构造变长编码&amp;mdash;&amp;gt;哈夫曼编码
+1.先统计一条消息中n个字符分别出现频率&amp;mdash;&amp;gt;节点权值
+2.构造哈夫曼树
+3.标上1和0
+注：哈夫曼树WPL值即为信息编码所占bit位数
+注：变长编码中遵循前缀属性原则（短的编码不能是长编码的前缀，避免二义性）
+哈夫曼编码树实现：
+1.建立哈夫曼树：把每个字符的频率看作节点的权值，建立哈夫曼树，通过结构体数组模拟存储
+节点：权值，父亲的下标，左右孩子节点的下标
+（1）查找最小的两个根节点 （2）合并，加入一个新的根节点 注：n个叶子节点，总共有2*n-1个节点
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;cstring&amp;gt; using namespace std; class Node { public: int w;//权值 int fi;//父亲节点坐标 int left;//左右孩子节点下标 int right; }; class HFM_Tree { public: int size;//节点个数 Node* tree;//指针模拟开数组 public: HFM_Tree(int w_arr[], int sz) :size(2 * sz - 1) { tree = new Node[size]; if (tree == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { //初始化哈夫曼树（从下标为零开始存储） for (int i = 0; i &amp;lt; size; ++i) { tree[i].</description>
+    </item>
+    
+    <item>
+      <title>数据结构 并查集</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%B9%B6%E6%9F%A5%E9%9B%86/</link>
+      <pubDate>Wed, 20 Dec 2023 16:28:15 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%B9%B6%E6%9F%A5%E9%9B%86/</guid>
+      <description>今天学习并查集，一种常用的树的算法，之后还会学习哈夫曼树
+并查集：利用树型结构来处理一些不相交的集合的合并和查询问题
+合并两个集合（两棵树）：只需要合并两棵树的根节点，先找到各自的根节点，把根节点设立父子关系即可
+查询两个节点是否在同一个集合（树）：只需要找到两个节点的根节点，看根节点是否相同
+并查集用树型结构实现：双亲表示法
+并查集算法优化：路径压缩（递归实现）
+例题：洛谷p1551&amp;mdash;亲戚
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; class Tree_Node { public: int fi; int data; public: }; class Tree { public: int size; Tree_Node* pN; public: Tree(int sz):size(sz) { pN = new Tree_Node[sz]; for (int i = 0; i &amp;lt; sz; ++i) { pN[i].fi = pN[i].data = i + 1; } } int Find_fi(int k)//找祖先 { while (pN[k - 1].fi != k) { k = pN[k - 1].</description>
+    </item>
+    
     <item>
       <title>数据结构 平衡二叉树</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/</link>
@@ -57,18 +268,7 @@
 存储结构:
 存一棵树：1.节点数据 2.数据之间的关系&amp;ndash;父子
 1.双亲(父亲)表示法：方便找父亲，不方便找孩子 1.顺序存储方式存数据：&amp;ndash;数组 2.在存数据的同时，把每个数据的父亲所在下标存一下
-2.孩子表示法： 1.顺序存储方式存数据：&amp;ndash;数组 2.链表来存每个节点孩子的数据
-3.孩子兄弟表示法&amp;mdash;二叉链表
-二叉树
-两种特殊二叉树 1.满二叉树：深度为k，并且节点个数为(2^k)-1的二叉树 2.完全二叉树；对满二叉树，从下向上，从右向左依次删掉若干个节点，剩下的树就是完全二叉树 性质：默认根节点是第一层 1.在二叉树的第i层，最多有2^(i - 1)个节点
-2.深度为k的二叉树，最多有(2^k)-1个节点（等比求和）
-3.在一棵二叉树中，叶子节点的数目比度为2的节点数目多一个
-4.具有n个节点的完全二叉树的深/高度为(logn) + 1, 其中logn向下取整
-5.对于一棵完全二叉树，进行编号，编号规则为：根节点为1，然后从上到下，从左到右。除根节点外，节点i的父亲节点编号为i/2(向下取整)。除叶子节点外，节点i的左孩子节点编号为2i，右节点为2i+1
-补充性质：任何一棵二叉树都可以加NULL节点，从而补成一棵满(或完全)二叉树(结合性质5得到一个存二叉树的方式&amp;ndash;顺序存储，基于数组)
-二叉树的操作 1.建树--插入数据 2.遍历（两类四种）：沿着某条路径，对树中的节点都遍历一次且仅遍历一次。 1.层次遍历--广度优先遍历 遍历顺序：从上往下，依次输出每一层节点（左-&amp;gt;右） 2.深度优先遍历：先序遍历(根，左，右)，中序遍历(左，根，右)，后序遍历(左，右，根) 3.线索化 背景： 1.n个节点二叉树，以二叉链表存储，一共2n个指针域，n-1个真正存储了指针，n+1为空，极大浪费空间 2.某一节点的中序遍历序列的前驱与后继是谁 3.如何快速得到某节点中序遍历序列中的前驱与后继 具体操作： 1.如果一个节点其左孩子指针域为空，那么将该指针域指向其前驱节点 2.如果一个节点其右孩子指针域为空，那么将该指针域指向其后继节点 历时两周，终于把二叉树学习完了，不过这只是开始，紧接着来到的是排序二叉树，二叉平衡树&amp;hellip;&amp;hellip;
-二叉树具体实现如下（包括了广度遍历，深度遍历（递归与非递归实现），线索化，查找中序遍历前驱与后继等操作）
-#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; //链栈，用于实现非递归深度优先遍历 template&amp;lt;class T&amp;gt; class stack_Node { public: T data; stack_Node&amp;lt;T&amp;gt;* next; }; template&amp;lt;class T&amp;gt; class m_stack { public: stack_Node&amp;lt;T&amp;gt;* head; public: m_stack() { head = new stack_Node&amp;lt;T&amp;gt;; if (head == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { head-&amp;gt;next = nullptr; } } void m_push(T k) { stack_Node&amp;lt;T&amp;gt;* s = new stack_Node&amp;lt;T&amp;gt;; s-&amp;gt;next = head-&amp;gt;next; s-&amp;gt;data = k; head-&amp;gt;next = s; } T m_pop() { if (m_empty()) { cout &amp;lt;&amp;lt; &amp;quot;栈空&amp;quot; &amp;lt;&amp;lt; endl; } else { //p指向要删除的首元节点 stack_Node&amp;lt;T&amp;gt;* p = head-&amp;gt;next; T k = p-&amp;gt;data; head-&amp;gt;next = p-&amp;gt;next; delete p; p = nullptr; return k; } } bool m_empty() { if (head-&amp;gt;next == nullptr) return true; else return false; } void get_top() { if (m_empty()) { cout &amp;lt;&amp;lt; &amp;quot;栈空&amp;quot; &amp;lt;&amp;lt; endl; } else { cout &amp;lt;&amp;lt; head-&amp;gt;next-&amp;gt;data &amp;lt;&amp;lt; endl; } } }; //链式队列，用于实现广度优先遍历 template&amp;lt;class T&amp;gt; class q_Node { public: T data; q_Node&amp;lt;T&amp;gt;* next; }; template&amp;lt;class T&amp;gt; class Link_queue { public: q_Node&amp;lt;T&amp;gt;* head;//指向头节点的指针 q_Node&amp;lt;T&amp;gt;* rear;//指向队尾元素所在节点的指针 public: Link_queue() { head = new q_Node&amp;lt;T&amp;gt;; rear = head; if (head == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { head-&amp;gt;next = nullptr; rear-&amp;gt;next = nullptr; } } bool m_Empty() { if (head-&amp;gt;next == nullptr) { return true; } return false; } void En_queue(T k) { q_Node&amp;lt;T&amp;gt;* s = new q_Node&amp;lt;T&amp;gt;; if (s == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { //新节点插入队尾 s-&amp;gt;data = k; s-&amp;gt;next = nullptr; rear-&amp;gt;next = s; rear = s; } } T Del_queue() { //出队时需要注意是否是首元节点出队 T x(0);//保存出队元素 //判空 //1.</description>
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class Node { public: T data;//存储数据 int fi;//father_i,fi == -1,认为是根节点 }; template&amp;lt;class T&amp;gt; class Tree { public: int size; Node&amp;lt;T&amp;gt;* pN;//指针开辟数组，存储节点 public: Tree(T k, int sz = 1) { //加入根节点 pN = new Node&amp;lt;T&amp;gt;[sz]; pN[0].data = k; pN[0].fi = -1; size = 1; } int Find(T fx) { for (int i = 0; i &amp;lt; size; i++) { if (pN[i].</description>
     </item>
     
     <item>

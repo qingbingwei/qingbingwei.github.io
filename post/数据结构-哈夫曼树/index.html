@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 哈夫曼树 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 哈夫曼树"/>
+<meta name="twitter:description" content="1.节点i的路径长度：从根节点到节点i的路径上所经过边数
+2.树的路径长度：所有节点的路径长度之和
+内部路径长度：所有内部节点路径长度之和
+外部路径长度（有时会把树的路径长度当作外部路径长度）：所有叶子节点路径长度之和
+3.节点i的带权路径长度：节点i的路径长度*节点i权值
+4.树的带权路径长度（WPL）：所有叶子节点的带权路径长度之和
+给出n个节点（都带有权值），可以再自行加入若干节点（不确定），用这n个节点全部做叶子节点，自行加入的节点做内部节点去建立一棵二叉树，其中WPL最小的一棵二叉树称为哈夫曼树（最优二叉树）
+注：哈夫曼树WPL的值唯一
+但WPL的值最小的哈夫曼树不唯一
+如何构建哈夫曼树？
+给定n个节点（带权值且只做叶子节点）
+1.一开始认为n个节点为n棵树
+2.每次找根节点权值最小的两棵树（x，y），再新加入一个节点z做x和y的父亲，新的根节点权值为（x，y），此时将x，y两棵树合并出一棵新树，这棵树的根节点为z
+哈夫曼树应用：通过编码进行数据压缩
+哈夫曼编码&mdash;&gt;变长编码，压缩空间
+定长编码：ASCII编码（8bit），Unicode编码（16bit）
+缺陷：浪费空间
+变长编码：比定长编码省空间
+可以使用哈夫曼树来构造变长编码&mdash;&gt;哈夫曼编码
+1.先统计一条消息中n个字符分别出现频率&mdash;&gt;节点权值
+2.构造哈夫曼树
+3.标上1和0
+注：哈夫曼树WPL值即为信息编码所占bit位数
+注：变长编码中遵循前缀属性原则（短的编码不能是长编码的前缀，避免二义性）
+哈夫曼编码树实现：
+1.建立哈夫曼树：把每个字符的频率看作节点的权值，建立哈夫曼树，通过结构体数组模拟存储
+节点：权值，父亲的下标，左右孩子节点的下标
+（1）查找最小的两个根节点 （2）合并，加入一个新的根节点 注：n个叶子节点，总共有2*n-1个节点
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;cstring&gt; using namespace std; class Node { public: int w;//权值 int fi;//父亲节点坐标 int left;//左右孩子节点下标 int right; }; class HFM_Tree { public: int size;//节点个数 Node* tree;//指针模拟开数组 public: HFM_Tree(int w_arr[], int sz) :size(2 * sz - 1) { tree = new Node[size]; if (tree == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { //初始化哈夫曼树（从下标为零开始存储） for (int i = 0; i &lt; size; &#43;&#43;i) { tree[i]."/>
+
+    <meta property="og:title" content="数据结构 哈夫曼树" />
+<meta property="og:description" content="1.节点i的路径长度：从根节点到节点i的路径上所经过边数
+2.树的路径长度：所有节点的路径长度之和
+内部路径长度：所有内部节点路径长度之和
+外部路径长度（有时会把树的路径长度当作外部路径长度）：所有叶子节点路径长度之和
+3.节点i的带权路径长度：节点i的路径长度*节点i权值
+4.树的带权路径长度（WPL）：所有叶子节点的带权路径长度之和
+给出n个节点（都带有权值），可以再自行加入若干节点（不确定），用这n个节点全部做叶子节点，自行加入的节点做内部节点去建立一棵二叉树，其中WPL最小的一棵二叉树称为哈夫曼树（最优二叉树）
+注：哈夫曼树WPL的值唯一
+但WPL的值最小的哈夫曼树不唯一
+如何构建哈夫曼树？
+给定n个节点（带权值且只做叶子节点）
+1.一开始认为n个节点为n棵树
+2.每次找根节点权值最小的两棵树（x，y），再新加入一个节点z做x和y的父亲，新的根节点权值为（x，y），此时将x，y两棵树合并出一棵新树，这棵树的根节点为z
+哈夫曼树应用：通过编码进行数据压缩
+哈夫曼编码&mdash;&gt;变长编码，压缩空间
+定长编码：ASCII编码（8bit），Unicode编码（16bit）
+缺陷：浪费空间
+变长编码：比定长编码省空间
+可以使用哈夫曼树来构造变长编码&mdash;&gt;哈夫曼编码
+1.先统计一条消息中n个字符分别出现频率&mdash;&gt;节点权值
+2.构造哈夫曼树
+3.标上1和0
+注：哈夫曼树WPL值即为信息编码所占bit位数
+注：变长编码中遵循前缀属性原则（短的编码不能是长编码的前缀，避免二义性）
+哈夫曼编码树实现：
+1.建立哈夫曼树：把每个字符的频率看作节点的权值，建立哈夫曼树，通过结构体数组模拟存储
+节点：权值，父亲的下标，左右孩子节点的下标
+（1）查找最小的两个根节点 （2）合并，加入一个新的根节点 注：n个叶子节点，总共有2*n-1个节点
+#define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; #include&lt;cstring&gt; using namespace std; class Node { public: int w;//权值 int fi;//父亲节点坐标 int left;//左右孩子节点下标 int right; }; class HFM_Tree { public: int size;//节点个数 Node* tree;//指针模拟开数组 public: HFM_Tree(int w_arr[], int sz) :size(2 * sz - 1) { tree = new Node[size]; if (tree == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { //初始化哈夫曼树（从下标为零开始存储） for (int i = 0; i &lt; size; &#43;&#43;i) { tree[i]." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-12-20T16:49:51+08:00" />
+<meta property="article:modified_time" content="2023-12-20T16:49:51+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 哈夫曼树</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 20, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>1.节点i的路径长度：从根节点到节点i的路径上所经过边数</p>
+<p>2.树的路径长度：所有节点的路径长度之和</p>
+<p>内部路径长度：所有内部节点路径长度之和</p>
+<p>外部路径长度（有时会把树的路径长度当作外部路径长度）：所有叶子节点路径长度之和</p>
+<p>3.节点i的带权路径长度：节点i的路径长度*节点i权值</p>
+<p>4.树的带权路径长度（WPL）：所有叶子节点的带权路径长度之和</p>
+<p>给出n个节点（都带有权值），可以再自行加入若干节点（不确定），用这n个节点全部做叶子节点，自行加入的节点做内部节点去建立一棵二叉树，其中WPL最小的一棵二叉树称为哈夫曼树（最优二叉树）</p>
+<p>注：哈夫曼树WPL的值唯一</p>
+<p>但WPL的值最小的哈夫曼树不唯一</p>
+<p>如何构建哈夫曼树？</p>
+<p>给定n个节点（带权值且只做叶子节点）</p>
+<p>1.一开始认为n个节点为n棵树</p>
+<p>2.每次找根节点权值最小的两棵树（x，y），再新加入一个节点z做x和y的父亲，新的根节点权值为（x，y），此时将x，y两棵树合并出一棵新树，这棵树的根节点为z</p>
+<p>哈夫曼树应用：通过编码进行数据压缩</p>
+<p>哈夫曼编码&mdash;&gt;变长编码，压缩空间</p>
+<p>定长编码：ASCII编码（8bit），Unicode编码（16bit）</p>
+<p>缺陷：浪费空间</p>
+<p>变长编码：比定长编码省空间</p>
+<p>可以使用哈夫曼树来构造变长编码&mdash;&gt;哈夫曼编码</p>
+<p>1.先统计一条消息中n个字符分别出现频率&mdash;&gt;节点权值</p>
+<p>2.构造哈夫曼树</p>
+<p>3.标上1和0</p>
+<p>注：哈夫曼树WPL值即为信息编码所占bit位数</p>
+<p>注：变长编码中遵循前缀属性原则（短的编码不能是长编码的前缀，避免二义性）</p>
+<p>哈夫曼编码树实现：</p>
+<p>1.建立哈夫曼树：把每个字符的频率看作节点的权值，建立哈夫曼树，通过结构体数组模拟存储</p>
+<p>节点：权值，父亲的下标，左右孩子节点的下标</p>
+<pre><code>（1）查找最小的两个根节点
+
+（2）合并，加入一个新的根节点
+</code></pre>
+<p>注：n个叶子节点，总共有2*n-1个节点</p>
+<pre><code>#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+using namespace std;
+class Node
+{
+public:
+	int w;//权值
+	int fi;//父亲节点坐标
+	int left;//左右孩子节点下标
+	int right;
+};
+class HFM_Tree
+{
+public:
+	int size;//节点个数
+	Node* tree;//指针模拟开数组
+public:
+	HFM_Tree(int w_arr[], int sz) :size(2 * sz - 1)
+	{
+		tree = new Node[size];
+		if (tree == nullptr)
+		{
+			cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+		}
+		else
+		{
+			//初始化哈夫曼树（从下标为零开始存储）
+			for (int i = 0; i &lt; size; ++i)
+			{
+				tree[i].w = 0;
+				tree[i].fi = 0;
+				tree[i].left = tree[i].right = 0;
+			}
+			//构建哈夫曼树
+			for (int i = 0; i &lt; sz; ++i)
+			{
+				tree[i].fi = i;
+				tree[i].w = w_arr[i];
+			}
+			int w1(0);
+			int w2(0);//查找最小权值的两个下标
+			//放入新节点
+			for (int i = sz; i &lt; size; ++i)
+			{
+				//i位置放新的节点，所以范围最大为i - 1
+				Find_Min_w(i, w1, w2);
+				//将最小权值的两个根节点连接起来，作为孩子
+				tree[w1].fi = tree[w2].fi = i;
+				tree[i].w = tree[w1].w + tree[w2].w;
+				tree[i].fi = i;//别忘了给新节点加上父亲
+				tree[i].left = w1;
+				tree[i].right = w2;
+			}
+		}
+	}
+	//查找的范围和两个权值，传引用直接修改
+	void Find_Min_w(int range, int&amp; w_1, int&amp; w_2)
+	{
+		//先找最小权值下标
+		int min(0);
+		for (int i = 0; i &lt; range; ++i)
+		{
+			if (tree[i].fi == i)
+			{
+				//找第一个根节点
+				min = i;
+				break;
+			}
+		}
+		//找出最小权值下标
+		for (int i = 0; i &lt; range; ++i)
+		{
+			if (tree[i].fi == i)
+			{
+				if (tree[i].w &lt; tree[min].w)
+				{
+					min = i;
+				}
+			}
+		}
+		w_1 = min;
+		//再找第二小根节点下标
+		for (int i = 0; i &lt; range; ++i)
+		{
+			if (tree[i].fi == i &amp;&amp; i != w_1)
+			{
+				//找第二个根节点
+				min = i;
+				break;
+			}
+		}
+		for (int i = 0; i &lt; range; ++i)
+		{
+			if (tree[i].fi == i &amp;&amp; i != w_1)
+			{
+				if (tree[i].w &lt; tree[min].w)
+				{
+					min = i;
+				}
+			}
+		}
+		w_2 = min;
+	}
+	//进行哈夫曼编码，左为0，右为1，从下往上找（找出来是倒序的）
+	//利用二维数组存储编码，使用一维数组暂存每一个字符编码，将一维数组拷贝到二维数组中
+
+	//叶子节点个数
+	char** Create_HFM_code(int n)
+	{
+		char *temp = new char[n];//树理论最高为n，但实际存不满
+		char** code = new char*[n];
+		int start(0);//一开始存放编码的位置
+		int p(0);//存放节点下标
+		int p_f(0);//存放节点父亲下标（用于判断是左孩子还是右孩子）
+		for (int i = 0; i &lt; n; ++i)
+		{
+			start = n - 1;
+			temp[start] = '\0';//因为存放的是0，1字符
+			p = i;
+			p_f = tree[i].fi;
+			while (tree[p].fi != p)//一路找到根节点
+			{
+				start--;
+				if (tree[p_f].left == p)
+				{
+					temp[start] = '0';
+				}
+				else
+				{
+					temp[start] = '1';
+				}
+				p = p_f;
+				p_f = tree[p].fi;
+			}
+			code[i] = new char[n - start];
+			strcpy(code[i], &amp;temp[start]);//拷贝哈夫曼编码
+		}
+		delete temp;
+		temp = nullptr;
+		return code;
+	}
+};
+int main()
+{
+	char s[8] = { 'A', 'B', 'C', 'D','E', 'F', 'G', 'H' };
+	int w[8] = { 5, 29, 7, 8,14, 23, 3, 11 };
+	HFM_Tree tr(w, 8);
+	char** code = tr.Create_HFM_code(8);
+	for (int i = 0; i &lt; 8; ++i)
+	{
+		cout &lt;&lt; s[i] &lt;&lt; ' ' &lt;&lt; code[i] &lt;&lt; endl;
+	}
+	return 0;
+}
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

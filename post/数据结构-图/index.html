@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 图 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 图"/>
+<meta name="twitter:description" content="图的概念： 逻辑结构：多对多 graph 图 g vertex 顶点 v edge 边\弧 e 图G是由两个集合V和E构成，G = (V,E),其中V是顶点的有限非空集合，E是V中顶点偶对的有限集，这些顶点偶对称为边（弧） 重边：两个顶点不只有一条边 自边：顶点自身形成一条边 图的分类： 不同的维度： 1.方向性：有向图和无向图 2.环：带环图和无环图 //环：从一个点x出发，沿着边走，最终可以回到x 注：有向无环图（DAG） 3.边权：无权图 带权图 图的基本术语： 1.简单图：若不存在顶点到自身的边，且同一条边不重复出现，则称这样的图为简单图 2.无向图：在图中，如果代表边的顶点偶对是无序的，则为无向图 3.有向图：在图中，如果代表边的顶点偶对是有序的，则为有向图 //有向边（弧） //起点：弧尾 //终点：弧头 //注：无向图可以看成有向图 4.完全图：图中每两个顶点都有一条边 //完全有向图：n（n-1）条边 //完全无向图：n（n-1）/2条边 5.端点，邻接点； 端点：边的两个顶点 邻接点：上述两个顶点互为邻接点 6.顶点的度，入度和出度 //对于无向图而言 度：该点所连的边数 //对于有向图而言 入度；入边的个数 出度：出边的个数 度：出度&#43;入度（一定为偶数） 7.子集：与子树类似 8.路径，路径长度： 路径：顶点序列 路径长度：边的数目 简单路径：一条路径上除开始点和结束点可以相同外，其余顶点均不相同（路径中不含环） 9.回路，环 欧拉环路：经过图中各边一次且恰好一次的环路 哈密尔顿环路：经过图中各顶点一次且恰好一次的环路 10.连通，连通图和连通分量（针对无向图） 1.连通：如果顶点x和y之间存在可以相互抵达的路径，则称两个顶点连通 2.连通图：图中任意两个顶点都连通 3.连通分量：无向图中的极大连通子图称为图的连通分量 注：连通图只有一个极大连通子图（自身） 非连通图有多个极大连通子图 注:极大连通子图（连通分量） 极小连通子图（图的生成树）：在保证各点连通的情况下，边最少 11.强连通图和强连通分量（针对有向图，含义同上） 12.稠密图和稀疏图 一个图接近完全图时，称为稠密图，当一个图含有较少边数时，称为稀疏图，一般以nlogn作为分界线（n为节点个数） 13.权和网 边上带有权的图称为带权图，也称之为网 //注：自边权值看作零，两个点之间没有连接权值看作无穷大 14.连通图的生成树（针对无向图） 连通图的生成树是一个极小的连通子图 图的存储： 1."/>
+
+    <meta property="og:title" content="数据结构 图" />
+<meta property="og:description" content="图的概念： 逻辑结构：多对多 graph 图 g vertex 顶点 v edge 边\弧 e 图G是由两个集合V和E构成，G = (V,E),其中V是顶点的有限非空集合，E是V中顶点偶对的有限集，这些顶点偶对称为边（弧） 重边：两个顶点不只有一条边 自边：顶点自身形成一条边 图的分类： 不同的维度： 1.方向性：有向图和无向图 2.环：带环图和无环图 //环：从一个点x出发，沿着边走，最终可以回到x 注：有向无环图（DAG） 3.边权：无权图 带权图 图的基本术语： 1.简单图：若不存在顶点到自身的边，且同一条边不重复出现，则称这样的图为简单图 2.无向图：在图中，如果代表边的顶点偶对是无序的，则为无向图 3.有向图：在图中，如果代表边的顶点偶对是有序的，则为有向图 //有向边（弧） //起点：弧尾 //终点：弧头 //注：无向图可以看成有向图 4.完全图：图中每两个顶点都有一条边 //完全有向图：n（n-1）条边 //完全无向图：n（n-1）/2条边 5.端点，邻接点； 端点：边的两个顶点 邻接点：上述两个顶点互为邻接点 6.顶点的度，入度和出度 //对于无向图而言 度：该点所连的边数 //对于有向图而言 入度；入边的个数 出度：出边的个数 度：出度&#43;入度（一定为偶数） 7.子集：与子树类似 8.路径，路径长度： 路径：顶点序列 路径长度：边的数目 简单路径：一条路径上除开始点和结束点可以相同外，其余顶点均不相同（路径中不含环） 9.回路，环 欧拉环路：经过图中各边一次且恰好一次的环路 哈密尔顿环路：经过图中各顶点一次且恰好一次的环路 10.连通，连通图和连通分量（针对无向图） 1.连通：如果顶点x和y之间存在可以相互抵达的路径，则称两个顶点连通 2.连通图：图中任意两个顶点都连通 3.连通分量：无向图中的极大连通子图称为图的连通分量 注：连通图只有一个极大连通子图（自身） 非连通图有多个极大连通子图 注:极大连通子图（连通分量） 极小连通子图（图的生成树）：在保证各点连通的情况下，边最少 11.强连通图和强连通分量（针对有向图，含义同上） 12.稠密图和稀疏图 一个图接近完全图时，称为稠密图，当一个图含有较少边数时，称为稀疏图，一般以nlogn作为分界线（n为节点个数） 13.权和网 边上带有权的图称为带权图，也称之为网 //注：自边权值看作零，两个点之间没有连接权值看作无穷大 14.连通图的生成树（针对无向图） 连通图的生成树是一个极小的连通子图 图的存储： 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9B%BE/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2023-12-27T19:57:55+08:00" />
+<meta property="article:modified_time" content="2023-12-27T19:57:55+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 图</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 27, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          8 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>图的概念：
+
+逻辑结构：多对多
+
+graph 图 g
+vertex 顶点 v
+edge 边\弧 e
+
+图G是由两个集合V和E构成，G = (V,E),其中V是顶点的有限非空集合，E是V中顶点偶对的有限集，这些顶点偶对称为边（弧）
+
+重边：两个顶点不只有一条边
+自边：顶点自身形成一条边
+
+图的分类：
+不同的维度：
+1.方向性：有向图和无向图
+2.环：带环图和无环图
+//环：从一个点x出发，沿着边走，最终可以回到x
+注：有向无环图（DAG）
+3.边权：无权图 带权图
+
+图的基本术语：
+1.简单图：若不存在顶点到自身的边，且同一条边不重复出现，则称这样的图为简单图
+2.无向图：在图中，如果代表边的顶点偶对是无序的，则为无向图
+3.有向图：在图中，如果代表边的顶点偶对是有序的，则为有向图
+//有向边（弧）
+//起点：弧尾
+//终点：弧头
+//注：无向图可以看成有向图
+4.完全图：图中每两个顶点都有一条边
+//完全有向图：n（n-1）条边
+//完全无向图：n（n-1）/2条边
+5.端点，邻接点；
+    端点：边的两个顶点
+    邻接点：上述两个顶点互为邻接点
+6.顶点的度，入度和出度
+    //对于无向图而言
+    度：该点所连的边数
+
+    //对于有向图而言
+    入度；入边的个数
+    出度：出边的个数
+    度：出度+入度（一定为偶数）
+7.子集：与子树类似
+8.路径，路径长度：
+    路径：顶点序列
+    路径长度：边的数目
+    简单路径：一条路径上除开始点和结束点可以相同外，其余顶点均不相同（路径中不含环）
+9.回路，环
+    欧拉环路：经过图中各边一次且恰好一次的环路
+    哈密尔顿环路：经过图中各顶点一次且恰好一次的环路
+10.连通，连通图和连通分量（针对无向图）
+    1.连通：如果顶点x和y之间存在可以相互抵达的路径，则称两个顶点连通
+    2.连通图：图中任意两个顶点都连通
+    3.连通分量：无向图中的极大连通子图称为图的连通分量
+    注：连通图只有一个极大连通子图（自身）
+    非连通图有多个极大连通子图
+
+    注:极大连通子图（连通分量）
+    极小连通子图（图的生成树）：在保证各点连通的情况下，边最少
+11.强连通图和强连通分量（针对有向图，含义同上）
+12.稠密图和稀疏图
+    一个图接近完全图时，称为稠密图，当一个图含有较少边数时，称为稀疏图，一般以nlogn作为分界线（n为节点个数）
+13.权和网
+    边上带有权的图称为带权图，也称之为网
+    //注：自边权值看作零，两个点之间没有连接权值看作无穷大
+14.连通图的生成树（针对无向图）
+    连通图的生成树是一个极小的连通子图
+    
+
+图的存储：
+    1.边集数组
+    2.邻接矩阵
+    3.邻接表
+    4.十字链表
+    5.多重邻接表
+有向图/无向图：边集数组，邻接矩阵，邻接表
+
+有向图：十字链表
+
+无向图：多重邻接表
+
+做题：邻接矩阵，链式前向星（邻接表）  //链式前向星后续再学习
+
+存储图：
+（1）边集数组：不太方便，效率低，但是简单
+存点：数组存点集
+存边：起点，终点，边权
+（2）邻接矩阵：如果为稀疏图，存在较大空间浪费
+存点：数组存点集
+存边：二维数组（邻接矩阵），下标就是点的编号
+//无权图可以用bool类型二维数组
+有向图；i-&gt;j j-&gt;i e[i][j] != e[j][i]
+无向图：i-&gt;j j-&gt;i e[i][j] == e[j][i]
+（3）邻接表：方便算出度，不方便算入度（对于有向图而言）
+//为了方便计算入度，可以建立逆邻接表，但不方便计算出度
+//二者结合形成十字链表
+存点：数组存点集
+存边：
+    1.无向图
+    把每个顶点的邻接点构成线性表，因为线性表大小不定，所以使用链表
+    2.有向图
+    邻接表：顶点后面挂的单链表，由其出边邻接点构成
+    逆邻接表：顶点后面挂的单链表，由其入边邻接点构成
+
+（4）十字链表：结构复杂，操作简单
+把有向图的邻接表和逆邻接表结合起来
+结构复杂，使用简单
+
+（5）多重邻接表
+同上
+
+//注：做题常用邻接矩阵和邻接表
+
+图的遍历：从图中某点出发，把所有点访问且仅访问一次
+1.深度优先遍历（DFS）-----&gt;递归/栈
+    1.右手原则：在没有碰到重复顶点的情况下，分叉口始终是向右边走，每路过一个顶点就做一个记号
+    2.左手原则：在没有碰到重复顶点的情况下，分叉口始终是向左边走，每路过一个顶点就做一个记号
+
+步骤：
+1.首先选定一个未被访问的顶点V作为起始顶点，并将其标记为已经访问过
+2.然后搜索与顶点V邻接的所有顶点，判断这些顶点是否被访问过，如果有未被访问过的顶点W,再选取与顶点W邻接的未被访问的一个顶点进行访问，依次重复进行。当一个顶点的所有的邻接顶点都被访问过时，则依次回退到最近被访问的顶点。若该顶点还有其他邻接点未被访问，则从这些未被访问的顶点中取出一个并重复上述过程，直到与起始顶点V相邻接的所有顶点都被访问过为止。
+3.若此时图中依然有顶点未被访问，则再选取其中一个顶点作为起始顶点并进行遍历，转第二步，反之，则遍历结束。//即可能该图为非连通图，有多个极大连通子图
+
+2.广度优先遍历（BFS）-----&gt;队列
+
+
+注：图遍历序列不唯一
+
+遍历时间复杂度（DFS与BFS一样）
+
+邻接矩阵（n^2） //n为点的个数
+邻接表（n+m） //n为点的个数，m为边的个数
+
+BFS优缺点：
+    缺点：在搜索过程中，BFS必须要保存搜索过程中的状态，用于判重
+    优点：一般用于找无权图最短路径
+
+DFS优缺点：
+    缺点：容易超时/或爆栈
+    优点：使用空间少，一般用于找所有的解
+
+
+边集数组:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+class Edge
+{
+public:
+    int start;//起点
+    int end;//终点
+    int w;//权值
+};
+class Graph
+{
+public:
+    Edge* e;//边集
+    int* vertex;//点集
+    int size;//点的个数
+public:
+    Graph(int sz):size(sz)
+    {
+        vertex = new int[sz];
+        e = new Edge[sz * (sz - 1)];//若为无向图，则(sz * (sz - 1)) / 2
+        if (vertex == nullptr || e == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+    }
+    void Find(int x)//找邻接点
+    {
+        for (int i = 0; i &lt; size * (size - 1); ++i)
+        {
+            if (e[i].start == x)
+            {
+                cout &lt;&lt; e[i].end &lt;&lt; endl;
+            }
+            if (e[i].end == x)
+            {
+                cout &lt;&lt; e[i].start &lt;&lt; endl;
+            }
+        }
+    }
+};
+int main()
+{
+    int a(4);
+    Graph g(a);
+
+    return 0;
+}
+
+邻接矩阵:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+//有权无向图为例
+class Graph
+{
+public:
+    int** edge;//邻接矩阵
+    int* vertex;//点集
+    int size;//点的个数
+    int size2;//边的个数
+public:
+    Graph(int sz,int sz2) :size(sz),size2(sz2)
+    {
+        vertex = new int[sz];
+        edge = new int* [sz];
+        if (vertex == nullptr || edge == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        for (int i = 0; i &lt; sz; ++i)
+        {
+            edge[i] = new int[sz];
+            if (edge[i] == nullptr)
+            {
+                cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+            }
+        }
+    }
+    void Find(int x)//找邻接点,有权无向图,权值大于零
+    {
+        for (int i = 0; i &lt; size; ++i)
+        {
+            if (edge[x][i] &gt; 0)
+            {
+                cout &lt;&lt; i &lt;&lt; endl;
+            }
+        }
+    }
+};
+int main()
+{
+    int a(4);
+    Graph m(a,a);
+
+    return 0;
+}
+
+邻接表:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+//无向带权图为例
+class Node
+{
+public:
+    int adjv;//邻接点编号
+    int m_w;//权值
+    Node* next;
+};
+class Graph_Node
+{
+public:
+    int vertex_i;//点的编号
+    Node* first;//不使用头节点，直接使用头指针
+};
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    Graph_Node* g;//邻接表
+public:
+    Graph(int sz1,int sz2):size1(sz1),size2(sz2)
+    {
+        g = new Graph_Node[sz1];
+        if (g == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        //初始化点
+        for (int i = 0;i &lt; sz1; ++i)
+        {
+            cin &gt;&gt; g[i].vertex_i;
+            g[i].first = nullptr;
+        }
+        //输入边和权值
+        int x(0);
+        int y(0);
+        int w(0);
+        for (int i = 0; i &lt; sz2; ++i)
+        {
+            cin &gt;&gt; x &gt;&gt; y &gt;&gt; w;
+            //y为x邻接点
+            Node* s = new Node;
+            s-&gt;adjv = y;
+            s-&gt;m_w = w;
+            //进行头插
+            s-&gt;next = g[x].first;
+            g[x].first = s;
+            
+            //x为y邻接点(开辟一块新的空间)
+            s = new Node;
+            s-&gt;adjv = x;
+            s-&gt;m_w = w;
+            //进行头插
+            s-&gt;next = g[y].first;
+            g[y].first = s;
+        }
+    }
+};
+int main()
+{
+    return 0;
+}
+
+十字链表:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+//十字链表节点结构
+class Link_Node
+{
+public:
+    //存储点的数据，若下标与数据不对应，则先找到数据对应下标
+    int tail_v;//弧尾（起点），加入到弧尾出边单链表
+    int head_v;//弧头（终点），加入到弧头入边单链表
+    int wi;//权值
+    Link_Node* tail_out_next;//弧尾出边单链表下一个节点
+    Link_Node* head_in_next;//弧头入边单链表下一个节点
+};
+class Vertex_Node
+{
+public:
+    int vertex_i;//点的编号
+    Link_Node* first_out;//出边单链表头指针
+    Link_Node* first_in;//入边单链表头指针
+};
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    Vertex_Node* v;//十字链表实现
+public:
+    Graph(int sz1,int sz2):size1(sz1),size2(sz2)
+    {
+        v = new Vertex_Node[sz1];
+        if (v == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //初始化点
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                cin &gt;&gt; v[i].vertex_i;
+                v[i].first_in = nullptr;
+                v[i].first_out = nullptr;
+            }
+            //进行两次头插
+    
+            //输入边和权值
+            int x(0);
+            int y(0);
+            int w(0);
+            for (int i = 0; i &lt; sz2; ++i)
+            {
+                cin &gt;&gt; x &gt;&gt; y &gt;&gt; w;
+                Link_Node* s = new Link_Node;
+                s-&gt;tail_v = x;
+                s-&gt;head_v = y;
+                s-&gt;wi = w;
+
+                //第一次头插
+                //s插入到弧尾x出边单链表中
+                s-&gt;tail_out_next = v[x].first_out;
+                v[x].first_out = s;
+
+                //第二次头插
+                //s插入到弧头y入边单链表中
+                s-&gt;head_in_next = v[y].first_in;
+                v[y].first_in = s;
+            }
+        }
+    }
+};
+int main()
+{
+    Graph g(4, 6);
+    int ans(0);
+    int x(0);
+    cin &gt;&gt; x;
+    Link_Node* p = g.v[x].first_out;
+    while (p != nullptr)
+    {
+        ans++;
+        p = p-&gt;tail_out_next;
+    }
+    cout &lt;&lt; ans;
+    return 0;
+}
+/*
+1 0 3
+0 1 4
+1 2 2
+2 0 5
+0 3 6
+2 3 8
+2
+*/
+
+多重邻接表:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+//多重邻接表
+//无向图邻接表一条边存储两次，浪费空间
+
+class Link_Node
+{
+public:
+    //存储点的数据，若下标与数据不对应，则先找到数据对应下标
+    //两个端点
+    int vi;
+    int vj;
+    int wi;//权值
+    Link_Node* vi_next;//vi单链表下一个节点
+    Link_Node* vj_next;//vj单链表下一个节点
+};
+class Vertex_Node
+{
+public:
+    int vertex_i;//点的编号
+    Link_Node* first;//边单链表头指针
+};
+
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    Vertex_Node* v;//多重邻接表实现
+public:
+    Graph(int sz1,int sz2):size1(sz1),size2(sz2)
+    {
+        v = new Vertex_Node[sz1];
+        if (v == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //初始化点
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                cin &gt;&gt; v[i].vertex_i;
+                v[i].first = nullptr;
+            }
+            //输入边和权值
+            int x(0);
+            int y(0);
+            int w(0);
+            for (int i = 0; i &lt; sz2; ++i)
+            {
+                cin &gt;&gt; x &gt;&gt; y &gt;&gt; w;
+                Link_Node* s = new Link_Node;
+                s-&gt;vi = x;
+                s-&gt;vj = y;
+                s-&gt;wi = w;
+
+                //第一次头插(先vi)
+                s-&gt;vi_next = v[x].first;
+                v[x].first = s;
+
+                //第二次头插(后vj)
+                s-&gt;vj_next = v[y].first;
+                v[y].first = s;
+            }
+        }
+    }
+};
+int main()
+{
+    Graph g(4, 5);
+    int ans(0);
+    int x(0);
+    cin &gt;&gt; x;
+    Link_Node* p = g.v[x].first;
+    while (p != nullptr)
+    {
+        ans++;
+        if (p-&gt;vi == x)
+        {
+            p = p-&gt;vi_next;
+        }
+        else
+        {
+            p = p-&gt;vj_next;
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+/*
+0
+1
+2
+3
+0 1 3
+0 3 5
+0 2 5
+1 3 6
+3 2 6
+*/
+
+BFS:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+
+//队列实现，循环队列
+//将点的下标入队
+template&lt;class T&gt;
+class m_queue
+{
+public:
+    T* data;
+    int size;
+    int front;
+    int rear;
+public:
+    m_queue(int sz):size(sz)
+    {
+        data = new T[sz];
+        if (data == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            rear = 0;//指向队尾元素下一个元素
+            front = 0;
+        }
+    }
+    void En_queue(T k)
+    {
+        //牺牲一个位置与判空区分
+        if ((rear + 1) % size == front)
+        {
+            cout &lt;&lt; &quot;队列已满&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            data[rear] = k;
+            //cout &lt;&lt; k &lt;&lt; &quot;入队&quot; &lt;&lt; endl;
+            //实现循环效果
+            rear = (rear + 1) % size;
+        }
+    }
+    T De_queue()
+    {
+        int x(0);
+        //保存出队元素
+        if (front == rear)
+        {
+            cout &lt;&lt; &quot;队空&quot; &lt;&lt; endl;
+            return -1;
+        }
+        else
+        {
+            x = data[front];
+            front = (front + 1) % size;
+            //cout &lt;&lt; x &lt;&lt; &quot;出队&quot; &lt;&lt; endl;
+            return x;
+        }
+    }
+    bool m_empty()
+    {
+        if (front == rear)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+};
+
+
+//以一个无权无向图为基础 进行BFS
+//存储方式：邻接表
+
+class Edge_Node
+{
+public:
+    int adj_v;//邻接点下标
+    Edge_Node* next;
+};
+class Graph_Node
+{
+public:
+    char vertex_i;//顶点编号
+    Edge_Node* first;//边链表
+};
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    Graph_Node* g;//邻接表
+    bool* visit;//记录是否访问过
+public:
+    Graph(int sz1,int sz2):size1(sz1),size2(sz2)
+    {
+        g = new Graph_Node[sz1];
+        visit = new bool[sz1];
+        if (g == nullptr || visit == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            //初始化
+            for (int i = 0; i &lt; size1; ++i)
+            {
+                cin &gt;&gt; g[i].vertex_i;
+                g[i].first = nullptr;
+                visit[i] = false;
+            }
+            //读入数据
+            int x(0);
+            int y(0);
+            for (int i = 0; i &lt; size2; ++i)
+            {
+                cin &gt;&gt; x &gt;&gt; y;
+                //两次头插
+                Edge_Node* s = new Edge_Node;
+                //y为邻接点
+                s-&gt;adj_v = y;
+                s-&gt;next = g[x].first;
+                g[x].first = s;
+
+                s = new Edge_Node;
+                //x为邻接点
+                s-&gt;adj_v = x;
+                s-&gt;next = g[y].first;
+                g[y].first = s;
+            }
+        }
+    }
+    //为了避免重复入队，一入队便标记
+    void BFS()
+    {
+        //声明队列
+        m_queue&lt;int&gt; q(100);
+        //存储出队元素
+        int x(0);
+        Edge_Node* p = nullptr;
+        for (int i = 0; i &lt; size1; ++i)
+        {
+            if (visit[i] == false)
+            {
+                //以下标为i点做起点
+                //把i点入队
+                q.En_queue(i);
+                visit[i] = true;
+                while (!q.m_empty())
+                {
+                    x = q.De_queue();
+                    //访问
+                    cout &lt;&lt; g[x].vertex_i &lt;&lt; endl;
+                    //下标为x点邻接点入队
+                    p = g[x].first;
+                    while (p != nullptr)
+                    {
+                        if (visit[p-&gt;adj_v] == false)
+                        {
+                            q.En_queue(p-&gt;adj_v);
+                            visit[p-&gt;adj_v] = true;
+                        }
+                        p = p-&gt;next;
+                    }
+                }
+            }
+        }
+    }
+};
+int main()
+{
+    Graph g(9, 15);
+    g.BFS();
+    return 0;
+}
+
+//也可以将点的编号入队，但如果将编号入队，
+//需要先根据编号找到对应下标
+
+
+/*
+测试用例：
+9
+15
+ABCDEFGHI
+0 1
+0 5
+1 6
+5 6
+2 1
+1 8
+2 8
+6 7
+2 3
+3 8
+3 7
+3 4
+4 7
+4 5
+3 6
+*/
+
+DFS:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+
+
+//以一个无权无向图为基础 进行DFS
+//存储方式：邻接矩阵
+class Graph
+{
+public:
+    int** edge;//邻接矩阵
+    char* vertex;//点集数组
+    bool* visit;//存储已经访问过的点(与点集数组下标对应)
+    int size1;//点的个数
+    int size2;//边的个数
+public:
+    Graph(int sz1, int sz2) :size1(sz1), size2(sz2)
+    {
+        vertex = new char[sz1];
+        visit = new bool[sz1];
+        edge = new int* [sz1];
+        if (visit == nullptr || edge == nullptr || vertex == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+
+        for (int i = 0; i &lt; sz1; ++i)
+        {
+            edge[i] = new int[sz1];
+            if (edge[i] == nullptr)
+            {
+                cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+            }
+        }
+        for (int i = 0; i &lt; sz1; ++i)
+        {
+            cin &gt;&gt; vertex[i];
+            visit[i] = false;
+        }
+        int x(0);
+        int y(0);
+        //假设x，y之间有一条边
+        for (int i = 0; i &lt; sz2; ++i)
+        {
+            cin &gt;&gt; x &gt;&gt; y;
+            edge[x][y] = 1;
+            edge[y][x] = 1;
+        }
+
+    }
+    //以下标为零的点开始遍历
+    //DFS和DFSg两层循环避免图为非连通图时只遍历一个极大连通子图
+    void DFS()
+    {
+        for (int i = 0; i &lt; size1; ++i)
+        {
+            if (visit[i] == false)
+            {
+                //标记为已经访问
+                visit[i] = true;
+                DFSg(i);
+            }
+        }
+    }
+    void DFSg(int x)
+    {
+        //访问点x
+        cout &lt;&lt; vertex[x] &lt;&lt; endl;
+        //再访问x邻接点
+        for (int i = 0; i &lt; size1; ++i)
+        {
+            //没访问过且为x邻接点
+            if (visit[i] == false &amp;&amp; edge[x][i] == 1)
+            {
+                //标记为已经访问
+                visit[i] = true;
+                DFSg(i);
+            }
+        }
+    }
+
+
+};
+int main()
+{
+    Graph g(9, 15);
+    g.DFS();
+    return 0;
+}
+/*
+测试用例：
+9
+15
+ABCDEFGHI
+0 1
+0 5
+1 6
+5 6
+2 1
+1 8
+2 8
+6 7
+2 3
+3 8
+3 7
+3 4
+4 7
+4 5
+3 6
+*/
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

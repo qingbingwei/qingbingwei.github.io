@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 最小生成树 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 最小生成树"/>
+<meta name="twitter:description" content="生成树：一个连通图的生成树时一个极小连通子图，包含n个顶点，但只有构成一棵树的n-1条边 注：包含n个顶点的无向完全图最多包含n^(n-2)棵生成树 注：只有无向图才有生成树（且必须为连通图），有向图对应概念为树型生成图 生成树的属性： 1.一个连通图可以有多个生成树 2.一个连通图的所有生成树都包含相同的顶点个数和边数 3.生成树当中不存在环 4.移除生成树中的任意一条边都会导致图的不连通 5.在生成树中添加一条边会构成环 6.对于包含n个顶点的连通图，生成树包含n个顶点和n-1条边 7.对于包含n个顶点的无向完全图最多包含包含n^(n-2)棵生成树 最小生成树：一个带权图的生成树，该生成树边权之和最小，则称该生成树为最小生成树 注：只有无向连通带权图才有最小生成树，且最小生成树不一定唯一 1.Kruskal算法----&gt;从边出发 //基于贪心和并查集 1.选择权值尽可能小的n-1条边----&gt;排序：选择排序算法 2.选边时，选的每一条边都得是连接未连通的两个节点才行，否则成环---&gt;通过并查集判断一条边的两个点是否属于同一个集合，若不属于，则该边可选，并合并两个不同集合 时间复杂度：主要分为两块 选择排序O(m^2)&#43;并查集O(m)----&gt;O(m^2) 注：即Kruskal算法时间复杂度取决于排序算法时间复杂度，比如使用快速排序将会变为mlogm （m为边的数目） 2.Prim算法-----&gt;从点出发 //基于贪心 点到生成树的距离dist： 1.已经在生成树中的点：0 2.不在生成树中的点：该点与生成树中任意若干点直接相连，其每条连接边对应的权值就是dist 注：不考虑间接相连，间接相连dist视为无穷大 点分为两类： 1.已经选中的点，已经构成一部分生成树 2.还未选中的点 选择n次： 第一次：任意选择一个点 接下来n-1一次：选则第二类中点，该点dist最小，同时通过选中的点更新与其相连的点到生成树的dist 思路： 维护一个点到生成树的最小距离dist[],初始化为无穷大 维护一个标记数组visit[] 1.任选一个点作为起点，把起点x加入到生成树中：visit[x]=1,dist[x]=0 2.更新x邻接点到生成树最小距离 3.执行n-1次循环（1）找到visit[]==0且dist[]最小的点下（2）把起点x加入到生成树中：visit[x]=1,dist[x]=0 (3)更新x邻接点到生成树最小距离 时间复杂度：O(n^2) 注：n为点的个数 注：点多边多（稠密图）Prim算法，点多边少（稀疏图）Kruskal算法 Kruskal算法: #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; //并查集 class Tree_Node { public: int fi; int data;//注：本图所有点编号与其下标对应 }; class Tree { public: Tree_Node* pN; int size; public: Tree(int sz) :size(sz) { pN = new Tree_Node[size]; for (int i = 0; i &lt; size; &#43;&#43;i) { pN[i]."/>
+
+    <meta property="og:title" content="数据结构 最小生成树" />
+<meta property="og:description" content="生成树：一个连通图的生成树时一个极小连通子图，包含n个顶点，但只有构成一棵树的n-1条边 注：包含n个顶点的无向完全图最多包含n^(n-2)棵生成树 注：只有无向图才有生成树（且必须为连通图），有向图对应概念为树型生成图 生成树的属性： 1.一个连通图可以有多个生成树 2.一个连通图的所有生成树都包含相同的顶点个数和边数 3.生成树当中不存在环 4.移除生成树中的任意一条边都会导致图的不连通 5.在生成树中添加一条边会构成环 6.对于包含n个顶点的连通图，生成树包含n个顶点和n-1条边 7.对于包含n个顶点的无向完全图最多包含包含n^(n-2)棵生成树 最小生成树：一个带权图的生成树，该生成树边权之和最小，则称该生成树为最小生成树 注：只有无向连通带权图才有最小生成树，且最小生成树不一定唯一 1.Kruskal算法----&gt;从边出发 //基于贪心和并查集 1.选择权值尽可能小的n-1条边----&gt;排序：选择排序算法 2.选边时，选的每一条边都得是连接未连通的两个节点才行，否则成环---&gt;通过并查集判断一条边的两个点是否属于同一个集合，若不属于，则该边可选，并合并两个不同集合 时间复杂度：主要分为两块 选择排序O(m^2)&#43;并查集O(m)----&gt;O(m^2) 注：即Kruskal算法时间复杂度取决于排序算法时间复杂度，比如使用快速排序将会变为mlogm （m为边的数目） 2.Prim算法-----&gt;从点出发 //基于贪心 点到生成树的距离dist： 1.已经在生成树中的点：0 2.不在生成树中的点：该点与生成树中任意若干点直接相连，其每条连接边对应的权值就是dist 注：不考虑间接相连，间接相连dist视为无穷大 点分为两类： 1.已经选中的点，已经构成一部分生成树 2.还未选中的点 选择n次： 第一次：任意选择一个点 接下来n-1一次：选则第二类中点，该点dist最小，同时通过选中的点更新与其相连的点到生成树的dist 思路： 维护一个点到生成树的最小距离dist[],初始化为无穷大 维护一个标记数组visit[] 1.任选一个点作为起点，把起点x加入到生成树中：visit[x]=1,dist[x]=0 2.更新x邻接点到生成树最小距离 3.执行n-1次循环（1）找到visit[]==0且dist[]最小的点下（2）把起点x加入到生成树中：visit[x]=1,dist[x]=0 (3)更新x邻接点到生成树最小距离 时间复杂度：O(n^2) 注：n为点的个数 注：点多边多（稠密图）Prim算法，点多边少（稀疏图）Kruskal算法 Kruskal算法: #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; //并查集 class Tree_Node { public: int fi; int data;//注：本图所有点编号与其下标对应 }; class Tree { public: Tree_Node* pN; int size; public: Tree(int sz) :size(sz) { pN = new Tree_Node[size]; for (int i = 0; i &lt; size; &#43;&#43;i) { pN[i]." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-01-24T16:32:01+08:00" />
+<meta property="article:modified_time" content="2024-01-24T16:32:01+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 最小生成树</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 24, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          4 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>生成树：一个连通图的生成树时一个极小连通子图，包含n个顶点，但只有构成一棵树的n-1条边
+
+注：包含n个顶点的无向完全图最多包含n^(n-2)棵生成树
+
+注：只有无向图才有生成树（且必须为连通图），有向图对应概念为树型生成图
+
+生成树的属性：
+    1.一个连通图可以有多个生成树
+    2.一个连通图的所有生成树都包含相同的顶点个数和边数
+    3.生成树当中不存在环
+    4.移除生成树中的任意一条边都会导致图的不连通
+    5.在生成树中添加一条边会构成环
+    6.对于包含n个顶点的连通图，生成树包含n个顶点和n-1条边
+    7.对于包含n个顶点的无向完全图最多包含包含n^(n-2)棵生成树
+
+最小生成树：一个带权图的生成树，该生成树边权之和最小，则称该生成树为最小生成树
+注：只有无向连通带权图才有最小生成树，且最小生成树不一定唯一
+
+1.Kruskal算法----&gt;从边出发 //基于贪心和并查集
+    1.选择权值尽可能小的n-1条边----&gt;排序：选择排序算法
+    2.选边时，选的每一条边都得是连接未连通的两个节点才行，否则成环---&gt;通过并查集判断一条边的两个点是否属于同一个集合，若不属于，则该边可选，并合并两个不同集合
+
+    时间复杂度：主要分为两块 选择排序O(m^2)+并查集O(m)----&gt;O(m^2)
+    注：即Kruskal算法时间复杂度取决于排序算法时间复杂度，比如使用快速排序将会变为mlogm
+    （m为边的数目）
+2.Prim算法-----&gt;从点出发   //基于贪心
+
+点到生成树的距离dist：
+1.已经在生成树中的点：0
+2.不在生成树中的点：该点与生成树中任意若干点直接相连，其每条连接边对应的权值就是dist
+注：不考虑间接相连，间接相连dist视为无穷大
+
+点分为两类：
+1.已经选中的点，已经构成一部分生成树
+2.还未选中的点
+选择n次：
+第一次：任意选择一个点
+接下来n-1一次：选则第二类中点，该点dist最小，同时通过选中的点更新与其相连的点到生成树的dist
+
+思路：
+维护一个点到生成树的最小距离dist[],初始化为无穷大
+维护一个标记数组visit[]
+1.任选一个点作为起点，把起点x加入到生成树中：visit[x]=1,dist[x]=0
+2.更新x邻接点到生成树最小距离
+3.执行n-1次循环（1）找到visit[]==0且dist[]最小的点下（2）把起点x加入到生成树中：visit[x]=1,dist[x]=0 (3)更新x邻接点到生成树最小距离 
+
+时间复杂度：O(n^2)
+注：n为点的个数
+
+注：点多边多（稠密图）Prim算法，点多边少（稀疏图）Kruskal算法
+
+Kruskal算法:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+
+//并查集
+class Tree_Node
+{
+public:
+    int fi;
+    int data;//注：本图所有点编号与其下标对应
+};
+class Tree
+{
+public:
+    Tree_Node* pN;
+    int size;
+public:
+    Tree(int sz) :size(sz)
+    {
+        pN = new Tree_Node[size];
+        for (int i = 0; i &lt; size; ++i)
+        {
+            pN[i].data = pN[i].fi = i;
+        }
+    }
+    int Find_fi(int k)
+    {
+        while (pN[k].data != pN[k].fi)
+        {
+            //往上找
+            k = pN[k].fi;
+        }
+        return k;
+    }
+};
+//无向连通带权图
+//存储方式：邻接矩阵+边集数组（边集数组方便根据权值对边进行排序）
+class Edge
+{
+public:
+    int u;
+    int v;//两个顶点
+    int w;//权值
+};
+
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    int** graph;
+    Edge* e;
+public:
+    Graph(int sz1, int sz2) :size1(sz1), size2(sz2)
+    {
+        graph = new int* [sz1];
+        e = new Edge[sz2];
+        if (e == nullptr || graph == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                graph[i] = new int[sz1];
+                if (graph[i] == nullptr)
+                {
+                    cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+                }
+            }
+            //初始化图
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                for (int j = 0; j &lt; sz1; ++j)
+                {
+                    if (i == j)
+                    {
+                        graph[i][j] = 0;//自边权值为零
+                    }
+                    else
+                    {
+                        graph[i][j] = 999999;//没边权值为一个较大数
+                    }
+                }
+            }
+            //输入边
+            int x(0);
+            int y(0);
+            int wi(0);
+            for (int i = 0; i &lt; sz2; ++i)
+            {
+                cin &gt;&gt; x &gt;&gt; y &gt;&gt; wi;
+                graph[x][y] = graph[y][x] = wi;
+                e[i].u = x;
+                e[i].v = y;
+                e[i].w = wi;
+            }
+        }
+    }
+    //根据权值对边进行排序（选择排序）
+    void Sort_Edge()
+    {
+        Edge tmp;
+        int min;
+        for (int i = 0; i &lt; size2; ++i)
+        {
+            min = i;
+            for (int j = i + 1; j &lt; size2; ++j)
+            {
+                if (e[j].w &lt; e[min].w)
+                {
+                    min = j;
+                }
+            }
+            tmp = e[i];
+            e[i] = e[min];
+            e[min] = tmp;
+        }
+
+    }
+    //克鲁斯卡尔算法
+    void Kruskal()
+    {
+        Tree tr(size1);//并查集
+        cout &lt;&lt; &quot;以下为最小生成树的边&quot; &lt;&lt; endl;
+        int n(0);//记录选边次数
+        int fu(0);
+        int fv(0);//两个顶点的祖先
+        for (int i = 0; i &lt; size2; ++i)
+        {
+            fu = tr.Find_fi(e[i].u);
+            fv = tr.Find_fi(e[i].v);
+            if (fu != fv)
+            {
+                n++;
+                //并查集合并
+                tr.pN[fu].fi = fv;
+                cout &lt;&lt; e[i].u &lt;&lt; &quot; &quot; &lt;&lt; e[i].v &lt;&lt; &quot; &quot; &lt;&lt; e[i].w &lt;&lt; endl;
+            }
+            if (n == size1 - 1)
+            {
+                break;
+            }
+        }
+    }
+};
+int main()
+{
+    Graph g(9,15);
+    g.Sort_Edge();
+    g.Kruskal();
+    return 0;
+}
+/*
+测试用例：讲义上的图
+9 15
+0 1 3
+0 5 4
+1 6 6
+6 5 7
+1 2 8
+1 8 5
+2 8 2
+2 3 12
+8 3 11
+6 3 14
+6 7 9
+5 4 18
+3 7 6
+7 4 1
+3 4 10
+0
+*/
+
+Prim算法:
+
+#define _CRT_SECURE_NO_WARNINGS
+#include&lt;iostream&gt;
+using namespace std;
+
+//无向连通带权图
+//存储方式：邻接矩阵
+class Graph
+{
+public:
+    int size1;//点的个数
+    int size2;//边的个数
+    int** graph;
+    bool* visit;//标记数组
+    int* dist;//到最小生成树距离数组
+public:
+    Graph(int sz1,int sz2):size1(sz1),size2(sz2)
+    {
+        graph = new int* [sz1];
+        visit = new bool[sz1];
+        dist = new int[sz1];
+        if (dist == nullptr || visit == nullptr || graph == nullptr)
+        {
+            cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+        }
+        else
+        {
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                graph[i] = new int[sz1];
+                if (graph[i] == nullptr)
+                {
+                    cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl;
+                }
+            }
+            //初始化
+            for (int i = 0; i &lt; sz1; ++i)
+            {
+                for (int j = 0; j &lt; sz1; ++j)
+                {
+                    if (i == j)
+                    {
+                        graph[i][j] = 0;//自边权值为零
+                    }
+                    else
+                    {
+                        graph[i][j] = 999999;//没边权值为一个较大数
+                    }
+                }
+                visit[i] = false;
+                dist[i] = 999999;
+            }
+            //输入边
+            int x(0);
+            int y(0);
+            int wi(0);
+            for (int i = 0; i &lt; sz2; ++i)
+            {
+                cin &gt;&gt; x &gt;&gt; y &gt;&gt; wi;
+                graph[x][y] = graph[y][x] = wi;
+            }
+            prim();
+        }
+    }
+    void prim()
+    {
+        //1.输入起点
+        int x(0);
+        cin &gt;&gt; x;
+        visit[x] = true;
+        dist[x] = 0;
+        //2.
+        for (int i = 0; i &lt; size1; ++i)
+        {
+            dist[i] = m_min(dist[i], graph[x][i]);
+        }
+        //3.
+        int t(0);//dist[t]最小
+        for (int i = 0; i &lt; size1 - 1; ++i)
+        {
+            int min_n(999999);
+            for (int j = 0; j &lt; size1; ++j)
+            {
+                if (visit[j] == false &amp;&amp; dist[j] &lt; min_n)
+                {
+                    t = j;
+                    min_n = dist[j];
+                }
+            }
+            cout &lt;&lt; &quot;点：&quot; &lt;&lt; t &lt;&lt; &quot;权值为&quot; &lt;&lt; min_n &lt;&lt; &quot;的边&quot; &lt;&lt; endl;
+            //将找到的点加入并标记
+            visit[t] = true;
+            dist[t] = 0;
+            //更新下标为t的点的邻接点
+            for (int i = 0; i &lt; size1; ++i)
+            {
+                //没有选择过才能更新
+                if (visit[i] == false)
+                {
+                    dist[i] = m_min(dist[i],graph[t][i]);
+                }
+            }
+        }
+    }
+    inline int m_min(int n1,int n2)
+    {
+        return n1 &lt; n2 ? n1 : n2;
+    }
+};
+int main()
+{
+    Graph g(9, 15);
+    g.prim();
+    return 0;
+}
+/*
+测试用例：讲义上的图
+9 15
+0 1 3
+0 5 4
+1 6 6
+6 5 7
+1 2 8
+1 8 5
+2 8 2
+2 3 12
+8 3 11
+6 3 14
+6 7 9
+5 4 18
+3 7 6
+7 4 1
+3 4 10
+0
+*/</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据库 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据库"/>
+<meta name="twitter:description" content="数据库类型： 1.关系型数据库:MySQL，Oracle，SQL Server,SQLite，DB2 2.非关系型数据库:Redis，MongoDB 数据库管理系统:Database Management System(DBMS): 主要用于科学组织和存储数据，高效获取和维护数据(如Navicat) 结构化查询语言： 1.结构化查询语句，Structured Query Language，简称SQL,分为如下四大类： （1）数据定义语言(DDL):数据库，数据表的创建，修改和删除 CREATE,ALTER,DROP （2）数据操作语言(DML):数据的增加，修改和删除 INSERT,UPDATE,DELETE （3）数据查询语言(DQL):数据的查询 SELECT （4）数据控制语言(DCL):用户授权，事物的提交和回滚 GRANT,COMMIT,ROLLBACK -- 创建数据库 CREATE DATABASE IF NOT EXISTS lesson DEFAULT CHARACTER SET GBK COLLATE GBK_CHINESE_CI; -- 修改数据库 ALTER DATABASE lesson CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 删除数据库 DROP DATABASE IF EXISTS lesson; -- 查看数据库 SHOW DATABASES; -- 使用数据库 USE lesson; -- 列类型 decimal(m,d) //字符串类型浮点数 m为数据总位数,d为小数点后位数,m-d为整数最大位数(可以小于) (1)数值类型 tinyint smallint mediumint int bigint float double decimal (2)日期时间类型 DATE YYYY-MM-dd ，日期格式 1000-01-01 ~ 9999-12-31 TIME HH:mm:ss ，时间格式 -838:59:59."/>
+
+    <meta property="og:title" content="数据库" />
+<meta property="og:description" content="数据库类型： 1.关系型数据库:MySQL，Oracle，SQL Server,SQLite，DB2 2.非关系型数据库:Redis，MongoDB 数据库管理系统:Database Management System(DBMS): 主要用于科学组织和存储数据，高效获取和维护数据(如Navicat) 结构化查询语言： 1.结构化查询语句，Structured Query Language，简称SQL,分为如下四大类： （1）数据定义语言(DDL):数据库，数据表的创建，修改和删除 CREATE,ALTER,DROP （2）数据操作语言(DML):数据的增加，修改和删除 INSERT,UPDATE,DELETE （3）数据查询语言(DQL):数据的查询 SELECT （4）数据控制语言(DCL):用户授权，事物的提交和回滚 GRANT,COMMIT,ROLLBACK -- 创建数据库 CREATE DATABASE IF NOT EXISTS lesson DEFAULT CHARACTER SET GBK COLLATE GBK_CHINESE_CI; -- 修改数据库 ALTER DATABASE lesson CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; -- 删除数据库 DROP DATABASE IF EXISTS lesson; -- 查看数据库 SHOW DATABASES; -- 使用数据库 USE lesson; -- 列类型 decimal(m,d) //字符串类型浮点数 m为数据总位数,d为小数点后位数,m-d为整数最大位数(可以小于) (1)数值类型 tinyint smallint mediumint int bigint float double decimal (2)日期时间类型 DATE YYYY-MM-dd ，日期格式 1000-01-01 ~ 9999-12-31 TIME HH:mm:ss ，时间格式 -838:59:59." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E5%BA%93/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-02T12:15:50+08:00" />
+<meta property="article:modified_time" content="2024-02-02T12:15:50+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据库</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 2, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <pre><code>数据库类型：
+1.关系型数据库:MySQL，Oracle，SQL Server,SQLite，DB2
+2.非关系型数据库:Redis，MongoDB
+
+数据库管理系统:Database Management System(DBMS):
+    主要用于科学组织和存储数据，高效获取和维护数据(如Navicat)
+
+结构化查询语言：
+    1.结构化查询语句，Structured Query Language，简称SQL,分为如下四大类：
+    （1）数据定义语言(DDL):数据库，数据表的创建，修改和删除
+        CREATE,ALTER,DROP
+    （2）数据操作语言(DML):数据的增加，修改和删除
+        INSERT,UPDATE,DELETE
+    （3）数据查询语言(DQL):数据的查询
+        SELECT
+    （4）数据控制语言(DCL):用户授权，事物的提交和回滚
+        GRANT,COMMIT,ROLLBACK
+
+
+-- 创建数据库
+CREATE DATABASE IF NOT EXISTS lesson DEFAULT CHARACTER SET GBK COLLATE GBK_CHINESE_CI;
+-- 修改数据库
+ALTER DATABASE lesson CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+-- 删除数据库
+DROP DATABASE IF EXISTS lesson;
+-- 查看数据库
+SHOW DATABASES;
+-- 使用数据库
+USE lesson;
+-- 列类型
+decimal(m,d) //字符串类型浮点数
+m为数据总位数,d为小数点后位数,m-d为整数最大位数(可以小于)
+(1)数值类型
+tinyint
+smallint
+mediumint
+int
+bigint
+float
+double
+decimal
+(2)日期时间类型
+DATE YYYY-MM-dd ，日期格式 1000-01-01 ~ 9999-12-31
+TIME HH:mm:ss ，时间格式 -838:59:59.000000 ~ 838:59:59.000000
+DATETIME YY-MM-dd HH:mm:ss 1000-01-01 00:00:00.000000 ~ 9999-12-31 23:59:59.999999
+TIMESTAMP YYYY-MM-dd HH:mm:ss 格式表示的时间戳 1970-01-01 00:00:01.000000 ~ 2038-01-1903:14:07.999999
+YEAR YYYY 格式的年份值 1901~2155
+(3)字符串类型
+char[(M)] 固定长字符串，检索快但浪费空间
+varchar[(M)] 变长字符串
+text 文本串
+(4)列类型修饰属性
+UNSIGNED 无符号
+ZEROFILL 不足位数补零
+NOT NULL 该列类型值不能为空
+DEFAULT 设置默认值
+AUTO_INCREMENT 表示自增长，只能应用于数值列类型,该列类型必须为键，且不能为空
+
+-- 数据表类型
+MyISAM,InnoDB,HEAP,BOB,CSV,最常用的为MyISAM,InnoDB
+
+二者区别:
+(1)事务处理：前者不支持，后者支持
+(2)数据行锁定：前者不支持，后者支持
+(3)外键约束：前者不支持，后者支持
+(4)全文索引：前者支持，后者不支持
+(5)表空间大小：前者较小，后者较大，为前者两倍
+//事务：涉及的所有操作是一个整体，要么都执行，要么都不执行
+//数据行锁定：一行数据，当一个用户在修改该数据时，可以直接将该条数据锁定
+注: 当涉及的业务操作以查询居多，修改和删除较少时，可以使用MyISAM。
+    当设计的业务操作经常会有修改和删除操作时，使用InnoDB。
+
+-- 创建数据表
+CREATE TABLE IF NOT EXISTS 数据表名称（
+    字段名1 列类型（长度） [修饰属性] [键/索引] [注释]，
+    ......
+    字段名n 列类型（长度） [修饰属性] [键/索引] [注释]
+）[ENGINE = 数据表类型] [CHARSET = 字符集编码] [COMMENT = 注释]
+
+CREATE TABLE IF NOT EXISTS student(
+    `number` VARCHAR(30) NOT NULL PRIMARY KEY COMMENT '学号，主键',
+    name VARCHAR(30) NOT NULL COMMENT '姓名',
+    sex TINYINT(1) UNSIGNED DEFAULT 0 COMMENT '性别：0-男 1-女 2-其他',
+    age TINYINT(3) UNSIGNED DEFAULT 0 COMMENT '年龄',
+    score DOUBLE(5,2) UNSIGNED COMMENT '成绩'
+) ENGINE=InnoDB CHARSET=UTF8 COMMENT='学生表';
+-- 修改数据表
+ALTER TABLE 表名 RENAME AS 新表名;
+ALTER TABLE student RENAME AS stu;
+-- 增加字段
+ALTER TABLE 表名 ADD 字段名 列类型（长度） [修饰属性] [键/索引] [注释];
+ALTER TABLE stu ADD phone VARCHAR(11) NOT NULL COMMENT '联系电话';
+-- 查看表结构
+DESC 表名;
+DESC stu;
+-- 修改字段
+ALTER TABLE 表名 MODIFY 字段名 列类型（长度） [修饰属性] [键/索引] [注释];
+ALTER TABLE stu MODIFY sex VARCHAR(2) DEFAULT '男' COMMENT '性别：男 女 其他';
+--
+ALTER TABLE 表名 CHANGE 字段名 新字段名 列类型（长度） [修饰属性] [键/索引] [注释];
+ALTER TABLE stu CHANGE phone mobile VARCHAR(11) NOT NULL COMMENT '联系电话';
+-- MODIFY 可修改字段名以外属性，CHANGE 可修改所有属性
+
+--删除字段
+ALTER TABLE 表名 DROP 字段名;
+ALTER TABLE stu DROP mobile;
+
+--删除数据表
+DROP TABLE IF EXISTS 表名;
+DROP TABLE IF EXISTS stu;
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
