@@ -16,7 +16,7 @@
       <description>今天尝试实现顺序表，基本的增，删，查，插，改功能基本实现，但扩容时存在部分问题，只能部分扩容，原因尚未找出，等待后续优化（鬼晓得什么时候，也许明天）
 2023.11.11 今天提交链表顺便修复一下之前的bug，扩容时忘了size++
 代码如下（博客显示有点问题，不知道为什么，之后去修复一下）
-#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;stdexcept&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class ArrayList { public: ArrayList(int Num) :size(0) //初始化构造函数 { date = new T[Num]; length = Num; } void AddEle(ArrayList* pa, T ele)//增添元素 { //判断是否超过最大容量 try { if (pa-&amp;gt;size &amp;lt; pa-&amp;gt;length) { pa-&amp;gt;date[size] = ele; pa-&amp;gt;size++; } else { throw runtime_error(&amp;quot;空间已满，是否扩容 Y/N&amp;quot;); } } catch (runtime_error err) { cout &amp;lt;&amp;lt; err.what() &amp;lt;&amp;lt; endl; char ch(0); cin &amp;gt;&amp;gt; ch; if (ch == &#39;Y&#39; || ch == &#39;y&#39;) { T* date_copy = new T[size + 1]; for (size_t i = 0; i &amp;lt; pa-&amp;gt;length; i++) { date_copy[i] = date[i]; }//将值存储到新空间 delete[] date; if (date !</description>
+#define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; #include&amp;lt;stdexcept&amp;gt; using namespace std; template&amp;lt;class T&amp;gt; class ArrayList { public: ArrayList(int Num) :size(0) //初始化构造函数 { date = new T[Num]; if (date == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } length = Num; } void AddEle(T ele)//增添元素 { //判断是否超过最大容量 try { if (size &amp;lt;length) { date[size] = ele; size++; } else { throw runtime_error(&amp;quot;空间已满，是否扩容 Y/N&amp;quot;); } } catch (runtime_error err) { cout &amp;lt;&amp;lt; err.</description>
     </item>
     
     <item>
