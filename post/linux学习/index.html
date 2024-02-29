@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Linux学习 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux学习"/>
+<meta name="twitter:description" content="在开始练习算法的同时，学习了解一下Linux操作系统。
+Linux磁盘分区:(20G)
+1./boot:引导分区，保存Linux启动需要用到的引导程序和文件 1G 2.swap:交换区，如果Linux内存不够用，swap分区会临时充当内存 2G 3./:根分区 17G Linux系统中三种网络连接方式
+1.桥接模式:在虚拟机里面的网络地址必须和外部的网络地址保持在同一网段(IPv4为例，前三位相同)。 这样Linux操作系统才可以和外部的机器进行通信。但是如果用户数量太多容易造成IP冲突 2.NAT模式(网络地址转换):在NAT模式下，虚拟机里面的网络可以不再和主机里面的网络保持在同一网段。但是主机里面会存在虚拟网卡。 这个虚拟网卡的IP地址必须和Linux里面的IP地址在同一网段。 这样Linux就可以通过虚拟网卡和主机之间进行通信。 同时我们的Linux操作系统也可以和外部的网络进行通信 3.仅主机模式:Linux系统的地址必须和主机IP地址保持一致 虚拟机的克隆:
+在选择克隆类型的时候，有两种
+1.创建链接克隆。这种克隆的方式占用的磁盘空间较小，克隆时间更快。本质上还是使用原来的 linux操作系统，只是克隆了原linux操作系统的引用。 2.创建完整克隆。这种克隆的方式占用是磁盘空间较大，克隆时间比较慢，相当于把原来的linux 操作系统复制了一份。一般我们选择完整克隆。 虚拟机的快照:
+VMware的菜单栏中有虚拟机快照这个选项，形象来说快照就相当于一个备份文件， 记录的是虚拟机运行到某一节点时的状态，在虚拟机的使用过程中如果发生了意外， 比如系统崩溃或系统异常，此时如果事先保存了快照，就可以选择恢复到快照， 即将虚拟机的磁盘文件系统和存储系统恢复到留下快照的那个节点，以恢复虚拟机的正常使用。 Linux目录结构:
+linux文件系统采用的是层级式的树状目录结构，其中最上层的根目录是&quot;/&quot;，然后在此目录下面再创建其他的目录。 Linux目录结构详解:
+/bin目录: 是Binary的缩写, 这个目录存放着最经常使用的命令。 比如我们常用的cd命令 cp命令都是存放在bin目录里面。 /sbin目录: s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。 /home目录: 存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。 /root目录: 该目录为系统管理员（root），也称作超级权限者的用户主目录。 如果我们使用root账户登录，默认所处的目录位置就是在/root下面。 /lib目录: 系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。 几乎所有的应用程序都需要用到这些共享库。 如果这个目录里面的文件被删除了，linux操作系统也就不能正常运行了。 /etc目录: 所有的系统管理所需要的配置文件和子目录。 linux系统本身所需要用到的配置文件也是存放在etc目录。 如果我们自己安装一些系统服务，比如mysql数据库服务，那么和数据库相关的配置文件(my.cnf)也是存放在/etc目录里面。 /boot目录: 存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。 如果这个目录里面的文件被删除了，linux操作系统也就不能正常运行了。 /dev目录: 类似于windows的设备管理器，把所有的硬件用文件的形式存储。 /proc目录: 这个目录是一个虚拟的目录，它是系统内存的映射，访问这个目录来获取系统的信息。 这个目录我们不要动，否则可能造成系统的崩溃。 /tmp目录: 这个目录是用来存放一下临时文件的。 /sys目录: 这个目录存放了linux内核相关的文件信息。 这个目录我们不要动，否则可能造成系统的崩溃。 /media目录: linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。 比如我们插入的U盘 光驱都会被映射成对应的文件存放在media目录。 /mnt目录: 系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将外部的存储挂载在/mnt/上，然后进入该目录就可以查看里的内容了。 比如共享目录Linux-common。 /opt目录: 这是主机给安装软件所存放的目录 /usr/local目录: 简单的说就是应用程序安装之后，安装程序所存放的目录。 一般是通过编译源码方式安装的程序。(类似于Windows系统的program file) /var目录: 这个目录中存放着在不断变化，扩充着的东西，最常用的就是包括各种日志文件。 Linux远程登陆:"/>
+
+    <meta property="og:title" content="Linux学习" />
+<meta property="og:description" content="在开始练习算法的同时，学习了解一下Linux操作系统。
+Linux磁盘分区:(20G)
+1./boot:引导分区，保存Linux启动需要用到的引导程序和文件 1G 2.swap:交换区，如果Linux内存不够用，swap分区会临时充当内存 2G 3./:根分区 17G Linux系统中三种网络连接方式
+1.桥接模式:在虚拟机里面的网络地址必须和外部的网络地址保持在同一网段(IPv4为例，前三位相同)。 这样Linux操作系统才可以和外部的机器进行通信。但是如果用户数量太多容易造成IP冲突 2.NAT模式(网络地址转换):在NAT模式下，虚拟机里面的网络可以不再和主机里面的网络保持在同一网段。但是主机里面会存在虚拟网卡。 这个虚拟网卡的IP地址必须和Linux里面的IP地址在同一网段。 这样Linux就可以通过虚拟网卡和主机之间进行通信。 同时我们的Linux操作系统也可以和外部的网络进行通信 3.仅主机模式:Linux系统的地址必须和主机IP地址保持一致 虚拟机的克隆:
+在选择克隆类型的时候，有两种
+1.创建链接克隆。这种克隆的方式占用的磁盘空间较小，克隆时间更快。本质上还是使用原来的 linux操作系统，只是克隆了原linux操作系统的引用。 2.创建完整克隆。这种克隆的方式占用是磁盘空间较大，克隆时间比较慢，相当于把原来的linux 操作系统复制了一份。一般我们选择完整克隆。 虚拟机的快照:
+VMware的菜单栏中有虚拟机快照这个选项，形象来说快照就相当于一个备份文件， 记录的是虚拟机运行到某一节点时的状态，在虚拟机的使用过程中如果发生了意外， 比如系统崩溃或系统异常，此时如果事先保存了快照，就可以选择恢复到快照， 即将虚拟机的磁盘文件系统和存储系统恢复到留下快照的那个节点，以恢复虚拟机的正常使用。 Linux目录结构:
+linux文件系统采用的是层级式的树状目录结构，其中最上层的根目录是&quot;/&quot;，然后在此目录下面再创建其他的目录。 Linux目录结构详解:
+/bin目录: 是Binary的缩写, 这个目录存放着最经常使用的命令。 比如我们常用的cd命令 cp命令都是存放在bin目录里面。 /sbin目录: s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。 /home目录: 存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。 /root目录: 该目录为系统管理员（root），也称作超级权限者的用户主目录。 如果我们使用root账户登录，默认所处的目录位置就是在/root下面。 /lib目录: 系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。 几乎所有的应用程序都需要用到这些共享库。 如果这个目录里面的文件被删除了，linux操作系统也就不能正常运行了。 /etc目录: 所有的系统管理所需要的配置文件和子目录。 linux系统本身所需要用到的配置文件也是存放在etc目录。 如果我们自己安装一些系统服务，比如mysql数据库服务，那么和数据库相关的配置文件(my.cnf)也是存放在/etc目录里面。 /boot目录: 存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。 如果这个目录里面的文件被删除了，linux操作系统也就不能正常运行了。 /dev目录: 类似于windows的设备管理器，把所有的硬件用文件的形式存储。 /proc目录: 这个目录是一个虚拟的目录，它是系统内存的映射，访问这个目录来获取系统的信息。 这个目录我们不要动，否则可能造成系统的崩溃。 /tmp目录: 这个目录是用来存放一下临时文件的。 /sys目录: 这个目录存放了linux内核相关的文件信息。 这个目录我们不要动，否则可能造成系统的崩溃。 /media目录: linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。 比如我们插入的U盘 光驱都会被映射成对应的文件存放在media目录。 /mnt目录: 系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将外部的存储挂载在/mnt/上，然后进入该目录就可以查看里的内容了。 比如共享目录Linux-common。 /opt目录: 这是主机给安装软件所存放的目录 /usr/local目录: 简单的说就是应用程序安装之后，安装程序所存放的目录。 一般是通过编译源码方式安装的程序。(类似于Windows系统的program file) /var目录: 这个目录中存放着在不断变化，扩充着的东西，最常用的就是包括各种日志文件。 Linux远程登陆:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/linux%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-16T11:30:51+08:00" />
+<meta property="article:modified_time" content="2024-02-16T11:30:51+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Linux学习</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 16, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/linux/">Linux</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>在开始练习算法的同时，学习了解一下Linux操作系统。</p>
+<p>Linux磁盘分区:(20G)</p>
+<pre><code>1./boot:引导分区，保存Linux启动需要用到的引导程序和文件  1G
+2.swap:交换区，如果Linux内存不够用，swap分区会临时充当内存 2G
+3./:根分区 17G
+</code></pre>
+<p>Linux系统中三种网络连接方式</p>
+<pre><code>1.桥接模式:在虚拟机里面的网络地址必须和外部的网络地址保持在同一网段(IPv4为例，前三位相同)。
+这样Linux操作系统才可以和外部的机器进行通信。但是如果用户数量太多容易造成IP冲突
+
+2.NAT模式(网络地址转换):在NAT模式下，虚拟机里面的网络可以不再和主机里面的网络保持在同一网段。但是主机里面会存在虚拟网卡。
+这个虚拟网卡的IP地址必须和Linux里面的IP地址在同一网段。
+这样Linux就可以通过虚拟网卡和主机之间进行通信。
+同时我们的Linux操作系统也可以和外部的网络进行通信
+
+3.仅主机模式:Linux系统的地址必须和主机IP地址保持一致
+</code></pre>
+<p>虚拟机的克隆:</p>
+<p>在选择克隆类型的时候，有两种</p>
+<pre><code>1.创建链接克隆。这种克隆的方式占用的磁盘空间较小，克隆时间更快。本质上还是使用原来的
+linux操作系统，只是克隆了原linux操作系统的引用。
+
+2.创建完整克隆。这种克隆的方式占用是磁盘空间较大，克隆时间比较慢，相当于把原来的linux
+操作系统复制了一份。一般我们选择完整克隆。
+</code></pre>
+<p>虚拟机的快照:</p>
+<pre><code>VMware的菜单栏中有虚拟机快照这个选项，形象来说快照就相当于一个备份文件，
+记录的是虚拟机运行到某一节点时的状态，在虚拟机的使用过程中如果发生了意外，
+比如系统崩溃或系统异常，此时如果事先保存了快照，就可以选择恢复到快照，
+即将虚拟机的磁盘文件系统和存储系统恢复到留下快照的那个节点，以恢复虚拟机的正常使用。
+</code></pre>
+<p>Linux目录结构:</p>
+<pre><code>linux文件系统采用的是层级式的树状目录结构，其中最上层的根目录是&quot;/&quot;，然后在此目录下面再创建其他的目录。
+</code></pre>
+<p>Linux目录结构详解:</p>
+<pre><code>/bin目录:
+是Binary的缩写, 这个目录存放着最经常使用的命令。
+比如我们常用的cd命令 cp命令都是存放在bin目录里面。
+
+/sbin目录:
+s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。
+
+/home目录:
+存放普通用户的主目录，在Linux中每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。
+
+/root目录:
+该目录为系统管理员（root），也称作超级权限者的用户主目录。
+如果我们使用root账户登录，默认所处的目录位置就是在/root下面。
+
+/lib目录:
+系统开机所需要最基本的动态连接共享库，其作用类似于Windows里的DLL文件。
+几乎所有的应用程序都需要用到这些共享库。
+如果这个目录里面的文件被删除了，linux操作系统也就不能正常运行了。
+
+/etc目录:
+所有的系统管理所需要的配置文件和子目录。
+linux系统本身所需要用到的配置文件也是存放在etc目录。
+如果我们自己安装一些系统服务，比如mysql数据库服务，那么和数据库相关的配置文件(my.cnf)也是存放在/etc目录里面。
+
+/boot目录:
+存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。
+如果这个目录里面的文件被删除了，linux操作系统也就不能正常运行了。
+
+/dev目录:
+类似于windows的设备管理器，把所有的硬件用文件的形式存储。
+
+/proc目录:
+这个目录是一个虚拟的目录，它是系统内存的映射，访问这个目录来获取系统的信息。
+这个目录我们不要动，否则可能造成系统的崩溃。
+
+/tmp目录:
+这个目录是用来存放一下临时文件的。
+
+/sys目录:
+这个目录存放了linux内核相关的文件信息。
+这个目录我们不要动，否则可能造成系统的崩溃。
+
+/media目录:
+linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。
+比如我们插入的U盘 光驱都会被映射成对应的文件存放在media目录。
+
+/mnt目录:
+系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将外部的存储挂载在/mnt/上，然后进入该目录就可以查看里的内容了。
+比如共享目录Linux-common。
+
+/opt目录:
+这是主机给安装软件所存放的目录
+
+/usr/local目录:
+简单的说就是应用程序安装之后，安装程序所存放的目录。
+一般是通过编译源码方式安装的程序。(类似于Windows系统的program file)
+
+/var目录:
+这个目录中存放着在不断变化，扩充着的东西，最常用的就是包括各种日志文件。
+</code></pre>
+<p>Linux远程登陆:</p>
+<pre><code>在实际工作中，linux服务器是开发小组共享的，并不是存放在每个用户的本地电脑上，
+linux服务器一般会存在在一台独立的电脑上(独立的机房里)。
+所以我们需要远程的登录到linux进行相关的操作。
+</code></pre>
+<p>vi/vim: Linux内置文本编辑器</p>
+<pre><code>语法: vim 文件名称
+</code></pre>
+<p>vi/vim的三种模式:</p>
+<pre><code>1.正常模式：
+    在这种模式下面，我们不能在文件中输入内容，但是可以浏览内容，还可以删除内容。
+2.插入模式：
+    按下i，I，o，O，a等任意一个字母之后才会进入插入模式，一般情况按下i即可，此时我们可以在文本中输入内容。
+3.命令行模式(底行模式)：
+    按esc键回到正常模式，再按shift + : 切换到底行模式。
+    在这个模式当中，可以提供你相关指令，完成读取，存盘，替换vim，显示行号等操作。
+    输入wq:保存并退出
+    q:直接退出
+    q!:不保存并退出
+</code></pre>
+<p>vim编辑器的一些快捷键:</p>
+<pre><code>1.拷贝当前行 (yy)，并粘贴(p) (正常模式下)
+2.2yyp复制并粘贴下面两行 (正常模式下)
+3.dd删除当前行 (正常模式下)
+4.2dd删除下面两行 (正常模式下)
+5.查找指定内容 / + 关键字 (命令行模式下)
+6.设置行号 set nu (命令行模式下)
+7.取消行号 set nonu (命令行模式下)
+8.G 快速将光标定位到文件末尾处
+  gg 快速将光标定位到文件起始处
+  行号 shift + g 快速将光标定位到对应行号 (正常模式下)
+9.撤销 u (正常模式下)
+10.文本内容替换 (命令行模式下)
+    1.要搜索当前行中字符串“World”的首次出现，并将其替换为“shijie” 
+        s/World/shijie/
+    
+    2.要替换当前行中搜索到的所有内容，可以添加 g 标志 
+        s/World/shijie/g
+    
+    3.想搜索和替换整个文件中的匹配内容，使用百分比字符 % 作为范围。此字符指示从文件第一行到最后一行的范围 
+        %s/World/shijie/g
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

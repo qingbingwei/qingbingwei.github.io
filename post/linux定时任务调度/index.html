@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Linux定时任务调度 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux定时任务调度"/>
+<meta name="twitter:description" content="定时任务调度:指每隔指定的时间，执行特定的命令或程序(脚本)
+任务调度命令:
+crontab
+-e 编辑定时任务 -l 查询定时任务 -r 删除定时任务 例.创建一个定时任务，将etc目录下面的文件列表查询出来，追加到/tmp/etc.txt文件中，并每分钟执行1次。 */1 * * * * ls -l /etc/ &gt; /tmp/etc.txt 占位符含义 第一个 “*” 一个小时当中的第几分钟 0-59 第二个 “*” 一天当中的第几个小时 0-23 第三个 “*” 一个月当中的第几天 1-31 第四个 “*” 一年当中的第几个月 1-12 第五个 “*” 一周当中的星期几 0-7(0和7都代表星期日) 特殊符号 * 代表任何时间，比如第一个“*”就代表1小时中每分钟都执行1次的意思。 ， 代表不连续的时间，比如“0 8,12,16 * * *”就代表1天中的8点过0分，12点过0分，16点过0分都会执行1次。 - 代表连续的世间范围，比如“0 5 * * 1-6”就代表星期1到星期6的凌晨5点过0分都会执行。 */n 代表每隔多久执行1次。比如“*/10 * * * *” 就代表每隔10分钟就执行1次命令。 注:service crond restart [重启任务调度] at
+机制介绍: 1. at命令是一次性定时执行任务计划，at的守护线程atd以后台的模式运行，检查作业队列来运行。 2."/>
+
+    <meta property="og:title" content="Linux定时任务调度" />
+<meta property="og:description" content="定时任务调度:指每隔指定的时间，执行特定的命令或程序(脚本)
+任务调度命令:
+crontab
+-e 编辑定时任务 -l 查询定时任务 -r 删除定时任务 例.创建一个定时任务，将etc目录下面的文件列表查询出来，追加到/tmp/etc.txt文件中，并每分钟执行1次。 */1 * * * * ls -l /etc/ &gt; /tmp/etc.txt 占位符含义 第一个 “*” 一个小时当中的第几分钟 0-59 第二个 “*” 一天当中的第几个小时 0-23 第三个 “*” 一个月当中的第几天 1-31 第四个 “*” 一年当中的第几个月 1-12 第五个 “*” 一周当中的星期几 0-7(0和7都代表星期日) 特殊符号 * 代表任何时间，比如第一个“*”就代表1小时中每分钟都执行1次的意思。 ， 代表不连续的时间，比如“0 8,12,16 * * *”就代表1天中的8点过0分，12点过0分，16点过0分都会执行1次。 - 代表连续的世间范围，比如“0 5 * * 1-6”就代表星期1到星期6的凌晨5点过0分都会执行。 */n 代表每隔多久执行1次。比如“*/10 * * * *” 就代表每隔10分钟就执行1次命令。 注:service crond restart [重启任务调度] at
+机制介绍: 1. at命令是一次性定时执行任务计划，at的守护线程atd以后台的模式运行，检查作业队列来运行。 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-25T11:23:30+08:00" />
+<meta property="article:modified_time" content="2024-02-25T11:23:30+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Linux定时任务调度</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 25, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/linux/">Linux</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>定时任务调度:指每隔指定的时间，执行特定的命令或程序(脚本)</p>
+<p>任务调度命令:</p>
+<p>crontab</p>
+<pre><code>-e 编辑定时任务
+-l 查询定时任务
+-r 删除定时任务
+
+例.创建一个定时任务，将etc目录下面的文件列表查询出来，追加到/tmp/etc.txt文件中，并每分钟执行1次。
+    */1 * * * * ls -l /etc/ &gt; /tmp/etc.txt
+
+    占位符含义
+    第一个 “*” 一个小时当中的第几分钟 0-59
+    第二个 “*” 一天当中的第几个小时 0-23
+    第三个 “*” 一个月当中的第几天 1-31
+    第四个 “*” 一年当中的第几个月 1-12
+    第五个 “*” 一周当中的星期几 0-7(0和7都代表星期日)
+
+    特殊符号
+    *  代表任何时间，比如第一个“*”就代表1小时中每分钟都执行1次的意思。
+    ， 代表不连续的时间，比如“0 8,12,16 * * *”就代表1天中的8点过0分，12点过0分，16点过0分都会执行1次。
+    -  代表连续的世间范围，比如“0 5 * * 1-6”就代表星期1到星期6的凌晨5点过0分都会执行。
+    */n  代表每隔多久执行1次。比如“*/10 * * * *” 就代表每隔10分钟就执行1次命令。
+
+    注:service crond restart [重启任务调度]
+</code></pre>
+<p>at</p>
+<pre><code>机制介绍:
+    1. at命令是一次性定时执行任务计划，at的守护线程atd以后台的模式运行，检查作业队列来运行。
+    2. 默认情况下，atd守护线程每60秒检查作业队列，有作业时会检查作业运行时间，如果时间与当前
+    时间匹配，则运行此作业。
+    3. at命令是一次性定制的计划任务，执行完一个任务后就不再执行此任务了。
+    4. 在使用at命令的时候，一定要保证atd进程的启动，可以用相关指令来查看
+    ps -ef | grep atd
+
+时间定义:
+    HH:MM
+        当天 HH:MM 执行，若当天时间已过，则在明天 HH:MM 执行
+        当天 4:00 (若超时则为明天 4:00): 4:00
+    英文粗略时间单次
+        midnight(午夜，00:00)、noon(中午，12:00)、teatime(下午茶时间，16:00) tomorrow（明天）
+        midnight、noon、teatime
+    英文月名 A 日期B [年份C]
+        C年A月B日执行
+        在 2018 年 1 月 15 日执行:January 15 2018
+    日期时间戳形式
+        绝对计时法  时间+日期
+        时间：HH:MM
+        日期：MMDDYY或MM/DD/YY或MM.DD.YY
+        在 2018 年 1 月 15 日执行：011518或01/15/18或01.15.18
+    now + 数量 单位
+        相对计时法
+        以 minutes、hours、days 或 weeks 为单位
+        5 天后的此时此刻执行：now + 5 days
+参数
+-m 当前任务执行后，向用户发送邮件
+-l(=atq) 列出当前用户任务队列
+-d(=atrm) 删除at任务
+-v 显示任务将被执行时间
+-c 输出任务内容
+-V 显示版本信息
+-f &lt;文件&gt; 从指定文件读入，而不是标准输入
+-t &lt;时间参数&gt; 以时间参数的形式提交要运行的任务，时间参数MMDDhhmm(月日时分)
+
+语法格式
+at [选项] [时间]
+at &gt; 命令(输入两次 Ctrl + D)
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

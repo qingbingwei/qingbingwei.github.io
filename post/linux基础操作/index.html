@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Linux基础操作 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux基础操作"/>
+<meta name="twitter:description" content="Linux的关机与重启
+1.shutdown shutdown -h now 立即关机 shutdown -h 1 一分钟后关机 shutdown -r now 立即重启 2.halt 关机 3.sync 同步内存中的数据到硬盘 4.reboot 重启系统 注:
+1.不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写入到磁盘中。 2.目前的shutdown、reboot、halt命令在关机前都进行了sync。 用户的登录和注销:
+1.切换用户命令 su 用户名称 2.注销当前用户 exit 注:在切换用户的时候，如果从低级别的用户切换到高级别的用户，需要输入密码的(xq &ndash;&gt; root)。 如果从高级别的用户切换到低级别的用户(root &ndash;&gt; xq)，那么是不需要输入密码的。
+Linux用户管理
+注:创建用户权限只有管理员才有，我们一般在root用户下面创建用户
+创建用户 useradd 用户名 创建用户，并且自定义用户目录名称 useradd -d 目录名称 用户名称 useradd -d /home/test king 设置用户密码 passwd 用户名 删除用户 userdel 用户名 (只是删除用户数据，对应目录不删除) 删除用户数据的同时也会删除用户目录 userdel -r 用户名 查询用户信息 id 用户名 获取当前用户名称 whoami 获取当前登录用户的详细信息 who am i Linux用户组管理"/>
+
+    <meta property="og:title" content="Linux基础操作" />
+<meta property="og:description" content="Linux的关机与重启
+1.shutdown shutdown -h now 立即关机 shutdown -h 1 一分钟后关机 shutdown -r now 立即重启 2.halt 关机 3.sync 同步内存中的数据到硬盘 4.reboot 重启系统 注:
+1.不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写入到磁盘中。 2.目前的shutdown、reboot、halt命令在关机前都进行了sync。 用户的登录和注销:
+1.切换用户命令 su 用户名称 2.注销当前用户 exit 注:在切换用户的时候，如果从低级别的用户切换到高级别的用户，需要输入密码的(xq &ndash;&gt; root)。 如果从高级别的用户切换到低级别的用户(root &ndash;&gt; xq)，那么是不需要输入密码的。
+Linux用户管理
+注:创建用户权限只有管理员才有，我们一般在root用户下面创建用户
+创建用户 useradd 用户名 创建用户，并且自定义用户目录名称 useradd -d 目录名称 用户名称 useradd -d /home/test king 设置用户密码 passwd 用户名 删除用户 userdel 用户名 (只是删除用户数据，对应目录不删除) 删除用户数据的同时也会删除用户目录 userdel -r 用户名 查询用户信息 id 用户名 获取当前用户名称 whoami 获取当前登录用户的详细信息 who am i Linux用户组管理" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/linux%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-21T15:08:23+08:00" />
+<meta property="article:modified_time" content="2024-02-21T15:08:23+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Linux基础操作</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 21, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/linux/">Linux</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>Linux的关机与重启</p>
+<pre><code>1.shutdown
+shutdown -h now 立即关机
+shutdown -h 1 一分钟后关机
+shutdown -r now 立即重启
+
+2.halt 关机
+
+3.sync 同步内存中的数据到硬盘
+
+4.reboot 重启系统
+</code></pre>
+<p>注:</p>
+<pre><code>1.不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写入到磁盘中。
+2.目前的shutdown、reboot、halt命令在关机前都进行了sync。
+</code></pre>
+<p>用户的登录和注销:</p>
+<pre><code>1.切换用户命令 su 用户名称
+2.注销当前用户 exit
+</code></pre>
+<p>注:在切换用户的时候，如果从低级别的用户切换到高级别的用户，需要输入密码的(xq &ndash;&gt; root)。
+如果从高级别的用户切换到低级别的用户(root &ndash;&gt; xq)，那么是不需要输入密码的。</p>
+<p>Linux用户管理</p>
+<p>注:创建用户权限只有管理员才有，我们一般在root用户下面创建用户</p>
+<pre><code>创建用户 useradd 用户名
+创建用户，并且自定义用户目录名称 useradd -d 目录名称 用户名称 
+    useradd -d /home/test king
+设置用户密码 passwd 用户名
+删除用户 userdel 用户名 (只是删除用户数据，对应目录不删除)
+删除用户数据的同时也会删除用户目录 userdel -r 用户名
+查询用户信息 id 用户名
+获取当前用户名称 whoami 
+获取当前登录用户的详细信息 who am i
+</code></pre>
+<p>Linux用户组管理</p>
+<p>用户组:可以将多个用户(具有相同的权限)统一管理</p>
+<pre><code>创建组的命令 groupadd 组名称
+删除组的命令 groupdel 组名称
+在创建用户时，可以指定用户的组 useradd -g 组名称 用户名
+修改用户所属的组 usermod -g 组名 用户名
+</code></pre>
+<p>Linux运行级别</p>
+<pre><code>0：关机
+1：单用户（找回用户丢失的密码，可以使用单用户模式）
+2：多用户状态但没有网络服务（一般很少用）
+3：多用户状态但有网络服务（没有图形化界面，但是有网络，这种用的最多）
+4：系统未使用，保留给用户（很少用）
+5：图形界面
+6：系统重启
+
+注:常用的运行级别是3和5，我们也可以指定系统默认的运行级别。
+切换运行级别的口令： init [0 1 2 3 4 5 6]
+
+获取当前操作系统默认运行级别: systemctl get-default
+设置操作系统默认运行级别: systemctl set-default multi-user.target
+</code></pre>
+<p>如何找回root密码:</p>
+<pre><code>1.进入Linux开机界面，按下e
+2.找到以linux16开头的行数,在行的最后面输入,init=/bin/sh。
+3.接着输入完成之后，直接按快捷键Ctrl + X 进入单用户模式
+4.接着在光标闪烁的位置输入： mount -o remount,rw / 然后按回车键。
+5.在新的一行最后面输入：passwd，然后按回车键。
+输入密码，然后再次输入确认密码（密码长度最好是8位以上，但不是必须的）。
+密码修改成功之后，会显示passwd .....的字样，说明密码修改成功。
+6.接着在光标闪烁的位置输入：touch /.autorelabel(注意touch 与后面的/之间有空格)。
+完成后按回车。
+7.接着在光标闪烁的位置继续输入：exec /sbin/init(注意exec 与后面的/之间有空格)。
+然后按回车键，等待系统自动修改密码（这个时间可能会有点长，请耐心等待）。
+完成后系统会自动重启，新的密码生效了。
+</code></pre>
+<p>Linux帮助指令</p>
+<pre><code>1.man 获得帮助信息
+ man 命令名称（功能描述：获得指定命令的帮助信息）
+
+2.help 获得shell内置命令的帮助信息
+ help 命令名称（功能描述：获得指定命令的帮助信息）
+</code></pre>
+<p>Linux文件相关操作指令</p>
+<pre><code>pwd 显示当前目录绝对路径
+ls 显示当前目录下所有文件
+cd 切换目录
+    1. ~ 回到当前用户的home目录
+    （如果是root用户，那么回到的就是root目录下面，如果是非root用户，那么就回到home/用户目录 下面）
+    2. / 回到系统根目录
+    3. .. 回到当前目录的上一级目录
+    4. - 回到上一条命令所在的目录
+    5. cd 绝对路径  切换到指定目录
+mkdir 用于创建目录
+    mkdir -p aaa/bbb 创建多级文件夹 使用-p参数 
+rmdir 删除目录(只能删除空文件夹)
+touch 创建空文件
+cp 拷贝文件到指定目录
+    例.将/home/kobe下面的Hello.txt拷贝至/home/guojing目录下面。
+    cp Hello.txt /home/guojing/
+    -r 递归复制整个文件
+    cp -r 文件夹 目标地址
+rm 移除文件或者目录
+    -r 递归删除整个文件夹(一般删除一个非空文件夹)
+    -f 强制删除不提示
+mv 移动文件(剪切)或者重命名
+    1.在同一个目录下面操作： mv oldName newName (重命名)
+    2.在不同目录下面操作：
+    将home/kobe目录下面的Demo1.txt文件剪切到/home/guojing目录下面，并将文件命名为Demo1.java
+    mv Demo1.txt /home/guojing/Demo1.java
+cat 浏览文件
+    cat [参数] 文件名
+    -n 显示行号
+    注: cat只能浏览文件，并不能修改文件，为了浏览方便，一般会用上管道命令 |more。
+    例. cat -n /etc/profile | more
+more more指令是一个基于vi编辑器的文本过滤器，他以全屏的方式显示文本文件的内容
+    以下为若干快捷键
+    1.空格键 向下翻页
+    2.Enter 向下翻一行
+    3.q 代表立刻more，不再显示文件内容
+    4.Ctrl + F 向下滚动一屏幕
+    5.Ctrl + B 返回上一屏
+    6.= 输出当前行号
+    7.:f 输出文件名和当前行号
+less 他的功能与more类似，但是比more更加强大，对显示大型文件具有高效率。
+    以下为若干快捷键
+    1.空格键 向下翻动一页
+    2.上箭头键 向上翻动一页
+    3.下箭头键 向下翻动一页
+    4./字符串内容 搜索字符串 n:向下搜索 N：向上搜索
+    5.q 立刻less，不再显示文件内容
+echo 输出内容到控制台
+head head用于显示文件开头部分内容，默认情况下head希纳是文件前10行的内容
+    例. head -n 5 文件 显示前五行的内容 5可以是任意数
+tail 用于输出文件中尾部的内容，默认情况下tail指令显示文件的前10行内容
+    例. tail -n 5 文件 查看文件最后5行的内容，5可以是任意数
+    tail -f 文件名称 （实时监控文件发生的变化）
+&gt; 指令和 &gt;&gt; 指令： &gt;输出重定向 ，&gt;&gt;追加
+    例.
+    echo ‘hello’ &gt; /home/guojing/test.txt （将hello输入到guojing文件夹下的test.txt中 之前内容覆盖）。
+    echo ‘hello’ &gt;&gt; /home/guojing/test.txt （将hello追加到guojing文件夹下的test.txt文件的末尾处 之前内容不会覆盖）。
+    cat /etc/profile &gt; /home/guojing/myprofile （将etc/profile 重定向到home目录下的myprofile 没有会自动创建）
+    cal &gt; /home/guojing/test.txt （将日历信息重定向输出到opt下的test文件）覆盖
+    cal &gt;&gt; /home/guojing/test.txt（将日历信息追加到opt目录下的test文件）追加
+ln 软连接:软连接也称为符号链接，类似中windows里面的快捷方式，主要是存放了链接文件的路径。
+    ln -s [源文件或目录] [软连接名称]
+    在xq目录下面创建软连接linkToRoot。这个软连接指向root目录。
+    ln -s /root linkToRoot
+    (或ln -s /root /home/xq/linkToRoot)
+history 查看用户已经执行过的历史指令
+    例.history  查看当前用户的历史指令
+    history 10  查看当前用户的最近10条历史指令</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

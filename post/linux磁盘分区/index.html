@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Linux磁盘分区 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux磁盘分区"/>
+<meta name="twitter:description" content="Linux磁盘分区机制
+1.Linux 系统中的文件系统的总体结构是一定的：只有一个根目录，根目录下的目录结构独立且唯一 （如 /boot、/dev、/bin、/etc 目录等都是唯一的），Linux 中的磁盘分区都是文件系统中的一部 分。 2.计算机的硬盘可以有多个、磁盘上的分区也可以有多个。 但每个磁盘要想连接到 Linux 系统中，需要将分区“映射”到文件系统的某一个目录下， 这样访问目录即可访问对应硬盘分区，这种映射称为“挂载”。 3.任何目录或其父目录都要挂载到硬盘的某个分区下。 如需要将某一分区挂载到根目录下，Linux 系统才能正常工作。 4.某个分区所挂载的目录，称为此分区的挂载点。 5.磁盘的不同分区可以挂载到 Linux 文件系统的不同分区下，但不能同时挂载到一个相同的目录。 注:我们可以使用lsblk命令来查看详细的磁盘分区信息
+Linux硬盘类型
+IDE硬盘 hdx~ hd:标识硬盘类型 IDE硬盘类型 x:不同的硬盘(a基本盘 b基本从属盘 c辅助盘 d辅助从属盘) ~:磁盘分区 1 2 3 4 5 SCSI硬盘 sdx~ sd:标识硬盘类型 SCSI硬盘类型 x:描述是第几块硬盘(a第一块硬盘 b第二块硬盘 c第三块硬盘 d第四块硬盘) ~:磁盘分区 1 2 3... 我们也可以查看分区的详细信息： [root@xq100 ~]# lsblk -f NAME FSTYPE LABEL UUID MOUNTPOINT sda ├─sda1 xfs 72921afb-f2fa-4b12-9338-28b31d19d15a /boot ├─sda2 swap 6b47cbdc-9db2-4e27-9309-3898c51b3d5f [SWAP] └─sda3 xfs 569b448b-1d35-47d6-929d-ad256d81d19d / sr0 iso9660 CentOS 7 x86_64 2019-09-11-18-50-31-00 注: NAME ：驱动器标识 FSTYPE ：文件系统类型 LABLE ：文件系统 LABLE UUID ：分区唯一标识符，格式化磁盘后，会给分区分配一个32位的唯一的字符串 MOUNTPOINT ：挂载点 给新增的硬盘分区"/>
+
+    <meta property="og:title" content="Linux磁盘分区" />
+<meta property="og:description" content="Linux磁盘分区机制
+1.Linux 系统中的文件系统的总体结构是一定的：只有一个根目录，根目录下的目录结构独立且唯一 （如 /boot、/dev、/bin、/etc 目录等都是唯一的），Linux 中的磁盘分区都是文件系统中的一部 分。 2.计算机的硬盘可以有多个、磁盘上的分区也可以有多个。 但每个磁盘要想连接到 Linux 系统中，需要将分区“映射”到文件系统的某一个目录下， 这样访问目录即可访问对应硬盘分区，这种映射称为“挂载”。 3.任何目录或其父目录都要挂载到硬盘的某个分区下。 如需要将某一分区挂载到根目录下，Linux 系统才能正常工作。 4.某个分区所挂载的目录，称为此分区的挂载点。 5.磁盘的不同分区可以挂载到 Linux 文件系统的不同分区下，但不能同时挂载到一个相同的目录。 注:我们可以使用lsblk命令来查看详细的磁盘分区信息
+Linux硬盘类型
+IDE硬盘 hdx~ hd:标识硬盘类型 IDE硬盘类型 x:不同的硬盘(a基本盘 b基本从属盘 c辅助盘 d辅助从属盘) ~:磁盘分区 1 2 3 4 5 SCSI硬盘 sdx~ sd:标识硬盘类型 SCSI硬盘类型 x:描述是第几块硬盘(a第一块硬盘 b第二块硬盘 c第三块硬盘 d第四块硬盘) ~:磁盘分区 1 2 3... 我们也可以查看分区的详细信息： [root@xq100 ~]# lsblk -f NAME FSTYPE LABEL UUID MOUNTPOINT sda ├─sda1 xfs 72921afb-f2fa-4b12-9338-28b31d19d15a /boot ├─sda2 swap 6b47cbdc-9db2-4e27-9309-3898c51b3d5f [SWAP] └─sda3 xfs 569b448b-1d35-47d6-929d-ad256d81d19d / sr0 iso9660 CentOS 7 x86_64 2019-09-11-18-50-31-00 注: NAME ：驱动器标识 FSTYPE ：文件系统类型 LABLE ：文件系统 LABLE UUID ：分区唯一标识符，格式化磁盘后，会给分区分配一个32位的唯一的字符串 MOUNTPOINT ：挂载点 给新增的硬盘分区" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/linux%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-02-25T13:43:58+08:00" />
+<meta property="article:modified_time" content="2024-02-25T13:43:58+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Linux磁盘分区</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Feb 25, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/linux/">Linux</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>Linux磁盘分区机制</p>
+<pre><code>1.Linux 系统中的文件系统的总体结构是一定的：只有一个根目录，根目录下的目录结构独立且唯一
+（如 /boot、/dev、/bin、/etc 目录等都是唯一的），Linux 中的磁盘分区都是文件系统中的一部
+分。
+2.计算机的硬盘可以有多个、磁盘上的分区也可以有多个。
+但每个磁盘要想连接到 Linux 系统中，需要将分区“映射”到文件系统的某一个目录下，
+这样访问目录即可访问对应硬盘分区，这种映射称为“挂载”。
+3.任何目录或其父目录都要挂载到硬盘的某个分区下。
+如需要将某一分区挂载到根目录下，Linux 系统才能正常工作。
+4.某个分区所挂载的目录，称为此分区的挂载点。
+5.磁盘的不同分区可以挂载到 Linux 文件系统的不同分区下，但不能同时挂载到一个相同的目录。
+</code></pre>
+<p>注:我们可以使用lsblk命令来查看详细的磁盘分区信息</p>
+<p>Linux硬盘类型</p>
+<pre><code>IDE硬盘 hdx~
+    hd:标识硬盘类型 IDE硬盘类型
+    x:不同的硬盘(a基本盘 b基本从属盘 c辅助盘 d辅助从属盘)
+    ~:磁盘分区 1 2 3 4 5
+SCSI硬盘 sdx~
+    sd:标识硬盘类型 SCSI硬盘类型
+    x:描述是第几块硬盘(a第一块硬盘 b第二块硬盘 c第三块硬盘 d第四块硬盘)
+    ~:磁盘分区 1 2 3...
+
+我们也可以查看分区的详细信息：
+    [root@xq100 ~]# lsblk -f
+    NAME   FSTYPE LABEL                   UUID                        MOUNTPOINT
+    sda
+    ├─sda1 xfs                     72921afb-f2fa-4b12-9338-28b31d19d15a   /boot
+    ├─sda2 swap                    6b47cbdc-9db2-4e27-9309-3898c51b3d5f   [SWAP]
+    └─sda3 xfs                     569b448b-1d35-47d6-929d-ad256d81d19d   /
+    sr0    iso9660 CentOS 7 x86_64 2019-09-11-18-50-31-00
+
+    注:
+    NAME ：驱动器标识
+    FSTYPE ：文件系统类型
+    LABLE ：文件系统 LABLE
+    UUID ：分区唯一标识符，格式化磁盘后，会给分区分配一个32位的唯一的字符串
+    MOUNTPOINT ：挂载点
+</code></pre>
+<p>给新增的硬盘分区</p>
+<pre><code>fdisk /dev/sdb
+然后输入n进行磁盘分区
+选择p，设置主分区
+然后一系列默认设置
+最后输入w进行设置写入
+</code></pre>
+<p>格式化磁盘分区</p>
+<pre><code>mkfs -t ext4 /dev/sdb1
+</code></pre>
+<p>挂载分区(临时)</p>
+<pre><code>cd /
+mkdir newdisk
+mount /dev/sdb1 /newdisk/  将sdb1磁盘分区挂载到newdisk目录
+注:用命令行挂载的方式重启后会失效！！！,也就是说这种挂载关系是临时的。
+</code></pre>
+<p>挂载分区(永久)  &mdash;&mdash;-似乎修改文件后会导致图形化界面无法正常启动</p>
+<pre><code>我们可以通过修改/etc/fstab文件实现永久挂载。
+添加完成后，执行mount -a（或者reboot）即刻生效。
+</code></pre>
+<p>磁盘情况查询指令</p>
+<pre><code>df -h 查询整个磁盘占用情况
+du -h [目录] 查询指定目录的磁盘占用情况
+    -s 指定目录大小汇总
+    -h 带计量单位
+    -a 含文件
+    --max-depth=1 子目录深度
+    -c 列出明细的同时，增加汇总值
+</code></pre>
+<p>磁盘操作实用指令</p>
+<pre><code>1.统计/opt文件夹下文件的个数
+    ls -l /opt | grep &quot;^-&quot; | wc -l     &quot;^-&quot; 以文件开头 wc -l 统计个数
+2.统计/opt文件夹下目录的个数
+    ls -l /opt | grep &quot;^d&quot; | wc -l    &quot;^d&quot; 以文件目录开头 wc -l 统计个数
+3.统计/opt文件下的文件的个数，包括子文件夹下的
+    ls -lR /opt | grep &quot;^-&quot; | wc -l    R 代表递归
+4.统计/opt文件夹下的目录的个数，包括子文件夹下的
+    ls -lR /opt | grep &quot;^d&quot; | wc -l
+5.以树状结构显示目录结构（如果没有tree，则使用 yum install tree 安装）
+    tree /home</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
