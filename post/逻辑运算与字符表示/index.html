@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>逻辑运算与字符表示 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="逻辑运算与字符表示"/>
+<meta name="twitter:description" content="逻辑运算
+位运算:位操作是对整数或其他二进制表示的数据的每个位进行单独操作。 虽然早期的计算机仅对整字进行操作，但人们很快就发现，对字中由若干位组成的字段甚至对单个位进行操作是很有用的，如: 1.位级操作:在计算机硬件和软件层面支持对一个字中的单个或一组位进行操作，这对于实现诸如错误检测(如奇偶校验、CRC校验)、数据压缩、编码解码(如ASCII到EBCDIC转换)、权限控制(如访问控制位)以及硬件接口信号处理等任务至关重要。 2.布尔逻辑:逻辑门电路的设计和数字逻辑的应用也要求能够对位进行AND、OR、NOT等逻辑操作，这在计算机内部的控制电路中是基础性的工作。 3.打包和拆包:在通信协议、数据格式化等领域，经常需要将多个小的数据元素（比如单个字符或标志位）组合成一个较大的字，或者从一个字中提取特定的位字段，这些操作都依赖于位级操作指令。 因此，现代计算机的指令集架构中通常包含了丰富的位操作指令，允许程序员直接对数据的各个位进行操作，极大地增强了程序设计的灵活性和效率。 按位与（AND）：同1为1 作用： x &amp; 1 = x x &amp; 0 = 0 1.保留某些位 2.清除某些位 3.检查标志位 4.网络地址和子网掩码计算 5.硬件接口控制 6.数据有效性校验 按位或（OR）：有1为1 作用： x | 0 = x x | 1 = 1 1.设置标志位 2.合并数据 3.条件赋值 4.硬件接口控制 按位异或（XOR）：不同为1 注: 1.满足交换律：a^b = b^a 2.满足结合律：(a^b)^c = a^(b^c) 3.自反性：a^a = 0 a^0 = a 作用： 1.不改变原始数据进行翻转特定位 2.交换两个变量的值（无需临时变量） x=x^y y=x^y x=x^y 3.计算奇偶校验位 非/取反（NOT）：单个操作数的每位取反，0变为1，1变为0。 作用： 1.反转二进制位 2.计算数值的补码形式 对一个正数执行按位非操作会得到一个负数，这个负数的补码是对其绝对值的原码按位取反后再加1； 反之，对一个负数执行按位非操作，则大致上可以得到该负数加1之后对应的正数（但不是绝对准确，因为溢出问题可能导致不一致）。 3.创建掩码 4.判断奇偶性 左移（Left Shift）：将一个数的所有位向左移动指定次数，空出的低位补零。 作用： 1."/>
+
+    <meta property="og:title" content="逻辑运算与字符表示" />
+<meta property="og:description" content="逻辑运算
+位运算:位操作是对整数或其他二进制表示的数据的每个位进行单独操作。 虽然早期的计算机仅对整字进行操作，但人们很快就发现，对字中由若干位组成的字段甚至对单个位进行操作是很有用的，如: 1.位级操作:在计算机硬件和软件层面支持对一个字中的单个或一组位进行操作，这对于实现诸如错误检测(如奇偶校验、CRC校验)、数据压缩、编码解码(如ASCII到EBCDIC转换)、权限控制(如访问控制位)以及硬件接口信号处理等任务至关重要。 2.布尔逻辑:逻辑门电路的设计和数字逻辑的应用也要求能够对位进行AND、OR、NOT等逻辑操作，这在计算机内部的控制电路中是基础性的工作。 3.打包和拆包:在通信协议、数据格式化等领域，经常需要将多个小的数据元素（比如单个字符或标志位）组合成一个较大的字，或者从一个字中提取特定的位字段，这些操作都依赖于位级操作指令。 因此，现代计算机的指令集架构中通常包含了丰富的位操作指令，允许程序员直接对数据的各个位进行操作，极大地增强了程序设计的灵活性和效率。 按位与（AND）：同1为1 作用： x &amp; 1 = x x &amp; 0 = 0 1.保留某些位 2.清除某些位 3.检查标志位 4.网络地址和子网掩码计算 5.硬件接口控制 6.数据有效性校验 按位或（OR）：有1为1 作用： x | 0 = x x | 1 = 1 1.设置标志位 2.合并数据 3.条件赋值 4.硬件接口控制 按位异或（XOR）：不同为1 注: 1.满足交换律：a^b = b^a 2.满足结合律：(a^b)^c = a^(b^c) 3.自反性：a^a = 0 a^0 = a 作用： 1.不改变原始数据进行翻转特定位 2.交换两个变量的值（无需临时变量） x=x^y y=x^y x=x^y 3.计算奇偶校验位 非/取反（NOT）：单个操作数的每位取反，0变为1，1变为0。 作用： 1.反转二进制位 2.计算数值的补码形式 对一个正数执行按位非操作会得到一个负数，这个负数的补码是对其绝对值的原码按位取反后再加1； 反之，对一个负数执行按位非操作，则大致上可以得到该负数加1之后对应的正数（但不是绝对准确，因为溢出问题可能导致不一致）。 3.创建掩码 4.判断奇偶性 左移（Left Shift）：将一个数的所有位向左移动指定次数，空出的低位补零。 作用： 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E4%B8%8E%E5%AD%97%E7%AC%A6%E8%A1%A8%E7%A4%BA/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-17T16:47:13+08:00" />
+<meta property="article:modified_time" content="2024-08-17T16:47:13+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">逻辑运算与字符表示</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 17, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>逻辑运算</p>
+<pre><code>位运算:位操作是对整数或其他二进制表示的数据的每个位进行单独操作。
+
+虽然早期的计算机仅对整字进行操作，但人们很快就发现，对字中由若干位组成的字段甚至对单个位进行操作是很有用的，如:
+
+    1.位级操作:在计算机硬件和软件层面支持对一个字中的单个或一组位进行操作，这对于实现诸如错误检测(如奇偶校验、CRC校验)、数据压缩、编码解码(如ASCII到EBCDIC转换)、权限控制(如访问控制位)以及硬件接口信号处理等任务至关重要。
+
+    2.布尔逻辑:逻辑门电路的设计和数字逻辑的应用也要求能够对位进行AND、OR、NOT等逻辑操作，这在计算机内部的控制电路中是基础性的工作。
+
+    3.打包和拆包:在通信协议、数据格式化等领域，经常需要将多个小的数据元素（比如单个字符或标志位）组合成一个较大的字，或者从一个字中提取特定的位字段，这些操作都依赖于位级操作指令。
+    
+    因此，现代计算机的指令集架构中通常包含了丰富的位操作指令，允许程序员直接对数据的各个位进行操作，极大地增强了程序设计的灵活性和效率。
+
+按位与（AND）：同1为1
+    作用：
+        x &amp; 1 = x  x &amp; 0 = 0
+        1.保留某些位
+        2.清除某些位
+        3.检查标志位
+        4.网络地址和子网掩码计算
+        5.硬件接口控制
+        6.数据有效性校验
+
+按位或（OR）：有1为1
+    作用：
+        x | 0 = x   x | 1 = 1
+        1.设置标志位
+        2.合并数据
+        3.条件赋值
+        4.硬件接口控制
+
+按位异或（XOR）：不同为1
+    注:
+        1.满足交换律：a^b = b^a
+        2.满足结合律：(a^b)^c = a^(b^c)
+        3.自反性：a^a = 0
+        a^0 = a
+    作用：
+        1.不改变原始数据进行翻转特定位
+        2.交换两个变量的值（无需临时变量）
+            x=x^y
+            y=x^y
+            x=x^y
+        3.计算奇偶校验位
+
+非/取反（NOT）：单个操作数的每位取反，0变为1，1变为0。
+    作用：
+        1.反转二进制位
+        2.计算数值的补码形式
+            对一个正数执行按位非操作会得到一个负数，这个负数的补码是对其绝对值的原码按位取反后再加1；
+            反之，对一个负数执行按位非操作，则大致上可以得到该负数加1之后对应的正数（但不是绝对准确，因为溢出问题可能导致不一致）。
+        3.创建掩码
+        4.判断奇偶性
+
+左移（Left Shift）：将一个数的所有位向左移动指定次数，空出的低位补零。
+    作用：
+        1.乘以2的幂
+        2.设置标志位
+        3.优化内存访问
+
+右移（Right Shift）：将一个数的所有位向右移动指定次数，高位是符号位时，可能补符号位（算术右移），也可能补0（逻辑右移）。
+    作用：
+        1.除以2的幂----&gt;向下取整
+        2.快速除法和乘法
+        3.提取低阶位信息
+</code></pre>
+<p>字符表示
+字符通常被组合为字符数目可变的字符串。表示一个字符串的方式有三种选择：</p>
+<pre><code>    1.长度前置：在字符串的第一个位置存储字符串的长度。这种方式允许直接通过第一个字节或几个字节快速获取字符串长度，不需要遍历整个字符串来计算长度。
+
+    2.附加长度变量：在字符串数据之后额外存储一个变量（通常是整数类型），用来记录字符串的实际长度。
+
+    3.使用特定字符作为结束符：如C语言中采用的方式，即在字符串的最后一个有效字符后面添加一个特殊的字符（通常是ASCII码值为0的空字符'\0'）来标识字符串的结尾。
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

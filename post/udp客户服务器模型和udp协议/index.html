@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>UDP客户服务器模型和UDP协议 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="UDP客户服务器模型和UDP协议"/>
+<meta name="twitter:description" content="socket 编程接口 对某种操作系统数据结构的抽象 （网络通信，发送信道 接收信道） 使用哪些系统调用接口来向这2个信道进行数据的 发送 接收
+C/S模式 client（多 从） Server（单 主） 从设备 主动 向 主设备进行请求， 主设备接收到这个请求后，进行解析并响应
+服务器先执行，在服务器机器上等待客户端的请求
+一、UDP服务器编程模型 1. socket() 获取 操作系统抽象数据结构的对象 2. 主动的先执行，等待客户端的请求，客户端的请求包到达服务器，如何这个数据包正确的找到服务器的进程 pid 进程号 &mdash;- 端口号 就是在服务器上，开后门 bind() 系统调用 把端口开放 3. 等待新的客户端发来请求 recvfrom
+二、UDP客户端编程模型 1. socket() 获取 操作系统抽象数据结构的对象 2. bind() 不建议做 但是该填写自己的端口，发送UDP数据包，src ip:port dest ip:port bind(88991) 客户端代码会在不同的机器上运行，无法保证每个客户端都没有使用88991端口号 不调用bind，src ip:port 没有信息 为了能够将这个数据发送到网卡上，内核就会自动的选择一个当前系统没有被使用的端口号作为src 3. sendto() 向某一个IP和port上发送数据包
+三、UDP协议抓包分析 UDP 从协议角度上， 只有目的端口、源端口的数据，不提供任何跟有序 无丢失的 传输提供帮助 UDP 面向数据报协议 TCP 面向连接的协议
+UDP丢包 1.服务器根本就不存在（对应的端口号没有），UDP包到了网络层，网络传送给传输层，传输层没有缓存区来存这个数据，自然这个数据就丢失了 2."/>
+
+    <meta property="og:title" content="UDP客户服务器模型和UDP协议" />
+<meta property="og:description" content="socket 编程接口 对某种操作系统数据结构的抽象 （网络通信，发送信道 接收信道） 使用哪些系统调用接口来向这2个信道进行数据的 发送 接收
+C/S模式 client（多 从） Server（单 主） 从设备 主动 向 主设备进行请求， 主设备接收到这个请求后，进行解析并响应
+服务器先执行，在服务器机器上等待客户端的请求
+一、UDP服务器编程模型 1. socket() 获取 操作系统抽象数据结构的对象 2. 主动的先执行，等待客户端的请求，客户端的请求包到达服务器，如何这个数据包正确的找到服务器的进程 pid 进程号 &mdash;- 端口号 就是在服务器上，开后门 bind() 系统调用 把端口开放 3. 等待新的客户端发来请求 recvfrom
+二、UDP客户端编程模型 1. socket() 获取 操作系统抽象数据结构的对象 2. bind() 不建议做 但是该填写自己的端口，发送UDP数据包，src ip:port dest ip:port bind(88991) 客户端代码会在不同的机器上运行，无法保证每个客户端都没有使用88991端口号 不调用bind，src ip:port 没有信息 为了能够将这个数据发送到网卡上，内核就会自动的选择一个当前系统没有被使用的端口号作为src 3. sendto() 向某一个IP和port上发送数据包
+三、UDP协议抓包分析 UDP 从协议角度上， 只有目的端口、源端口的数据，不提供任何跟有序 无丢失的 传输提供帮助 UDP 面向数据报协议 TCP 面向连接的协议
+UDP丢包 1.服务器根本就不存在（对应的端口号没有），UDP包到了网络层，网络传送给传输层，传输层没有缓存区来存这个数据，自然这个数据就丢失了 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/udp%E5%AE%A2%E6%88%B7%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%A8%A1%E5%9E%8B%E5%92%8Cudp%E5%8D%8F%E8%AE%AE/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-16T10:26:27+08:00" />
+<meta property="article:modified_time" content="2024-09-16T10:26:27+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">UDP客户服务器模型和UDP协议</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 16, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>socket  编程接口  对某种操作系统数据结构的抽象 （网络通信，发送信道 接收信道）
+使用哪些系统调用接口来向这2个信道进行数据的 发送 接收</p>
+<p>C/S模式     client（多 从）    Server（单 主）
+从设备 主动 向 主设备进行请求， 主设备接收到这个请求后，进行解析并响应</p>
+<p>服务器先执行，在服务器机器上等待客户端的请求</p>
+<p>一、UDP服务器编程模型
+1. socket()  获取 操作系统抽象数据结构的对象
+2. 主动的先执行，等待客户端的请求，客户端的请求包到达服务器，如何这个数据包正确的找到服务器的进程
+pid 进程号  &mdash;- 端口号
+就是在服务器上，开后门
+bind() 系统调用  把端口开放
+3. 等待新的客户端发来请求
+recvfrom</p>
+<p>二、UDP客户端编程模型
+1. socket()  获取 操作系统抽象数据结构的对象
+2. bind() 不建议做 但是该填写自己的端口，发送UDP数据包，src ip:port dest ip:port
+bind(88991) 客户端代码会在不同的机器上运行，无法保证每个客户端都没有使用88991端口号
+不调用bind，src ip:port 没有信息
+为了能够将这个数据发送到网卡上，内核就会自动的选择一个当前系统没有被使用的端口号作为src
+3. sendto()  向某一个IP和port上发送数据包</p>
+<p>三、UDP协议抓包分析
+UDP 从协议角度上， 只有目的端口、源端口的数据，不提供任何跟有序 无丢失的 传输提供帮助
+UDP 面向数据报协议      TCP 面向连接的协议</p>
+<pre><code>UDP丢包 
+        1.服务器根本就不存在（对应的端口号没有），UDP包到了网络层，网络传送给传输层，传输层没有缓存区来存这个数据，自然这个数据就丢失了
+        2.UDP的数据包在网络传输中，信号衰减没了
+假丢包  服务器存在，端口号也正常的，但是由于服务器的执行太慢了，迟迟不能执行到recvfrom的接口处，
+        此时数据包到达该机器后，分配给UDP层，UDP层发现数据包的目的端口和我的一样，把这个数据包暂时存放在缓存区里
+        缓存区里是接收数据包（只要是端口号是这个服务器的，就接收，仓库里按照数据包进行管理的）[TCP缓存区只能存放一个源地址的信息]
+
+UDP 有缓存区，只是这个缓存区里的数据，传输层确认这个数据是否有序，是否丢失，不确定
+丢包：链路和路由选择时，会引起丢失
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

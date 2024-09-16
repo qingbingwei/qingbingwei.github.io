@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>JavaScript // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JavaScript"/>
+<meta name="twitter:description" content="JavaScript 是一种解释性脚本语言（不用编译），主要用于向 HTML 添加交互行为，语法与 Java 语言类似。
+JavaScript 由 ECMAScript（简称 ES）、DOM（Document Object Model） 和 BOM（Broswer ObjectModel） 三大部分组成。
+注:该结构可以在HTML中的任意位置书写，但必须保证 JavaScript 脚本中使用到的元素必须在 JavaScript脚本执行前完成加载。 例. //可以访问id为a元素，不可以访问id为b元素 JavaScript 引入方式 1.行内脚本 2.内部脚本 document.getElementById(&ldquo;btn&rdquo;).onclick=function() { alert(&lsquo;你点击了按钮&rsquo;); } 3.外部脚本 // demo.js document.getElementById(&quot;btn&quot;).onclick=function() { alert(&#39;你点击了按钮&#39;); } &lt;!-- demo.html --&gt; &lt;input type=&quot;button&quot; value=&quot;点击&quot; id=&quot;btn&quot;&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt; JavaScript 语法 1.数据类型 2.变量 var 与 let 的区别 注:let 声明的变量只在它所在的代码块有效。 var 声明的变量属于全局变量 3.字符串 常用函数 ![](/img/string.png) 4.数组 1.创建数组 let 数组名 = new Array(数组长度); let 数组名 = new Array(数组元素1, 数组元素2, ."/>
+
+    <meta property="og:title" content="JavaScript" />
+<meta property="og:description" content="JavaScript 是一种解释性脚本语言（不用编译），主要用于向 HTML 添加交互行为，语法与 Java 语言类似。
+JavaScript 由 ECMAScript（简称 ES）、DOM（Document Object Model） 和 BOM（Broswer ObjectModel） 三大部分组成。
+注:该结构可以在HTML中的任意位置书写，但必须保证 JavaScript 脚本中使用到的元素必须在 JavaScript脚本执行前完成加载。 例. //可以访问id为a元素，不可以访问id为b元素 JavaScript 引入方式 1.行内脚本 2.内部脚本 document.getElementById(&ldquo;btn&rdquo;).onclick=function() { alert(&lsquo;你点击了按钮&rsquo;); } 3.外部脚本 // demo.js document.getElementById(&quot;btn&quot;).onclick=function() { alert(&#39;你点击了按钮&#39;); } &lt;!-- demo.html --&gt; &lt;input type=&quot;button&quot; value=&quot;点击&quot; id=&quot;btn&quot;&gt; &lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt; JavaScript 语法 1.数据类型 2.变量 var 与 let 的区别 注:let 声明的变量只在它所在的代码块有效。 var 声明的变量属于全局变量 3.字符串 常用函数 ![](/img/string.png) 4.数组 1.创建数组 let 数组名 = new Array(数组长度); let 数组名 = new Array(数组元素1, 数组元素2, ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/javascript/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-10T14:15:09+08:00" />
+<meta property="article:modified_time" content="2024-03-10T14:15:09+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">JavaScript</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 10, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          2 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>JavaScript 是一种解释性脚本语言（不用编译），主要用于向 HTML 添加交互行为，语法与 Java 语言类似。</p>
+<p>JavaScript 由 ECMAScript（简称 ES）、DOM（Document Object Model） 和 BOM（Broswer ObjectModel） 三大部分组成。</p>
+<p>注:该结构可以在HTML中的任意位置书写，但必须保证 JavaScript 脚本中使用到的元素必须在 JavaScript脚本执行前完成加载。
+例.
+<!-- raw HTML omitted --><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+//可以访问id为a元素，不可以访问id为b元素
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>JavaScript 引入方式
+1.行内脚本
+<!-- raw HTML omitted -->
+2.内部脚本
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+document.getElementById(&ldquo;btn&rdquo;).onclick=function()
+{
+alert(&lsquo;你点击了按钮&rsquo;);
+}
+<!-- raw HTML omitted --></p>
+<pre><code>3.外部脚本
+    // demo.js
+    document.getElementById(&quot;btn&quot;).onclick=function()
+    {
+        alert('你点击了按钮');
+    }
+    &lt;!-- demo.html --&gt;
+    &lt;input type=&quot;button&quot; value=&quot;点击&quot; id=&quot;btn&quot;&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>JavaScript 语法
+1.数据类型
+<img src="/img/data.png" alt=""></p>
+<pre><code>2.变量
+    var 与 let 的区别
+    注:let 声明的变量只在它所在的代码块有效。
+    var 声明的变量属于全局变量
+
+3.字符串
+    常用函数
+    ![](/img/string.png)
+
+4.数组
+    1.创建数组
+        let 数组名 = new Array(数组长度);
+        let 数组名 = new Array(数组元素1, 数组元素2, ..., 数组元素n);
+        let 数组名 = [数组元素1, 数组元素2, ..., 数组元素n];
+    2.数组常用函数
+    ![](/img/array.png)  
+
+5.对象
+    let 对象名 = new Object(); //创建对象
+    对象名.属性名1 = 属性值1; //为对象添加属性
+    对象名.属性名2 = 属性值2;
+    ...
+    对象名.属性名n = 属性值n;
+
+    let 对象名 = 
+    { 
+    //使用大括号创建对象
+    属性名1: 属性值1, //属性名和属性值的关系使用冒号表示，多个属性之间使用逗号分割开
+    属性名2: 属性值2,
+    ...
+    属性名n: 属性值n;
+    };
+</code></pre>
+<p>运算符
+<img src="/img/operation.png" alt="">
+注:
+1.在Java中两个整数相除所得的结果一定是整数;但是在JavaScript中,两个整数相除,得到的结果可能是浮点数
+2.三个等号进行比较,比较内容是否相同的同时还要检查数据类型是否一致
+3.两个等号进行比较,只比较内容是否相同</p>
+<p>流程控制语句
+1.if语句
+if(条件)
+{</p>
+<pre><code>    } 
+    else 
+    {
+        
+    }
+2.switch语句
+    switch(表达式)
+    {
+        case 常量1: break;
+        case 常量2: break;
+        ...
+        case 常量n: break;
+        default:
+    }
+3.循坏语句
+    for(循环变量初始化;循环条件;循环变量更新)
+    {
+        //循环操作
+    }
+    while(循环条件)
+    {
+        //循环操作
+    }
+    do
+    {
+        //循环操作
+    } while(循环条件);
+    for(let 变量名 in 对象或数组)
+    {
+        //循环操作
+    }
+    注:
+    1.对于数组来说,使用for-in循环就是遍历数组的下标
+    2.对于对象来说,使用for-in循环就是遍历对象的属性
+    3.对象的属性取值除了使用'.'操作符外,还可以使用中括号来取值
+        console.log(stu.name);
+        console.log(stu['name']);
+
+
+    //循环语句中的break和continue
+</code></pre>
+<p>函数
+1.系统函数
+1.窗体函数
+<img src="/img/dialog.png" alt="">
+2.数字相关函数
+<img src="/img/number.png" alt="">
+注:
+1.在JavaScript中,parseInt函数能够将以数字开头的任意字符串转换为整数
+2.在JavaScript中,parseFloat函数能够将以数字以及&rsquo;.&lsquo;号开头的任意字符串转换为浮点数
+3.Math类
+<img src="/img/math.png" alt="">
+注:random()不用传数值</p>
+<pre><code>2.自定义函数
+    function 函数名(参数1, 参数2, ... , 参数n)
+    {
+        //JavaScript语句
+        return 返回值; //需要返回值时使用return关键字返回；不需要时，不写return语句即可。
+    }
+    
+    //函数调用
+    函数名(参数值1, 参数值2, ... , 参数值n);
+
+    注:在JavaScript中，一个函数的返回值也可以是一个函数
+    function calculate(a, b, c)
+    {
+        let result = a * b;
+        return function (d) 
+        {
+            return result + c * d;
+        }
+    }
+    注:
+    1.此时需要注意的是，calculate函数执行后得到的结果是一个函数，也就是说，在JavaScript中，
+    2.变量可以存储一个函数，这种情况，我们把这个变量当作函数使用即可
+
+    例.
+    let s = calculate(1, 2, 3);
+    let num = s(4); //再次调用函数，得到计算结果
+    console.log(num); //14
+    //闭包
+    let n = calculate(1, 2, 3)(4); //函数调用
+    console.log(n) //14
+</code></pre>
+<p>元素事件与函数
+<img src="/img/pageEvent.png" alt=""></p>
+<p>注:input基本可以替代change的所有应用场景，如select以及
+<!-- raw HTML omitted --></p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

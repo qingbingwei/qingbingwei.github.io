@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>定点数乘法 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="定点数乘法"/>
+<meta name="twitter:description" content="m位数 * n位数 = (m &#43; n - 1)位数&mdash;-&gt;最少位数 m位数 * n位数 = (m &#43; n)位数&mdash;-&gt;最多位数
+定点数乘法 1.无符号数乘法 无符号数乘法运算用加法和移位运算来实现 2.有符号数乘法 (1)原码表示(符号位与数值位分开求) 1.乘积的符号位由两个乘数的符号位进行“异或”运算得到 2.乘积的数值位为两个乘数的绝对值之积，即执行无符号数乘法 注:在硬件实现中，乘法运算用加法和移位运算来实现
+假设我们实现4位 X 4位 = 8位的乘法器，那么： （1）需要一个8位的移位寄存器保存被乘数，他有一个左移的信号输入。 （2）需要一个8位的乘积寄存器，用来保存运算的结果。 （3）移位寄存器和乘积寄存器需要进行加法运算，所以需要一个8位的加法器，相加之后存放到乘积寄存器中。 （4）需要一个4位的乘数寄存器，同时将乘数寄存器的最低位连接右移信号，右移信号除了控制移位寄存器移位，还要控制是否进行加法运算和是否允许乘积寄存器保存当前的结果。 最后还需要控制自身是否右移位。 (2)补码表示(符号位参与运算) 在有符号数的补码乘法运算中，我们需要将被乘数和乘数先转化为补码进行乘法运算。 注:运算过程中的所有数据均以补码形式呈现。 符号位也参加运算，在运算过程中要考虑符号位乘上被乘数之后的部分积是正数还是负数。 注:位数不足时用最高位(即符号位)补齐位数 注:乘数符号位为1时，计算时将符号位看作-1与被乘数进行计算，得到被乘数相反数的补码 以上是手动计算补码乘法的过程。 计算机一般采用Booth算法（补码一位乘法）进行补码乘法运算，采用相加和相减操作计算补码数据的乘积。 "/>
+
+    <meta property="og:title" content="定点数乘法" />
+<meta property="og:description" content="m位数 * n位数 = (m &#43; n - 1)位数&mdash;-&gt;最少位数 m位数 * n位数 = (m &#43; n)位数&mdash;-&gt;最多位数
+定点数乘法 1.无符号数乘法 无符号数乘法运算用加法和移位运算来实现 2.有符号数乘法 (1)原码表示(符号位与数值位分开求) 1.乘积的符号位由两个乘数的符号位进行“异或”运算得到 2.乘积的数值位为两个乘数的绝对值之积，即执行无符号数乘法 注:在硬件实现中，乘法运算用加法和移位运算来实现
+假设我们实现4位 X 4位 = 8位的乘法器，那么： （1）需要一个8位的移位寄存器保存被乘数，他有一个左移的信号输入。 （2）需要一个8位的乘积寄存器，用来保存运算的结果。 （3）移位寄存器和乘积寄存器需要进行加法运算，所以需要一个8位的加法器，相加之后存放到乘积寄存器中。 （4）需要一个4位的乘数寄存器，同时将乘数寄存器的最低位连接右移信号，右移信号除了控制移位寄存器移位，还要控制是否进行加法运算和是否允许乘积寄存器保存当前的结果。 最后还需要控制自身是否右移位。 (2)补码表示(符号位参与运算) 在有符号数的补码乘法运算中，我们需要将被乘数和乘数先转化为补码进行乘法运算。 注:运算过程中的所有数据均以补码形式呈现。 符号位也参加运算，在运算过程中要考虑符号位乘上被乘数之后的部分积是正数还是负数。 注:位数不足时用最高位(即符号位)补齐位数 注:乘数符号位为1时，计算时将符号位看作-1与被乘数进行计算，得到被乘数相反数的补码 以上是手动计算补码乘法的过程。 计算机一般采用Booth算法（补码一位乘法）进行补码乘法运算，采用相加和相减操作计算补码数据的乘积。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E5%AE%9A%E7%82%B9%E6%95%B0%E4%B9%98%E6%B3%95/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-04T16:52:07+08:00" />
+<meta property="article:modified_time" content="2024-09-04T16:52:07+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">定点数乘法</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 4, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>m位数 * n位数 = (m + n - 1)位数&mdash;-&gt;最少位数
+m位数 * n位数 = (m + n)位数&mdash;-&gt;最多位数</p>
+<p>定点数乘法
+1.无符号数乘法
+无符号数乘法运算用加法和移位运算来实现
+2.有符号数乘法
+(1)原码表示(符号位与数值位分开求)
+1.乘积的符号位由两个乘数的符号位进行“异或”运算得到
+2.乘积的数值位为两个乘数的绝对值之积，即执行无符号数乘法
+注:在硬件实现中，乘法运算用加法和移位运算来实现</p>
+<pre><code>        假设我们实现4位 X 4位 = 8位的乘法器，那么：
+
+        （1）需要一个8位的移位寄存器保存被乘数，他有一个左移的信号输入。
+
+        （2）需要一个8位的乘积寄存器，用来保存运算的结果。
+
+        （3）移位寄存器和乘积寄存器需要进行加法运算，所以需要一个8位的加法器，相加之后存放到乘积寄存器中。
+
+        （4）需要一个4位的乘数寄存器，同时将乘数寄存器的最低位连接右移信号，右移信号除了控制移位寄存器移位，还要控制是否进行加法运算和是否允许乘积寄存器保存当前的结果。
+        最后还需要控制自身是否右移位。
+
+    (2)补码表示(符号位参与运算)
+        在有符号数的补码乘法运算中，我们需要将被乘数和乘数先转化为补码进行乘法运算。
+        注:运算过程中的所有数据均以补码形式呈现。
+
+        符号位也参加运算，在运算过程中要考虑符号位乘上被乘数之后的部分积是正数还是负数。
+
+        注:位数不足时用最高位(即符号位)补齐位数
+        注:乘数符号位为1时，计算时将符号位看作-1与被乘数进行计算，得到被乘数相反数的补码
+
+        以上是手动计算补码乘法的过程。
+
+
+        计算机一般采用Booth算法（补码一位乘法）进行补码乘法运算，采用相加和相减操作计算补码数据的乘积。</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 红黑树 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 红黑树"/>
+<meta name="twitter:description" content="AVL树缺点: 1.不适合动态查找，为了保持平衡，不停的进行旋转调整，浪费时间 2.不直观
+多路平衡树:多路平衡二叉树 B树 B&#43;树 红黑树
+索引存储
+1.外存和内存进行数据交互比较慢 2.数据管理方案:通常会使用索引表进行数据查找和交互，由于外存中数据比较多，建立的索引表中的索引数据也会比较多，所以索引表也往往存储在外存中
+多路平衡树:2-3-4-&hellip;-n树:树的度(阶):n &mdash;-&gt; n阶B树 (不允许有高度差) 以2-3树为例(3阶B树) 由以下节点组成: (1)二叉节点:含有一个数据和两个孩子的节点，其中左子树的值均小于父亲节点，右子树的值均大于父亲节点 (2)三叉节点:含有两个数据和三个孩子的节点，并且数据之间保持顺序性
+红黑树:用二叉树表示的4(或3)阶B树 把4阶B树中的3-，4-节点拆分为2-节点 注:红黑树一定是BST树 性质: 1.节点为红色或者黑色 2.根节点是黑色 3.所有外部叶子节点(NULL节点)是黑色 4.每个红色节点的两个子节点都是黑色(从根节点到每个叶子节点的路径不能有两个连续的红色节点) 5.从根节点到每个叶子节点的所有路径都包含相同数目黑色节点 注：从根节点到到叶子节点的黑色节点个数(黑高) 黑高相同&mdash;&ndash;&gt;黑路同
+结论: 1.从根节点到叶子节点的最长路径不大于最短路径的两倍 最短路径(bh):只有黑色节点 最长路径(2*bh):在最短路径基础上，每个黑色节点分下去一个红色节点 2.有n个内部节点的红黑树，其高度h&lt;=2log(n&#43;1) ----&gt;红黑树操作时间复杂度O(logn) 证明:b&lt;=2*bh-----&gt;bh&gt;=h/2 黑高bh 内部节点的数目最少:只有黑色节点的满二叉树 2^bh-1 n &gt;= 2^bh-1 log(n&#43;1)&gt;=bh&gt;=h/2 h&lt;=2log(n&#43;1) 红黑树的优点: BST----&gt;AVL----&gt;平衡因子的约束太严格了，需要频繁调整 -----&gt;红黑树:一棵子树的高度最多可以是另一棵子树的2倍 1.⼤多数⾃平衡BST(self-balancing BST) 库函数都是⽤红⿊树实现的，⽐如C&#43;&#43;中的map 和 set （或者 Java 中的 TreeSet 和 TreeMap）。 2.红⿊树也⽤于实现 Linux 操作系统的 CPU 调度。 完全公平调度（Completely Fair Scheduler）使⽤的就是红⿊树。 3.红⿊树也⽤于Linux提供的epoll多路复⽤的底层结构，便于快速增加、删除和查找⽹络连接的节点。 操作: 查找:特殊的BST,同BST RBT的插入:在一棵RBT中插入一个节点z 1."/>
+
+    <meta property="og:title" content="数据结构 红黑树" />
+<meta property="og:description" content="AVL树缺点: 1.不适合动态查找，为了保持平衡，不停的进行旋转调整，浪费时间 2.不直观
+多路平衡树:多路平衡二叉树 B树 B&#43;树 红黑树
+索引存储
+1.外存和内存进行数据交互比较慢 2.数据管理方案:通常会使用索引表进行数据查找和交互，由于外存中数据比较多，建立的索引表中的索引数据也会比较多，所以索引表也往往存储在外存中
+多路平衡树:2-3-4-&hellip;-n树:树的度(阶):n &mdash;-&gt; n阶B树 (不允许有高度差) 以2-3树为例(3阶B树) 由以下节点组成: (1)二叉节点:含有一个数据和两个孩子的节点，其中左子树的值均小于父亲节点，右子树的值均大于父亲节点 (2)三叉节点:含有两个数据和三个孩子的节点，并且数据之间保持顺序性
+红黑树:用二叉树表示的4(或3)阶B树 把4阶B树中的3-，4-节点拆分为2-节点 注:红黑树一定是BST树 性质: 1.节点为红色或者黑色 2.根节点是黑色 3.所有外部叶子节点(NULL节点)是黑色 4.每个红色节点的两个子节点都是黑色(从根节点到每个叶子节点的路径不能有两个连续的红色节点) 5.从根节点到每个叶子节点的所有路径都包含相同数目黑色节点 注：从根节点到到叶子节点的黑色节点个数(黑高) 黑高相同&mdash;&ndash;&gt;黑路同
+结论: 1.从根节点到叶子节点的最长路径不大于最短路径的两倍 最短路径(bh):只有黑色节点 最长路径(2*bh):在最短路径基础上，每个黑色节点分下去一个红色节点 2.有n个内部节点的红黑树，其高度h&lt;=2log(n&#43;1) ----&gt;红黑树操作时间复杂度O(logn) 证明:b&lt;=2*bh-----&gt;bh&gt;=h/2 黑高bh 内部节点的数目最少:只有黑色节点的满二叉树 2^bh-1 n &gt;= 2^bh-1 log(n&#43;1)&gt;=bh&gt;=h/2 h&lt;=2log(n&#43;1) 红黑树的优点: BST----&gt;AVL----&gt;平衡因子的约束太严格了，需要频繁调整 -----&gt;红黑树:一棵子树的高度最多可以是另一棵子树的2倍 1.⼤多数⾃平衡BST(self-balancing BST) 库函数都是⽤红⿊树实现的，⽐如C&#43;&#43;中的map 和 set （或者 Java 中的 TreeSet 和 TreeMap）。 2.红⿊树也⽤于实现 Linux 操作系统的 CPU 调度。 完全公平调度（Completely Fair Scheduler）使⽤的就是红⿊树。 3.红⿊树也⽤于Linux提供的epoll多路复⽤的底层结构，便于快速增加、删除和查找⽹络连接的节点。 操作: 查找:特殊的BST,同BST RBT的插入:在一棵RBT中插入一个节点z 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%A2%E9%BB%91%E6%A0%91/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-05T19:34:13+08:00" />
+<meta property="article:modified_time" content="2024-03-05T19:34:13+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 红黑树</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 5, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>AVL树缺点:
+1.不适合动态查找，为了保持平衡，不停的进行旋转调整，浪费时间
+2.不直观</p>
+<p>多路平衡树:多路平衡二叉树 B树 B+树 红黑树</p>
+<p>索引存储</p>
+<p>1.外存和内存进行数据交互比较慢
+2.数据管理方案:通常会使用索引表进行数据查找和交互，由于外存中数据比较多，建立的索引表中的索引数据也会比较多，所以索引表也往往存储在外存中</p>
+<p>多路平衡树:2-3-4-&hellip;-n树:树的度(阶):n &mdash;-&gt; n阶B树
+(不允许有高度差)
+以2-3树为例(3阶B树)
+由以下节点组成:
+(1)二叉节点:含有一个数据和两个孩子的节点，其中左子树的值均小于父亲节点，右子树的值均大于父亲节点
+(2)三叉节点:含有两个数据和三个孩子的节点，并且数据之间保持顺序性</p>
+<p>红黑树:用二叉树表示的4(或3)阶B树
+把4阶B树中的3-，4-节点拆分为2-节点
+注:红黑树一定是BST树
+性质:
+1.节点为红色或者黑色
+2.根节点是黑色
+3.所有外部叶子节点(NULL节点)是黑色
+4.每个红色节点的两个子节点都是黑色(从根节点到每个叶子节点的路径不能有两个连续的红色节点)
+5.从根节点到每个叶子节点的所有路径都包含相同数目黑色节点
+注：从根节点到到叶子节点的黑色节点个数(黑高)
+黑高相同&mdash;&ndash;&gt;黑路同</p>
+<pre><code>    结论:
+    1.从根节点到叶子节点的最长路径不大于最短路径的两倍
+    最短路径(bh):只有黑色节点
+    最长路径(2*bh):在最短路径基础上，每个黑色节点分下去一个红色节点
+    2.有n个内部节点的红黑树，其高度h&lt;=2log(n+1) ----&gt;红黑树操作时间复杂度O(logn)
+        证明:b&lt;=2*bh-----&gt;bh&gt;=h/2
+        黑高bh 内部节点的数目最少:只有黑色节点的满二叉树 2^bh-1
+        n &gt;= 2^bh-1
+        log(n+1)&gt;=bh&gt;=h/2
+        h&lt;=2log(n+1)
+
+红黑树的优点:
+    BST----&gt;AVL----&gt;平衡因子的约束太严格了，需要频繁调整
+    -----&gt;红黑树:一棵子树的高度最多可以是另一棵子树的2倍
+    
+    1.⼤多数⾃平衡BST(self-balancing BST) 库函数都是⽤红⿊树实现的，⽐如C++中的map 和 set
+    （或者 Java 中的 TreeSet 和 TreeMap）。
+    
+    2.红⿊树也⽤于实现 Linux 操作系统的 CPU 调度。
+    完全公平调度（Completely Fair Scheduler）使⽤的就是红⿊树。
+    
+    3.红⿊树也⽤于Linux提供的epoll多路复⽤的底层结构，便于快速增加、删除和查找⽹络连接的节点。
+
+操作:
+    查找:特殊的BST,同BST
+    RBT的插入:在一棵RBT中插入一个节点z
+    1.z插入的位置:同BST，先执行BST插入操作
+    2.确定z初始颜色:红
+        (1)黑:一定破坏黑路同----&gt;每次插入都进行调整
+        (2)红:可能导致两个红色节点相连----&gt;概率调整，不需要频繁调整
+    注:如果是在一棵空树上插入根节点，根节点直接赋成黑色
+    3.调整策略
+        1.染色:红色---&gt;黑色  黑色---&gt;红色
+        2.旋转:LL RR LR RL
+
+    
+    插入一个节点z，节点z初始是红色
+    插入的若干种情况:
+        1.树为空:根节点直接赋成黑色
+        2.树不空:z是红色，z-&gt;parent的颜色
+            (1)z-&gt;parent是黑色，不破坏任何性质，结束
+            (2)z-&gt;parent是红色:
+                g=z-&gt;parent-&gt;parent爷爷节点 是黑色的
+                p=z-&gt;parent父亲节点
+                (i)p是g的右孩子，u是左孩子
+                    (a)u 叔叔节点:红色
+                        将叔叔节点u(变黑色) 父亲节点(变黑色) 爷爷节点(变红色)均变色
+                        将爷爷节点g作为新的插入节点z，循环调整
+                    (b)u 叔叔节点:黑色 RR RL
+                        (一)z是其父亲节点p右孩子(RR)
+                            父亲节点p(变黑色) 爷爷节点g(变红色) 以g为中心，左旋
+                        (二)z是其父亲节点p左孩子(RL)
+                            以父亲节点p为中心 右旋，交换p，z所指向节点，转化成RR的情况
+                            父亲节点p(变黑色) 爷爷节点g(变红色) 以g为中心，左旋
+                (ii)p是g的左孩子，u是右孩子(旋转方向不同)
+                    (a)u 叔叔节点:红色
+                        将叔叔节点u(变黑色) 父亲节点(变黑色) 爷爷节点(变红色)均变色
+                        将爷爷节点g作为新的插入节点z，循环调整
+                    (b)u 叔叔节点:黑色 LL LR
+                        (一)z是其父亲节点p左孩子(LL)
+                            父亲节点p(变黑色) 爷爷节点g(变红色) 以g为中心，右旋
+                        (二)z是其父亲节点p右孩子(LR)
+                            以父亲节点p为中心 左旋，交换p，z所指向节点，转化成LL的情况
+                            父亲节点p(变黑色) 爷爷节点g(变红色) 以g为中心，右旋
+
+    删除一个节点z
+        1.先按照BST删除操作，删除z
+            (1)z的度为2,用z的中序遍历前驱y(或者中序遍历后继)节点的数据替换z,z-&gt;data=y-&gt;data,
+            问题转换为删除y节点(y的度一定为0/1)
+            (2)z的度为1/0，直接用z唯一孩子x，顶替z的位置
+            最终:删除的是一个度为1/0的y节点，x顶替y的位置(x是y唯一一个孩子)
+
+        2.调整:关注x和y的颜色(x是y的唯一一个孩子)，按照x和y的颜色的组合进行讨论
+            (1)简单的情况:
+                a.y红 x黑:不破坏任何性质 不需要调整
+                b.y黑 x红:可能破坏“不红红”，一定会破坏黑高相同，直接将x赋为黑色即可
+
+            (2)复杂的情况:
+                c.y黑 x黑 涉及到替换后x节点兄弟w p节点是x和w的父亲(y的父亲)
+                双黑节点:删除一个度为1/0的黑色的y节点之后,其黑色的孩子顶替了y的位置，
+                顶替之后x看成双黑节点，此时我们认为x对黑高贡献为2
+                    (i)x是右孩子，w是左孩子
+                        一.w是黑色，w孩子都是黑色
+                            w和x(双黑节点)褪一层黑色，w变为红色，褪掉的黑色给父亲p
+                                (1)p本身是红色，p直接变为黑色，结束
+                                (2)p本身是黑色，p再加上孩子们给的一层黑色，p变为双黑节点，p作为新的要调整节点x，循环调整-----&gt;上传根节点，直接结束，整棵树黑高减一
+                        二.w是黑色，w孩子R至少有一个红色(两个孩子均为红色可以归进下述两种情况任意一种)
+                                (1)R是w左孩子----&gt;LL
+                                    以p为中心右旋，w先变为p的颜色，p和R变为黑色
+                                (2)R是w右孩子----&gt;LR
+                                    以w为中心左旋，w变红，R变黑，调换w和R的指针
+                        三.w是红色，w孩子一定是黑色
+                            w变黑，p变红，以p为中心右旋，旋转之后w=p-&gt;l------&gt;转化为情况一，二
+                    (ii)x是左孩子，w是右孩子
+                        一.w是黑色，w孩子都是黑色
+                            w和x(双黑节点)褪一层黑色，w变为红色，褪掉的黑色给父亲p
+                                (1)p本身是红色，p直接变为黑色，结束
+                                (2)p本身是黑色，p再加上孩子们给的一层黑色，p变为双黑节点，p作为新的要调整节点x，循环调整-----&gt;上传根节点，直接结束，整棵树黑高减一
+                        二.w是黑色，w孩子R至少有一个红色(两个孩子均为红色可以归进下述两种情况任意一种)
+                                (1)R是w右孩子----&gt;RR
+                                    以p为中心左旋，w先变为p的颜色，p和R变为黑色
+                                (2)R是w左孩子----&gt;RL
+                                    以w为中心右旋，w变红，R变黑，调换w和R的指针
+                        三.w是红色，w孩子一定是黑色
+                            w变黑，p变红，以p为中心左旋，旋转之后w=p-&gt;r------&gt;转化为情况一，二
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

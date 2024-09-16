@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>操作系统 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="操作系统"/>
+<meta name="twitter:description" content="硬件支持系统 系统管理硬件
+操作系统就是一个建立在应用程序和硬件之间的一道桥梁 基本功能: 1.防止硬件被滥用，尤其是一些失控程序 2.通过一种比较简单的机制匹配对应的应用程序，进而控制复杂的硬件 对硬件的抽象: 1.进程 2.虚拟内存 3.文件
+进程:进程的本质就是操作系统执行的一个程序
+与进程相关 1.地址空间&mdash;&mdash;从某个最小值的存储位置(通常是零)到某个最大值的存储位置的列表 2.资源集&mdash;&mdash;-通常包括寄存器(寄存器一般包括程序计数器和堆栈指针)，打开文件的清单，突发的警报，有关的进程清单和其他需要执行程序的信息
+进程挂起 1.进程的地址空间&mdash;-磁盘映像 2.进程表项
+进程间通信 合作完成某些作业的相关进程经常需要彼此通信来完成作业
+进程是什么 1.从理论角度看，是对正在运行的程序过程的抽象 2.从实现角度看，是一种数据结构，目的在于清晰的刻画动态系统的内在规律，有效管理和调度进入计算机系统主存储器运行的程序
+并发技术 通过指令的交错执行，进程在来回切换，一个进程的指令和另一个进程的指令交错执行的过程就叫做并发运行
+在每个任务运行前，CPU都需要知道任务从哪里加载和运行 1.CPU寄存器 2.程序计数器 线程 线程是操作系统能够进行运算调度的最小单位。其被包含在进程中，是进程中的实际运作单位
+并发和并行 1.并行是指两个或者多个事件在同一时刻发生 2.并发是指两个或者多个事件在同一时间间隔内发生
+系统调用 操作系统提供的两种功能 1.为用户提供应用程序抽象 2.管理计算机资源 注:只有系统调用能够进入内核态而过程调用则不能进入内核态 注:API(应用程序接口)，POSIX(系统程序接口)
+分类 1.用于进程管理的系统调用 2.用于文件管理的系统调用 3.用于目录管理的系统调用 操作系统结构 1.单体结构 整个操作系统是以程序集合来编写的 优点: 调用任何一个所需要程序都非常高效 缺点: 1.但是上千个不受限制的彼此调用往往非常臃肿 2.只要系统故障，那么任何系统和应用程序将不可用，这是灾难性的 2.分层系统 分层系统使用层来分隔不同的功能单元。每一层只与该层上层与下层通信 3.微内核 传统上，所有的层都在内核中，但是这样没必要，尽可能减少内核态中功能可能是更好的做法
+只有一个模块---微内核---运行在内核态，其余模块可以作为普通用户进程运行 4.客户-服务端系统 "/>
+
+    <meta property="og:title" content="操作系统" />
+<meta property="og:description" content="硬件支持系统 系统管理硬件
+操作系统就是一个建立在应用程序和硬件之间的一道桥梁 基本功能: 1.防止硬件被滥用，尤其是一些失控程序 2.通过一种比较简单的机制匹配对应的应用程序，进而控制复杂的硬件 对硬件的抽象: 1.进程 2.虚拟内存 3.文件
+进程:进程的本质就是操作系统执行的一个程序
+与进程相关 1.地址空间&mdash;&mdash;从某个最小值的存储位置(通常是零)到某个最大值的存储位置的列表 2.资源集&mdash;&mdash;-通常包括寄存器(寄存器一般包括程序计数器和堆栈指针)，打开文件的清单，突发的警报，有关的进程清单和其他需要执行程序的信息
+进程挂起 1.进程的地址空间&mdash;-磁盘映像 2.进程表项
+进程间通信 合作完成某些作业的相关进程经常需要彼此通信来完成作业
+进程是什么 1.从理论角度看，是对正在运行的程序过程的抽象 2.从实现角度看，是一种数据结构，目的在于清晰的刻画动态系统的内在规律，有效管理和调度进入计算机系统主存储器运行的程序
+并发技术 通过指令的交错执行，进程在来回切换，一个进程的指令和另一个进程的指令交错执行的过程就叫做并发运行
+在每个任务运行前，CPU都需要知道任务从哪里加载和运行 1.CPU寄存器 2.程序计数器 线程 线程是操作系统能够进行运算调度的最小单位。其被包含在进程中，是进程中的实际运作单位
+并发和并行 1.并行是指两个或者多个事件在同一时刻发生 2.并发是指两个或者多个事件在同一时间间隔内发生
+系统调用 操作系统提供的两种功能 1.为用户提供应用程序抽象 2.管理计算机资源 注:只有系统调用能够进入内核态而过程调用则不能进入内核态 注:API(应用程序接口)，POSIX(系统程序接口)
+分类 1.用于进程管理的系统调用 2.用于文件管理的系统调用 3.用于目录管理的系统调用 操作系统结构 1.单体结构 整个操作系统是以程序集合来编写的 优点: 调用任何一个所需要程序都非常高效 缺点: 1.但是上千个不受限制的彼此调用往往非常臃肿 2.只要系统故障，那么任何系统和应用程序将不可用，这是灾难性的 2.分层系统 分层系统使用层来分隔不同的功能单元。每一层只与该层上层与下层通信 3.微内核 传统上，所有的层都在内核中，但是这样没必要，尽可能减少内核态中功能可能是更好的做法
+只有一个模块---微内核---运行在内核态，其余模块可以作为普通用户进程运行 4.客户-服务端系统 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-04-14T23:26:18+08:00" />
+<meta property="article:modified_time" content="2024-04-14T23:26:18+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">操作系统</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Apr 14, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>硬件支持系统 系统管理硬件</p>
+<p>操作系统就是一个建立在应用程序和硬件之间的一道桥梁
+基本功能:
+1.防止硬件被滥用，尤其是一些失控程序
+2.通过一种比较简单的机制匹配对应的应用程序，进而控制复杂的硬件
+对硬件的抽象:
+1.进程
+2.虚拟内存
+3.文件</p>
+<p>进程:进程的本质就是操作系统执行的一个程序</p>
+<p>与进程相关
+1.地址空间&mdash;&mdash;从某个最小值的存储位置(通常是零)到某个最大值的存储位置的列表
+2.资源集&mdash;&mdash;-通常包括寄存器(寄存器一般包括程序计数器和堆栈指针)，打开文件的清单，突发的警报，有关的进程清单和其他需要执行程序的信息</p>
+<p>进程挂起
+1.进程的地址空间&mdash;-磁盘映像
+2.进程表项</p>
+<p>进程间通信
+合作完成某些作业的相关进程经常需要彼此通信来完成作业</p>
+<p>进程是什么
+1.从理论角度看，是对正在运行的程序过程的抽象
+2.从实现角度看，是一种数据结构，目的在于清晰的刻画动态系统的内在规律，有效管理和调度进入计算机系统主存储器运行的程序</p>
+<p>并发技术
+通过指令的交错执行，进程在来回切换，一个进程的指令和另一个进程的指令交错执行的过程就叫做并发运行</p>
+<pre><code>在每个任务运行前，CPU都需要知道任务从哪里加载和运行
+1.CPU寄存器
+2.程序计数器
+</code></pre>
+<p>线程
+线程是操作系统能够进行运算调度的最小单位。其被包含在进程中，是进程中的实际运作单位</p>
+<p>并发和并行
+1.并行是指两个或者多个事件在同一时刻发生
+2.并发是指两个或者多个事件在同一时间间隔内发生</p>
+<p>系统调用
+操作系统提供的两种功能
+1.为用户提供应用程序抽象
+2.管理计算机资源
+注:只有系统调用能够进入内核态而过程调用则不能进入内核态
+注:API(应用程序接口)，POSIX(系统程序接口)</p>
+<pre><code>分类
+    1.用于进程管理的系统调用
+    2.用于文件管理的系统调用
+    3.用于目录管理的系统调用
+</code></pre>
+<p>操作系统结构
+1.单体结构
+整个操作系统是以程序集合来编写的
+优点:
+调用任何一个所需要程序都非常高效
+缺点:
+1.但是上千个不受限制的彼此调用往往非常臃肿
+2.只要系统故障，那么任何系统和应用程序将不可用，这是灾难性的
+2.分层系统
+分层系统使用层来分隔不同的功能单元。每一层只与该层上层与下层通信
+3.微内核
+传统上，所有的层都在内核中，但是这样没必要，尽可能减少内核态中功能可能是更好的做法</p>
+<pre><code>    只有一个模块---微内核---运行在内核态，其余模块可以作为普通用户进程运行
+4.客户-服务端系统
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

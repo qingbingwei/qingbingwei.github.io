@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>BOM和DOM // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="BOM和DOM"/>
+<meta name="twitter:description" content="BOM：BOM（Browser Object Model），即浏览器对象模型，BOM 提供了独立于内容的对象结构，可以与浏览器窗口进行互动
+1.window对象 ![](/img/window.png) 1.history对象 ![](/img/history.png) 2.location对象 ![](/img/location.png) 3.document对象 ![](/img/document.png) 2.Date类 ![](/img/date.png) 3.周期函数和延迟函数 ![](/img/periodic_function.png) DOM:DOM（Document Object Model），即文档对象模型，DOM主要提供了对于页面内容的一些操作。 在DOM中，所有的内容（标签和文本）都是DOM节点，所有的标签都是DOM元素。
+1.DOM节点关系 ![](/img/DOM_Node.png) 2.节点属性 ![](/img/Node.png) 3.元素属性 ![](/img/element.png) 4.节点操作 ![](/img/Node_operation.png) 5.节点样式 6.节点属性 ![](/img/Node_attribute.png) promise对象 Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息，其状态不受外界影响。Promise对象代表一个异步操作，有三种状态： 1.pending: 初始状态，不是成功或失败状态。 2.fulfilled: 意味着操作成功完成。 3.rejected: 意味着操作失败。
+只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。 这也是Promise 这个名字的由来，它的英语意思就是承诺，表示其他手段无法改变。 一旦 Promise 对象从初始状态改变，就不会再变，任何时候都可以得到这个结果。Promise 对象的状态改变，只有两种可能： 从 Pending 变为 Resolved 和从 Pending 变为 Rejected。 只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。 promise应用 function cal(a,b) { let promise = new Promise(function (resolve,reject) { if(b == 0) { reject(new Error(&ldquo;除数不能为零&rdquo;)); //异常情况处理使用reject函数进行拒绝 } else { //成功处理的情况使用resolve函数进行处理 resolve(a/b); } }); promise."/>
+
+    <meta property="og:title" content="BOM和DOM" />
+<meta property="og:description" content="BOM：BOM（Browser Object Model），即浏览器对象模型，BOM 提供了独立于内容的对象结构，可以与浏览器窗口进行互动
+1.window对象 ![](/img/window.png) 1.history对象 ![](/img/history.png) 2.location对象 ![](/img/location.png) 3.document对象 ![](/img/document.png) 2.Date类 ![](/img/date.png) 3.周期函数和延迟函数 ![](/img/periodic_function.png) DOM:DOM（Document Object Model），即文档对象模型，DOM主要提供了对于页面内容的一些操作。 在DOM中，所有的内容（标签和文本）都是DOM节点，所有的标签都是DOM元素。
+1.DOM节点关系 ![](/img/DOM_Node.png) 2.节点属性 ![](/img/Node.png) 3.元素属性 ![](/img/element.png) 4.节点操作 ![](/img/Node_operation.png) 5.节点样式 6.节点属性 ![](/img/Node_attribute.png) promise对象 Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息，其状态不受外界影响。Promise对象代表一个异步操作，有三种状态： 1.pending: 初始状态，不是成功或失败状态。 2.fulfilled: 意味着操作成功完成。 3.rejected: 意味着操作失败。
+只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。 这也是Promise 这个名字的由来，它的英语意思就是承诺，表示其他手段无法改变。 一旦 Promise 对象从初始状态改变，就不会再变，任何时候都可以得到这个结果。Promise 对象的状态改变，只有两种可能： 从 Pending 变为 Resolved 和从 Pending 变为 Rejected。 只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。 promise应用 function cal(a,b) { let promise = new Promise(function (resolve,reject) { if(b == 0) { reject(new Error(&ldquo;除数不能为零&rdquo;)); //异常情况处理使用reject函数进行拒绝 } else { //成功处理的情况使用resolve函数进行处理 resolve(a/b); } }); promise." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/bom%E5%92%8Cdom/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-10T23:33:25+08:00" />
+<meta property="article:modified_time" content="2024-03-10T23:33:25+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">BOM和DOM</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 10, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>BOM：BOM（Browser Object Model），即浏览器对象模型，BOM 提供了独立于内容的对象结构，可以与浏览器窗口进行互动</p>
+<pre><code>1.window对象
+![](/img/window.png)
+    1.history对象
+    ![](/img/history.png)
+
+    2.location对象
+    ![](/img/location.png)
+
+    3.document对象
+    ![](/img/document.png)
+
+2.Date类
+![](/img/date.png)
+
+3.周期函数和延迟函数
+![](/img/periodic_function.png)
+</code></pre>
+<p>DOM:DOM（Document Object Model），即文档对象模型，DOM主要提供了对于页面内容的一些操作。
+在DOM中，所有的内容（标签和文本）都是DOM节点，所有的标签都是DOM元素。</p>
+<pre><code>1.DOM节点关系
+![](/img/DOM_Node.png)
+
+2.节点属性
+![](/img/Node.png)
+
+3.元素属性
+![](/img/element.png)
+
+4.节点操作
+![](/img/Node_operation.png)
+
+5.节点样式
+
+
+6.节点属性
+![](/img/Node_attribute.png)
+</code></pre>
+<p>promise对象
+Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息，其状态不受外界影响。Promise对象代表一个异步操作，有三种状态：
+1.pending: 初始状态，不是成功或失败状态。
+2.fulfilled: 意味着操作成功完成。
+3.rejected: 意味着操作失败。</p>
+<pre><code>只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。
+这也是Promise 这个名字的由来，它的英语意思就是承诺，表示其他手段无法改变。
+
+一旦 Promise 对象从初始状态改变，就不会再变，任何时候都可以得到这个结果。Promise 对象的状态改变，只有两种可能：
+    从 Pending 变为 Resolved 和从 Pending 变为 Rejected。
+    只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。
+</code></pre>
+<p>promise应用
+function cal(a,b)
+{
+let promise = new Promise(function (resolve,reject)
+{
+if(b == 0)
+{
+reject(new Error(&ldquo;除数不能为零&rdquo;));
+//异常情况处理使用reject函数进行拒绝
+}
+else
+{
+//成功处理的情况使用resolve函数进行处理
+resolve(a/b);
+}
+});
+promise.then(function (result)
+{
+console.log(&ldquo;处理成功&rdquo; + result);
+});
+//这里result接收的值就是resolve函数的参数值</p>
+<pre><code>    promise.catch(function (error)
+    {
+        console.log(&quot;处理失败&quot; + error);
+    });
+    //这里error接收的值就是reject函数的参数值
+}
+</code></pre>
+<p>箭头函数
+箭头函数相当于Java中的 lambda 表达式，传递的依然是实现过程。
+function cal(a,b)
+{
+let promise = new Promise((resolve,reject) =&gt;
+{
+if(b == 0)
+{
+reject(new Error(&ldquo;除数不能为零&rdquo;));
+//异常情况处理使用reject函数进行拒绝
+}
+else
+{
+//成功处理的情况使用resolve函数进行处理
+resolve(a/b);
+}
+});
+promise.then((result) =&gt;
+{
+console.log(&ldquo;处理成功&rdquo; + result);
+});
+//这里result接收的值就是resolve函数的参数值</p>
+<pre><code>    promise.catch((error) =&gt;
+    {
+        console.log(&quot;处理失败&quot; + error);
+    });
+    //这里error接收的值就是reject函数的参数值
+}</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

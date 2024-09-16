@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Qt on 清兵卫的博客</title>
+    <link>https://qingbingwei.github.io/tags/qt/</link>
+    <description>Recent content in Qt on 清兵卫的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 02 Mar 2024 17:26:34 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/qt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Qt学习</title>
+      <link>https://qingbingwei.github.io/post/qt%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Sat, 02 Mar 2024 17:26:34 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/qt%E5%AD%A6%E4%B9%A0/</guid>
+      <description>近期把Linux基本命令学习了一遍，考虑到准备开始学习数据结构中较难的红黑树等内容，暂且不学习其他需要投入较多时间的知识，最后决定同时了解学习一下qt，也算是初步接触一下图形化界面了。
+Qt窗口坐标系: 左上角为远点，X向右增加，Y向下增加
+Qt信号和槽 信号槽的优点,松散耦合m信号发送端和接收端本身没有关联， 通过connect连接将两端耦合在一起</description>
+    </item>
+    
+  </channel>
+</rss>

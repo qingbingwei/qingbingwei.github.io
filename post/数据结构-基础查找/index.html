@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>数据结构 基础查找 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数据结构 基础查找"/>
+<meta name="twitter:description" content="基本概念 静态查找 数据集合稳定，不需要添加，删除元素的查找操作 动态查找 在数据集合进行查找的过程中，需要同时添加或删除元素的查找操作 关键字 数据元素中某个项的值，用它可以唯一标识一个数据元素 内查找和外查找 若整个查找过程都在内存中进⾏，则称之为内查找(internalsearch)； 反之，若查找过程的需要访问外存，则称之为外查找(external search)。 平均查找⻓度(Average Search Length，ASL) 注:ASL是衡量查找算法性能好坏的重要指标。 ⼀个査找算法的ASL越⼤，其时间性能越差； 反之，⼀个查找算法的ASL越⼩，其时间性能越好。 线性查找:顺序查找 二分查找 分块查找&mdash;&mdash;&gt;静态查找 注:以上均基于比较查找 1.顺序查找 从表中的第⼀个（或者最后⼀个）记录开始，逐个进⾏记录的关键字和给定值的⽐较， 若某个记录的关键字和给定值⽐较相等，则查找成功。 如果查找了所有的记录仍然找不到与给定值相等的关键字，则查找不成功。
+时间复杂度:O(n) 2.二分查找----前提，数据有序存放，存放在数组中(链表不适合) 确定待查记录所在的范围（区间），然后逐步缩⼩范围直到找到或者找不到该记录为⽌。 注意⼆分查找是在有序表上进⾏的，且⼆分查找也是分治思想的很好例证。 时间复杂度:O(logn) 判定树: 折半查找过程可⽤⼆叉树来描述，把当前查找区间的中间位置上的元素作为根， 由左⼦表和右⼦表构造的⼆叉树分别作为根的左⼦树和右⼦树，由此得到的⼆叉树称为描述折半查找过程的判定树 (deecision tree)或⽐较树(comparison tree)。 注:显然，判定树是⼀棵平衡⼆叉树,反之不成立 3.分块查找 索引存储结构 索引存储结构是在存储数据的同时还建⽴附加的索引表。索引表中的每⼀项称为索引项，索引项的⼀般形式为(关键字，地址)。 其中，关键字唯⼀标识⼀个结点，地址作为指向该关键字对应结点的指针，也可以是相对地址(如数组的下标)。 将査找表分为若⼲⼦块。块内的元素可以⽆序，但块之间是有序的，即第⼀个块中的最⼤关键字 ⼩于第⼆个块中的所有记录的关键字，第⼆个块中的最⼤关键字⼩于第三个块中的所有记录的关键字,以此类推。 再建⽴⼀个索引表，索引表中的每个元素含有各块的最⼤关键字和各块中的第⼀个元素的地址，索引表按关键字有序排列。 分块查找步骤 分块查找的过程分为两步： 第⼀步是在索引表中确定待查记录所在的块，可以顺序查找或折半査找索引表； 第⼆步是在块内顺序查找。
+基于散列表的查找:哈希&mdash;&mdash;&gt;动态查找 注:散列存储也叫hash存储 哈希查找&mdash;散列查找&mdash;&ndash;&gt;散列存储
+哈希: key &mdash;&ndash;&gt; 哈希函数 &mdash;&mdash;&gt; Add(地址) 冲突:两个不同数据，计算出同一个地址 哈希函数如何设计 1.直接定址法:哈希函数设计为一次函数 h(key)=a*key&#43;b 优点:不产生冲突 缺点:空间浪费大 2.除留余数法:哈希函数设计为对一个质数取余 h(key)=key%p p&lt;=m的质数,m是散列表大小 缺点:冲突几乎必然存在，只能尽可能降低 3.平方取中法 4.数字分析法 5.折叠法"/>
+
+    <meta property="og:title" content="数据结构 基础查找" />
+<meta property="og:description" content="基本概念 静态查找 数据集合稳定，不需要添加，删除元素的查找操作 动态查找 在数据集合进行查找的过程中，需要同时添加或删除元素的查找操作 关键字 数据元素中某个项的值，用它可以唯一标识一个数据元素 内查找和外查找 若整个查找过程都在内存中进⾏，则称之为内查找(internalsearch)； 反之，若查找过程的需要访问外存，则称之为外查找(external search)。 平均查找⻓度(Average Search Length，ASL) 注:ASL是衡量查找算法性能好坏的重要指标。 ⼀个査找算法的ASL越⼤，其时间性能越差； 反之，⼀个查找算法的ASL越⼩，其时间性能越好。 线性查找:顺序查找 二分查找 分块查找&mdash;&mdash;&gt;静态查找 注:以上均基于比较查找 1.顺序查找 从表中的第⼀个（或者最后⼀个）记录开始，逐个进⾏记录的关键字和给定值的⽐较， 若某个记录的关键字和给定值⽐较相等，则查找成功。 如果查找了所有的记录仍然找不到与给定值相等的关键字，则查找不成功。
+时间复杂度:O(n) 2.二分查找----前提，数据有序存放，存放在数组中(链表不适合) 确定待查记录所在的范围（区间），然后逐步缩⼩范围直到找到或者找不到该记录为⽌。 注意⼆分查找是在有序表上进⾏的，且⼆分查找也是分治思想的很好例证。 时间复杂度:O(logn) 判定树: 折半查找过程可⽤⼆叉树来描述，把当前查找区间的中间位置上的元素作为根， 由左⼦表和右⼦表构造的⼆叉树分别作为根的左⼦树和右⼦树，由此得到的⼆叉树称为描述折半查找过程的判定树 (deecision tree)或⽐较树(comparison tree)。 注:显然，判定树是⼀棵平衡⼆叉树,反之不成立 3.分块查找 索引存储结构 索引存储结构是在存储数据的同时还建⽴附加的索引表。索引表中的每⼀项称为索引项，索引项的⼀般形式为(关键字，地址)。 其中，关键字唯⼀标识⼀个结点，地址作为指向该关键字对应结点的指针，也可以是相对地址(如数组的下标)。 将査找表分为若⼲⼦块。块内的元素可以⽆序，但块之间是有序的，即第⼀个块中的最⼤关键字 ⼩于第⼆个块中的所有记录的关键字，第⼆个块中的最⼤关键字⼩于第三个块中的所有记录的关键字,以此类推。 再建⽴⼀个索引表，索引表中的每个元素含有各块的最⼤关键字和各块中的第⼀个元素的地址，索引表按关键字有序排列。 分块查找步骤 分块查找的过程分为两步： 第⼀步是在索引表中确定待查记录所在的块，可以顺序查找或折半査找索引表； 第⼆步是在块内顺序查找。
+基于散列表的查找:哈希&mdash;&mdash;&gt;动态查找 注:散列存储也叫hash存储 哈希查找&mdash;散列查找&mdash;&ndash;&gt;散列存储
+哈希: key &mdash;&ndash;&gt; 哈希函数 &mdash;&mdash;&gt; Add(地址) 冲突:两个不同数据，计算出同一个地址 哈希函数如何设计 1.直接定址法:哈希函数设计为一次函数 h(key)=a*key&#43;b 优点:不产生冲突 缺点:空间浪费大 2.除留余数法:哈希函数设计为对一个质数取余 h(key)=key%p p&lt;=m的质数,m是散列表大小 缺点:冲突几乎必然存在，只能尽可能降低 3.平方取中法 4.数字分析法 5.折叠法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-01T15:28:19+08:00" />
+<meta property="article:modified_time" content="2024-03-01T15:28:19+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">数据结构 基础查找</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 1, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>基本概念
+静态查找
+数据集合稳定，不需要添加，删除元素的查找操作
+动态查找
+在数据集合进行查找的过程中，需要同时添加或删除元素的查找操作
+关键字
+数据元素中某个项的值，用它可以唯一标识一个数据元素
+内查找和外查找
+若整个查找过程都在内存中进⾏，则称之为内查找(internalsearch)；
+反之，若查找过程的需要访问外存，则称之为外查找(external search)。
+平均查找⻓度(Average Search Length，ASL)
+<img src="/img/ASL.png" alt=""></p>
+<pre><code>注:ASL是衡量查找算法性能好坏的重要指标。
+⼀个査找算法的ASL越⼤，其时间性能越差；
+反之，⼀个查找算法的ASL越⼩，其时间性能越好。
+</code></pre>
+<p>线性查找:顺序查找 二分查找 分块查找&mdash;&mdash;&gt;静态查找
+注:以上均基于比较查找
+1.顺序查找
+从表中的第⼀个（或者最后⼀个）记录开始，逐个进⾏记录的关键字和给定值的⽐较，
+若某个记录的关键字和给定值⽐较相等，则查找成功。
+如果查找了所有的记录仍然找不到与给定值相等的关键字，则查找不成功。</p>
+<pre><code>    时间复杂度:O(n)
+
+2.二分查找----前提，数据有序存放，存放在数组中(链表不适合)
+    确定待查记录所在的范围（区间），然后逐步缩⼩范围直到找到或者找不到该记录为⽌。
+    注意⼆分查找是在有序表上进⾏的，且⼆分查找也是分治思想的很好例证。
+
+    时间复杂度:O(logn)
+    
+    判定树:
+    折半查找过程可⽤⼆叉树来描述，把当前查找区间的中间位置上的元素作为根，
+    由左⼦表和右⼦表构造的⼆叉树分别作为根的左⼦树和右⼦树，由此得到的⼆叉树称为描述折半查找过程的判定树
+    (deecision tree)或⽐较树(comparison tree)。
+
+    注:显然，判定树是⼀棵平衡⼆叉树,反之不成立
+
+3.分块查找
+    索引存储结构
+        索引存储结构是在存储数据的同时还建⽴附加的索引表。索引表中的每⼀项称为索引项，索引项的⼀般形式为(关键字，地址)。
+        其中，关键字唯⼀标识⼀个结点，地址作为指向该关键字对应结点的指针，也可以是相对地址(如数组的下标)。
+
+    将査找表分为若⼲⼦块。块内的元素可以⽆序，但块之间是有序的，即第⼀个块中的最⼤关键字
+    ⼩于第⼆个块中的所有记录的关键字，第⼆个块中的最⼤关键字⼩于第三个块中的所有记录的关键字,以此类推。
+    再建⽴⼀个索引表，索引表中的每个元素含有各块的最⼤关键字和各块中的第⼀个元素的地址，索引表按关键字有序排列。
+</code></pre>
+<p><img src="/img/fen.png" alt="">
+分块查找步骤
+分块查找的过程分为两步：
+第⼀步是在索引表中确定待查记录所在的块，可以顺序查找或折半査找索引表；
+第⼆步是在块内顺序查找。</p>
+<p>基于散列表的查找:哈希&mdash;&mdash;&gt;动态查找
+注:散列存储也叫hash存储
+哈希查找&mdash;散列查找&mdash;&ndash;&gt;散列存储</p>
+<p>哈希: key &mdash;&ndash;&gt; 哈希函数 &mdash;&mdash;&gt; Add(地址)
+冲突:两个不同数据，计算出同一个地址
+哈希函数如何设计
+1.直接定址法:哈希函数设计为一次函数
+h(key)=a*key+b
+优点:不产生冲突
+缺点:空间浪费大
+2.除留余数法:哈希函数设计为对一个质数取余
+h(key)=key%p  p&lt;=m的质数,m是散列表大小
+缺点:冲突几乎必然存在，只能尽可能降低
+3.平方取中法
+4.数字分析法
+5.折叠法</p>
+<pre><code>冲突解决方式
+    1.开放地址法:保证所有数据都存放在哈希表中
+        当产生冲突时，去计算一个偏移量d，结合d重新计算一个地址
+            1.线性探测法:d=1,2,3......
+            2.平方探测法:d=1^2,-1^2,2^2,-2^2......
+            3.双重哈希法/双散列法:d = h2(key) * i
+            h(key)=( h(key) + h2(key) * i) % m   注:m为散列表大小
+            4.伪随机序列法 d=随机序列
+    2.链地址法
+        将产生冲突的数据用单链表串起来，挂在同一个地址处
+
+1.ASL 平均查找长度
+2.装填因子 a(阿尔法)=表中数据的实际数量/哈希表长度  保持在0.75及以下
+3.再哈希:对哈希表进行扩容，对数据再次哈希算新地址放到新的哈希表中
+
+哈希的应用
+    1.哈希查找
+    2.密码校验
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

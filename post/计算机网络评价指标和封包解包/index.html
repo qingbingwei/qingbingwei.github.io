@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>计算机网络评价指标和封包解包 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="计算机网络评价指标和封包解包"/>
+<meta name="twitter:description" content="计算机⽹络的性能指标 1.速率 数据量的常⽤单位有字节（byte，记为⼤写B） 速率是指数据的传送速率（即每秒传送多少个⽐特），也称为数据率（Data Rate）或⽐特率（BitRate） 速率的基本单位是⽐特/秒（bit/s，可简记为b/s，有时也记为bps，即bit per second 数据量单位中的K、M、G、T的数值分别为2^10 、2^20 、2^30 、2^40 。 速率单位中的k、M、G、T的数值分别为10^3 、10^6 、10^9 、10^12 。 2.带宽 带宽在模拟信号系统中的意义，某个信号所包含的各种不同频率成分所占据的频率范围。单位：Hz 带宽在计算机⽹络中的意义，⽤来表示⽹络的通信线路所能传送数据的能⼒，即在单位时间内从⽹络中的某⼀点到另⼀点所能通过的最⾼数据率。单位：b/s。 数据传送速率 = min [ 主机接⼝速率，线路带宽，交换机或路由器的接⼝速率 ] 3.吞吐量 吞吐量是指在单位时间内通过某个⽹络或接⼝的实际数据量。吞吐量常被⽤于对实际⽹络的测量，以便获知到底有多少数据量通过了⽹络。 吞吐量受⽹络带宽的限制。 4.时延 时延是指数据从⽹络的⼀端传送到另⼀端所耗费的时间，也称为延迟或迟延。 数据可由⼀个或多个分组、甚⾄是⼀个⽐特构成。 分为：发送时延、传播时延、排队时延、处理时延 5.时延带宽积 时延带宽积是传播时延和带宽的乘积。 链路的时延带宽积也称为以⽐特为单位的链路⻓度，这对我们以后理解以太⽹的最短帧⻓是⾮常有帮助的。 6.往返时间 往返时间（Round-Trip Time，RTT）是指从发送端发送数据分组开始，到发送端收到接收端发来的相应确认分组为⽌，总共耗费的时间。 7.利⽤率 链路利⽤率，链路利⽤率是指某条链路有百分之⼏的时间是被利⽤的（即有数据通过）。完全空闲的链路的利⽤率为零。 ⽹络利⽤率，⽹络利⽤率是指⽹络中所有链路的链路利⽤率的加权平均。
+计算机⽹络数据封包和解包
+⽹络体系的术语 1.实体 实体是指任何可发送或接收信息的硬件或软件进程。 对等实体是指通信双⽅相同层次中的实体。 2.协议 协议是控制两个对等实体在“⽔平⽅向” 进⾏“逻辑通信”的规则的集合。
+协议的三要素 1.语法，定义所交换信息的格式 2.语义，定义通信双⽅所要完成的操作 3.同步，定义通信双⽅的时序关系 3.服务 协议是“⽔平”的，⽽服务是“垂直”的。 实体看得⻅下层提供的服务，但并不知道实现该服务的具体协议。下层的协议对上层的实体是“透明”的。 对等层次之间传送的数据包称为该层的协议数据单元（Protocol Data Unit，PDU）。 同⼀系统内层与层之间交换的数据包称为服务数据单元（Service Data Unit，SDU）。 "/>
+
+    <meta property="og:title" content="计算机网络评价指标和封包解包" />
+<meta property="og:description" content="计算机⽹络的性能指标 1.速率 数据量的常⽤单位有字节（byte，记为⼤写B） 速率是指数据的传送速率（即每秒传送多少个⽐特），也称为数据率（Data Rate）或⽐特率（BitRate） 速率的基本单位是⽐特/秒（bit/s，可简记为b/s，有时也记为bps，即bit per second 数据量单位中的K、M、G、T的数值分别为2^10 、2^20 、2^30 、2^40 。 速率单位中的k、M、G、T的数值分别为10^3 、10^6 、10^9 、10^12 。 2.带宽 带宽在模拟信号系统中的意义，某个信号所包含的各种不同频率成分所占据的频率范围。单位：Hz 带宽在计算机⽹络中的意义，⽤来表示⽹络的通信线路所能传送数据的能⼒，即在单位时间内从⽹络中的某⼀点到另⼀点所能通过的最⾼数据率。单位：b/s。 数据传送速率 = min [ 主机接⼝速率，线路带宽，交换机或路由器的接⼝速率 ] 3.吞吐量 吞吐量是指在单位时间内通过某个⽹络或接⼝的实际数据量。吞吐量常被⽤于对实际⽹络的测量，以便获知到底有多少数据量通过了⽹络。 吞吐量受⽹络带宽的限制。 4.时延 时延是指数据从⽹络的⼀端传送到另⼀端所耗费的时间，也称为延迟或迟延。 数据可由⼀个或多个分组、甚⾄是⼀个⽐特构成。 分为：发送时延、传播时延、排队时延、处理时延 5.时延带宽积 时延带宽积是传播时延和带宽的乘积。 链路的时延带宽积也称为以⽐特为单位的链路⻓度，这对我们以后理解以太⽹的最短帧⻓是⾮常有帮助的。 6.往返时间 往返时间（Round-Trip Time，RTT）是指从发送端发送数据分组开始，到发送端收到接收端发来的相应确认分组为⽌，总共耗费的时间。 7.利⽤率 链路利⽤率，链路利⽤率是指某条链路有百分之⼏的时间是被利⽤的（即有数据通过）。完全空闲的链路的利⽤率为零。 ⽹络利⽤率，⽹络利⽤率是指⽹络中所有链路的链路利⽤率的加权平均。
+计算机⽹络数据封包和解包
+⽹络体系的术语 1.实体 实体是指任何可发送或接收信息的硬件或软件进程。 对等实体是指通信双⽅相同层次中的实体。 2.协议 协议是控制两个对等实体在“⽔平⽅向” 进⾏“逻辑通信”的规则的集合。
+协议的三要素 1.语法，定义所交换信息的格式 2.语义，定义通信双⽅所要完成的操作 3.同步，定义通信双⽅的时序关系 3.服务 协议是“⽔平”的，⽽服务是“垂直”的。 实体看得⻅下层提供的服务，但并不知道实现该服务的具体协议。下层的协议对上层的实体是“透明”的。 对等层次之间传送的数据包称为该层的协议数据单元（Protocol Data Unit，PDU）。 同⼀系统内层与层之间交换的数据包称为服务数据单元（Service Data Unit，SDU）。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%B0%81%E5%8C%85%E8%A7%A3%E5%8C%85/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-08-21T17:35:31+08:00" />
+<meta property="article:modified_time" content="2024-08-21T17:35:31+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">计算机网络评价指标和封包解包</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Aug 21, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>计算机⽹络的性能指标
+1.速率
+数据量的常⽤单位有字节（byte，记为⼤写B）
+速率是指数据的传送速率（即每秒传送多少个⽐特），也称为数据率（Data Rate）或⽐特率（BitRate）
+速率的基本单位是⽐特/秒（bit/s，可简记为b/s，有时也记为bps，即bit per second
+数据量单位中的K、M、G、T的数值分别为2^10 、2^20 、2^30 、2^40 。
+速率单位中的k、M、G、T的数值分别为10^3 、10^6 、10^9 、10^12 。
+2.带宽
+带宽在模拟信号系统中的意义，某个信号所包含的各种不同频率成分所占据的频率范围。单位：Hz
+带宽在计算机⽹络中的意义，⽤来表示⽹络的通信线路所能传送数据的能⼒，即在单位时间内从⽹络中的某⼀点到另⼀点所能通过的最⾼数据率。单位：b/s。
+数据传送速率 = min [ 主机接⼝速率，线路带宽，交换机或路由器的接⼝速率 ]
+3.吞吐量
+吞吐量是指在单位时间内通过某个⽹络或接⼝的实际数据量。吞吐量常被⽤于对实际⽹络的测量，以便获知到底有多少数据量通过了⽹络。
+吞吐量受⽹络带宽的限制。
+4.时延
+时延是指数据从⽹络的⼀端传送到另⼀端所耗费的时间，也称为延迟或迟延。 数据可由⼀个或多个分组、甚⾄是⼀个⽐特构成。
+分为：发送时延、传播时延、排队时延、处理时延
+5.时延带宽积
+时延带宽积是传播时延和带宽的乘积。
+链路的时延带宽积也称为以⽐特为单位的链路⻓度，这对我们以后理解以太⽹的最短帧⻓是⾮常有帮助的。
+6.往返时间
+往返时间（Round-Trip Time，RTT）是指从发送端发送数据分组开始，到发送端收到接收端发来的相应确认分组为⽌，总共耗费的时间。
+7.利⽤率
+链路利⽤率，链路利⽤率是指某条链路有百分之⼏的时间是被利⽤的（即有数据通过）。完全空闲的链路的利⽤率为零。
+⽹络利⽤率，⽹络利⽤率是指⽹络中所有链路的链路利⽤率的加权平均。</p>
+<p>计算机⽹络数据封包和解包</p>
+<p>⽹络体系的术语
+1.实体
+实体是指任何可发送或接收信息的硬件或软件进程。
+对等实体是指通信双⽅相同层次中的实体。
+2.协议
+协议是控制两个对等实体在“⽔平⽅向” 进⾏“逻辑通信”的规则的集合。</p>
+<pre><code>    协议的三要素
+        1.语法，定义所交换信息的格式
+        2.语义，定义通信双⽅所要完成的操作
+        3.同步，定义通信双⽅的时序关系
+3.服务
+    协议是“⽔平”的，⽽服务是“垂直”的。
+    实体看得⻅下层提供的服务，但并不知道实现该服务的具体协议。下层的协议对上层的实体是“透明”的。
+    对等层次之间传送的数据包称为该层的协议数据单元（Protocol Data Unit，PDU）。
+    同⼀系统内层与层之间交换的数据包称为服务数据单元（Service Data Unit，SDU）。</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

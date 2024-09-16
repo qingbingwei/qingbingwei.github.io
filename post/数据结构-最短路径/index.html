@@ -13,10 +13,10 @@
     
     <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="数据结构 最短路径"/>
-<meta name="twitter:description" content="注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&gt;贪心 多源最短路径算法 2.Floyd算法----&gt;动态规划 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { for (int i = 0; i &lt; sz1; &#43;&#43;i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } } //初始化 for (int i = 0; i &lt; sz1; &#43;&#43;i) { for (int j = 0; j &lt; sz1; &#43;&#43;j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &lt; sz2; &#43;&#43;i) { cin &gt;&gt; x &gt;&gt; y &gt;&gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &gt;&gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &lt; size1; &#43;&#43;i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &lt; size1 - 1; &#43;&#43;i) { min_n = 999999; for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &gt; (dist[k] &#43; graph[k][j])) { dist[j] = dist[k] &#43; graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g."/>
+<meta name="twitter:description" content="注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&gt;贪心 单源最短路 O(n^2) 不能解决带负边权问题 多源最短路径算法 2.Floyd算法----&gt;动态规划 多源最短路 o(n^3) 不能解决负边权回路 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { for (int i = 0; i &lt; sz1; &#43;&#43;i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } } //初始化 for (int i = 0; i &lt; sz1; &#43;&#43;i) { for (int j = 0; j &lt; sz1; &#43;&#43;j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &lt; sz2; &#43;&#43;i) { cin &gt;&gt; x &gt;&gt; y &gt;&gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &gt;&gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &lt; size1; &#43;&#43;i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &lt; size1 - 1; &#43;&#43;i) { min_n = 999999; for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &gt; (dist[k] &#43; graph[k][j])) { dist[j] = dist[k] &#43; graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g."/>
 
     <meta property="og:title" content="数据结构 最短路径" />
-<meta property="og:description" content="注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&gt;贪心 多源最短路径算法 2.Floyd算法----&gt;动态规划 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { for (int i = 0; i &lt; sz1; &#43;&#43;i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } } //初始化 for (int i = 0; i &lt; sz1; &#43;&#43;i) { for (int j = 0; j &lt; sz1; &#43;&#43;j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &lt; sz2; &#43;&#43;i) { cin &gt;&gt; x &gt;&gt; y &gt;&gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &gt;&gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &lt; size1; &#43;&#43;i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &lt; size1 - 1; &#43;&#43;i) { min_n = 999999; for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &gt; (dist[k] &#43; graph[k][j])) { dist[j] = dist[k] &#43; graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g." />
+<meta property="og:description" content="注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&gt;贪心 单源最短路 O(n^2) 不能解决带负边权问题 多源最短路径算法 2.Floyd算法----&gt;动态规划 多源最短路 o(n^3) 不能解决负边权回路 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&lt;iostream&gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } else { for (int i = 0; i &lt; sz1; &#43;&#43;i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &lt;&lt; &quot;开辟失败&quot; &lt;&lt; endl; } } //初始化 for (int i = 0; i &lt; sz1; &#43;&#43;i) { for (int j = 0; j &lt; sz1; &#43;&#43;j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &lt; sz2; &#43;&#43;i) { cin &gt;&gt; x &gt;&gt; y &gt;&gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &gt;&gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &lt; size1; &#43;&#43;i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &lt; size1 - 1; &#43;&#43;i) { min_n = 999999; for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &lt; size1; &#43;&#43;j) { if (visit[j] == false &amp;&amp; dist[j] &gt; (dist[k] &#43; graph[k][j])) { dist[j] = dist[k] &#43; graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" /><meta property="article:section" content="post" />
 <meta property="article:published_time" content="2024-01-27T10:19:17+08:00" />
@@ -91,9 +91,9 @@
 对于无向带权图，有如下常用算法
 
 单源最短路径算法
-1.dijkstra算法----&gt;贪心
+1.dijkstra算法----&gt;贪心 单源最短路 O(n^2) 不能解决带负边权问题
 多源最短路径算法
-2.Floyd算法----&gt;动态规划
+2.Floyd算法----&gt;动态规划 多源最短路 o(n^3) 不能解决负边权回路
 
 最短路径算法核心思想：用中转点找更短的路径
 
@@ -256,7 +256,26 @@ int main()
 6 7 2
 6 8 7
 7 8 4
-*/</code></pre>
+*/
+</code></pre>
+<p>Floyd算法(DP):
+1.判题
+2.找状态数组
+(1)不加中转点时 任意两点之间最短路径的距离是多少&mdash;&ndash;&gt;初始状态:邻接矩阵
+(2)加1个中转点时 任意两点之间最短路径的距离是多少
+(3)加2个中转点时 任意两点之间最短路径的距离是多少
+&hellip;&hellip;
+(n)加k个中转点时 任意两点之间最短路径的距离是多少
+dp[k][i][j] = ans;
+初始状态:dp[0][i][j] = g[i][j]
+以前k个点做中转点时，i和j之间的最短路径的距离为ans
+3.状态转移公式
+第k个状态:dp[k][i][j] = min(dp[k-1][i][j],dp[k-1][i][k]+dp[k-1][k][j])</p>
+<pre><code>    降维优化:二维
+    dp[i][j] = ans;以前k个点做中转点时，i,j之间最短路径距离为ans
+
+    第k个状态:dp[i][j] = min(dp[i][j],dp[i][k]+dp[k][j])
+</code></pre>
 
     </div>
     <div class="post-footer">

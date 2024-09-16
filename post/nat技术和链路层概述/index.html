@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>NAT技术和链路层概述 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="NAT技术和链路层概述"/>
+<meta name="twitter:description" content="注:对于因特网骨干网设备(路由器),不允许转发私网IP
+因特⽹的接⼊⽅式 1.电话线⼊户 (1)平时说的ADSL电话拨号上⽹，⾮对称数字⽤户线路，提供上、下⾏不对称的传输带宽。 (2)需要提供猫（Modem）,调制解调器，进⾏数字信号和模拟信号的转换。 2.光纤⼊户 (1)光猫（optical modem），光调制解调器，进⾏数字信号和光信号的转换
+公⽹和私⽹ 1.公⽹（public） (1)Internet上路由器中只有到达公⽹的路由表，没有到达私⽹的路由表 (2)公⽹IP由因特⽹信息中⼼（Internet Network Information Center，Inter NIC）统⼀分配和管理 (3)ISP需要向Inter NIC申请公⽹IP 2.私⽹（private） (1)主要⽤于局域⽹ (2)A类：10.0.0.0/8，1个A类⽹络 (3)B类：172.16.0.0/16 ~ 172.31.0.0/16，16个B类⽹络 (4)C类：192.168.0.0/24 ~ 192.168.255.0/24，256个C类⽹络
+NAT技术 1.私⽹IP访问Internet需要进⾏NAT转换为公⽹IP (1)NAT（Network Address Translation） (2)这⼀步可以由路由器来完成 2.NAT特点 (1)可以节约公⽹IP资源 (2)会隐藏内部真实IP 3.NAT分类 (1)静态转换，⼿动配置NAT映射表 (2)动态转换，定义外部地址池，动态随机转换，⼀对⼀转换 (3)PAT（Port Address Translation），多对⼀转换 a.采⽤端⼝多路复⽤技术
+/************************************************************ */
+数据链路层概述 链路（Link）是指从⼀个节点到相邻节点的⼀段物理线路（有线或⽆线），⽽中间没有任何其他的交换节点。 1.数据链路（Data Link）是基于链路的。当在⼀条链路上传送数据时，除需要链路本身，还需要⼀些必要的通信协议来控制这些数据的传输，把实现这些协议的硬件和软件加到链路上，就构成了数据链路。 2.不同类型的数据链路，所⽤的通信协议可能是不同的 (1)⼴播信道：CSMA/CD协议（⽐如同轴电缆、集线器等组成的⽹络）&mdash;-&gt;几乎淘汰 (2)点对点信道：PPP协议（⽐如2个路由器之间的信道） 3.计算机中的⽹络适配器（俗称⽹卡）和其相应的软件驱动程序就实现了这些协议。⼀般的⽹络适配器都包含了物理层和数据链路层这两层的功能。
+数据链路层的三个问题 1.封装成帧 (1)帧（Frame）的数据部分，就是⽹络层传递下来的数据包（IP数据包，Packet） (2)最⼤传输单元MTU（Maximum Transfer Unit） a.每⼀种数据链路层协议都规定了所能传送的帧数据⻓度上限 b.以太⽹的MTU为1500字节(最小传输单元为46字节)&mdash;&mdash;&gt;针对数据部分 c.以太⽹V2的MAC帧最小为64字节 (3)以太⽹V2的MAC帧 (4)PPP帧 (5)封装成帧是指数据链路层给上层交付下来的协议数据单元PDU添加⼀个⾸部和⼀个尾部，使之成为帧。 a.帧的⾸部和尾部中包含有⼀些重要的控制信息。 b.帧⾸部和尾部的作⽤之⼀就是帧定界。 c.并不是每⼀种数据链路层协议的帧都包含有帧定界标志 2.透明传输 (1)透明传输是指数据链路层对上层交付下来的协议数据单元PDU没有任何限制，就好像数据链路层不存在⼀样。 a."/>
+
+    <meta property="og:title" content="NAT技术和链路层概述" />
+<meta property="og:description" content="注:对于因特网骨干网设备(路由器),不允许转发私网IP
+因特⽹的接⼊⽅式 1.电话线⼊户 (1)平时说的ADSL电话拨号上⽹，⾮对称数字⽤户线路，提供上、下⾏不对称的传输带宽。 (2)需要提供猫（Modem）,调制解调器，进⾏数字信号和模拟信号的转换。 2.光纤⼊户 (1)光猫（optical modem），光调制解调器，进⾏数字信号和光信号的转换
+公⽹和私⽹ 1.公⽹（public） (1)Internet上路由器中只有到达公⽹的路由表，没有到达私⽹的路由表 (2)公⽹IP由因特⽹信息中⼼（Internet Network Information Center，Inter NIC）统⼀分配和管理 (3)ISP需要向Inter NIC申请公⽹IP 2.私⽹（private） (1)主要⽤于局域⽹ (2)A类：10.0.0.0/8，1个A类⽹络 (3)B类：172.16.0.0/16 ~ 172.31.0.0/16，16个B类⽹络 (4)C类：192.168.0.0/24 ~ 192.168.255.0/24，256个C类⽹络
+NAT技术 1.私⽹IP访问Internet需要进⾏NAT转换为公⽹IP (1)NAT（Network Address Translation） (2)这⼀步可以由路由器来完成 2.NAT特点 (1)可以节约公⽹IP资源 (2)会隐藏内部真实IP 3.NAT分类 (1)静态转换，⼿动配置NAT映射表 (2)动态转换，定义外部地址池，动态随机转换，⼀对⼀转换 (3)PAT（Port Address Translation），多对⼀转换 a.采⽤端⼝多路复⽤技术
+/************************************************************ */
+数据链路层概述 链路（Link）是指从⼀个节点到相邻节点的⼀段物理线路（有线或⽆线），⽽中间没有任何其他的交换节点。 1.数据链路（Data Link）是基于链路的。当在⼀条链路上传送数据时，除需要链路本身，还需要⼀些必要的通信协议来控制这些数据的传输，把实现这些协议的硬件和软件加到链路上，就构成了数据链路。 2.不同类型的数据链路，所⽤的通信协议可能是不同的 (1)⼴播信道：CSMA/CD协议（⽐如同轴电缆、集线器等组成的⽹络）&mdash;-&gt;几乎淘汰 (2)点对点信道：PPP协议（⽐如2个路由器之间的信道） 3.计算机中的⽹络适配器（俗称⽹卡）和其相应的软件驱动程序就实现了这些协议。⼀般的⽹络适配器都包含了物理层和数据链路层这两层的功能。
+数据链路层的三个问题 1.封装成帧 (1)帧（Frame）的数据部分，就是⽹络层传递下来的数据包（IP数据包，Packet） (2)最⼤传输单元MTU（Maximum Transfer Unit） a.每⼀种数据链路层协议都规定了所能传送的帧数据⻓度上限 b.以太⽹的MTU为1500字节(最小传输单元为46字节)&mdash;&mdash;&gt;针对数据部分 c.以太⽹V2的MAC帧最小为64字节 (3)以太⽹V2的MAC帧 (4)PPP帧 (5)封装成帧是指数据链路层给上层交付下来的协议数据单元PDU添加⼀个⾸部和⼀个尾部，使之成为帧。 a.帧的⾸部和尾部中包含有⼀些重要的控制信息。 b.帧⾸部和尾部的作⽤之⼀就是帧定界。 c.并不是每⼀种数据链路层协议的帧都包含有帧定界标志 2.透明传输 (1)透明传输是指数据链路层对上层交付下来的协议数据单元PDU没有任何限制，就好像数据链路层不存在⼀样。 a." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/nat%E6%8A%80%E6%9C%AF%E5%92%8C%E9%93%BE%E8%B7%AF%E5%B1%82%E6%A6%82%E8%BF%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-05T22:24:06+08:00" />
+<meta property="article:modified_time" content="2024-09-05T22:24:06+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">NAT技术和链路层概述</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 5, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>注:对于因特网骨干网设备(路由器),不允许转发私网IP</p>
+<p>因特⽹的接⼊⽅式
+1.电话线⼊户
+(1)平时说的ADSL电话拨号上⽹，⾮对称数字⽤户线路，提供上、下⾏不对称的传输带宽。
+(2)需要提供猫（Modem）,调制解调器，进⾏数字信号和模拟信号的转换。
+2.光纤⼊户
+(1)光猫（optical modem），光调制解调器，进⾏数字信号和光信号的转换</p>
+<p>公⽹和私⽹
+1.公⽹（public）
+(1)Internet上路由器中只有到达公⽹的路由表，没有到达私⽹的路由表
+(2)公⽹IP由因特⽹信息中⼼（Internet Network Information Center，Inter NIC）统⼀分配和管理
+(3)ISP需要向Inter NIC申请公⽹IP
+2.私⽹（private）
+(1)主要⽤于局域⽹
+(2)A类：10.0.0.0/8，1个A类⽹络
+(3)B类：172.16.0.0/16 ~ 172.31.0.0/16，16个B类⽹络
+(4)C类：192.168.0.0/24 ~ 192.168.255.0/24，256个C类⽹络</p>
+<p>NAT技术
+1.私⽹IP访问Internet需要进⾏NAT转换为公⽹IP
+(1)NAT（Network Address Translation）
+(2)这⼀步可以由路由器来完成
+2.NAT特点
+(1)可以节约公⽹IP资源
+(2)会隐藏内部真实IP
+3.NAT分类
+(1)静态转换，⼿动配置NAT映射表
+(2)动态转换，定义外部地址池，动态随机转换，⼀对⼀转换
+(3)PAT（Port Address Translation），多对⼀转换
+a.采⽤端⼝多路复⽤技术</p>
+<p>/************************************************************ */</p>
+<p>数据链路层概述
+链路（Link）是指从⼀个节点到相邻节点的⼀段物理线路（有线或⽆线），⽽中间没有任何其他的交换节点。
+1.数据链路（Data Link）是基于链路的。当在⼀条链路上传送数据时，除需要链路本身，还需要⼀些必要的通信协议来控制这些数据的传输，把实现这些协议的硬件和软件加到链路上，就构成了数据链路。
+2.不同类型的数据链路，所⽤的通信协议可能是不同的
+(1)⼴播信道：CSMA/CD协议（⽐如同轴电缆、集线器等组成的⽹络）&mdash;-&gt;几乎淘汰
+(2)点对点信道：PPP协议（⽐如2个路由器之间的信道）
+3.计算机中的⽹络适配器（俗称⽹卡）和其相应的软件驱动程序就实现了这些协议。⼀般的⽹络适配器都包含了物理层和数据链路层这两层的功能。</p>
+<p>数据链路层的三个问题
+1.封装成帧
+(1)帧（Frame）的数据部分，就是⽹络层传递下来的数据包（IP数据包，Packet）
+(2)最⼤传输单元MTU（Maximum Transfer Unit）
+a.每⼀种数据链路层协议都规定了所能传送的帧数据⻓度上限
+b.以太⽹的MTU为1500字节(最小传输单元为46字节)&mdash;&mdash;&gt;针对数据部分
+c.以太⽹V2的MAC帧最小为64字节
+(3)以太⽹V2的MAC帧
+(4)PPP帧
+(5)封装成帧是指数据链路层给上层交付下来的协议数据单元PDU添加⼀个⾸部和⼀个尾部，使之成为帧。
+a.帧的⾸部和尾部中包含有⼀些重要的控制信息。
+b.帧⾸部和尾部的作⽤之⼀就是帧定界。
+c.并不是每⼀种数据链路层协议的帧都包含有帧定界标志
+2.透明传输
+(1)透明传输是指数据链路层对上层交付下来的协议数据单元PDU没有任何限制，就好像数据链路层不存在⼀样。
+a.⾯向字节的物理链路使⽤字节填充的⽅法实现透明传输。
+b.⾯向⽐特的物理链路使⽤⽐特填充的⽅法实现透明传输。
+3.差错检测
+(1)FCS是根据数据部分 + ⾸部计算得出的
+a.奇校验 数据 + 校验位&mdash;&mdash;&gt;1的个数是奇数
+b.CRC（Cyclic Redundancy Check，CRC）循环冗余校验
+基本思想：
+1.收发双⽅约定好⼀个⽣成多项式G(X)。
+2.发送⽅基于待发送的数据和⽣成多项式G(X)，计算出差错检测码（冗余码），将冗余码添加到待发送数据的后⾯⼀起传输。
+3.接收⽅收到数据和冗余码后，通过⽣成多项式G(X)来计算收到的数据和冗余码是否产⽣了误码。</p>
+<pre><code>            注:𝑮(𝑿) = 𝑿^4 + 𝑿^2 + 𝑿 + 𝟏，⽣成多项各项系数构成的⽐特串：10111（计算冗余码时作为除数）
+</code></pre>
+<p>/********************************************************** */</p>
+<p>Ethernet V2标准
+1.以太⽹帧的格式有
+(1)Ethernet V2标准 （使⽤最多）
+(2)IEEE的802.3标准
+2.为了能够检测正在发送的帧是否产⽣了冲突，以太⽹的帧⾄少要64字节
+3.⽤交换机组建的⽹络，已经⽀持全双⼯通信，不需要再使⽤CSMA/CD协议，它传输的帧依然是以太⽹帧
+4.格式说明
+(1)⾸部：⽬标MAC + 源MAC + ⽹络类型
+(2)以太⽹帧：⾸部 + 数据 + FCS
+(3)数据的⻓度⾄少是：64 - 6 - 6 - 2 - 4 = 46字节
+5.当数据部分的⻓度⼩于46字节时
+(1)数据链路层会在数据的后⾯加⼊⼀些字节填充
+(2)接收端会将添加的字节去掉
+6.⻓度总结
+(1)以太⽹帧的数据⻓度：46 ~ 1500字节
+(2)以太⽹帧的⻓度：64 ~ 1518字节</p>
+<p>以太⽹MAC帧协议
+1.接收⽅可能收到的⽆效MAC帧包括以下⼏种：
+(1)MAC帧的⻓度不是整数个字节
+(2)通过MAC帧的FCS字段的值检测出帧有误码
+(3)MAC帧的⻓度不在64 ~ 1518字节之间
+2.接收⽅收到⽆效的MAC帧时，就简单将其丢弃，以太⽹的数据链路层没有重传机制。</p>
+<p>/************************************************************ */</p>
+<p>PPP协议
+1.PPP概述
+(1)点对点协议（Point-to-Point Protocol，PPP）是⽬前使⽤最⼴泛的点对点数据链路层协议。
+(2)点对点协议PPP是因特⽹⼯程任务组（Internet Engineering Task Force，IETF）于1992年制定的。经过多次修订，⽬前PPP已成为因特⽹的正式标准[RFC1661，RFC1662]。
+(3)点对点协议PPP主要有两种应⽤：
+a.因特⽹⽤户
+b.⼴域⽹路由器链路
+2.PPP帧
+(1)标志（Flag）字段：PPP帧的定界符，取值为0x7E。
+(2)地址（Address）字段：取值为0xFF，预留（⽬前没有什么作⽤）。
+(3)控制（Control）字段：取值为0x03，预留（⽬前没有什么作⽤）。
+(4)协议（Protocol）字段：其值⽤来指明帧的数据载荷应向上交付给哪个协议处理。
+(5)数据部分最大传输单元MTU=1500B
+(6)帧检验序列（Frame Check Sequence ，FCS）字段∶其值是使用循环冗余校验CRC计算出的检错码。</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

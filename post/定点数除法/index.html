@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>定点数除法 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="定点数除法"/>
+<meta name="twitter:description" content="m位数 / n位数 = (m - n &#43; 1)位数&mdash;-&gt;最多位数 注:(m&gt;=n)
+二进制除法的运算，本质上相当于看最多几个除数累加能逼近于被除数。 （加上余数后就等于被除数）。
+定点数除法(均使用试商法，即恢复余数法，但计算机实际使用不恢复余数法) 1.无符号数除法 无符号数除法运算用减法和移位运算来实现
+(1)先对除数末尾补零到与被除数位数对齐（通过左移实现），左移一位代表乘2，右移一位代表除2； (2)判断大小，确定该位商1还是商0。 计算机不可能提前知道除数是否小于被除数。 先让被除数减去除数，若结果为&gt;=0，说明被除数&gt;=除数，直接商1。 若结果为负数，说明被除数&lt;除数，说明不能减，则先恢复被除数的原值，再商0。 比如32（n）位的除法：被除数64(2n)位，除数32(n)位。 先把除数左移32位，然后开始同十进制类似计算。 因为二进制只有0和1所以退化为减法，先减去被除数，如果结果为负，则当前位商置为0，再加回来， 如果结果为正，则当前位商为1，除数右移一位，继续如上做减法。 循环n&#43;1次，商的位数满足为止。 2.有符号数除法 (1)原码表示(符号位与数值位分开求) 1.符号位:被除数和除数的符号位“异或”运算得到 2.数值位:被除数和除数的数值位执行 “无符号除法” 注:余数符号位与被除数符号位相同 (2)补码表示(符号位参与运算) 1.符号位参与运算，除数和被除数，余数和商(异号相除较特殊)均用补码表示。 2.其他过程与无符号除法一致，区别在于判断是否可以减时，不能直接相减看结果的符号位，要按分情况来看。 注:如果同号相除得商；异号相除，将商的负数求补(带符号位) "/>
+
+    <meta property="og:title" content="定点数除法" />
+<meta property="og:description" content="m位数 / n位数 = (m - n &#43; 1)位数&mdash;-&gt;最多位数 注:(m&gt;=n)
+二进制除法的运算，本质上相当于看最多几个除数累加能逼近于被除数。 （加上余数后就等于被除数）。
+定点数除法(均使用试商法，即恢复余数法，但计算机实际使用不恢复余数法) 1.无符号数除法 无符号数除法运算用减法和移位运算来实现
+(1)先对除数末尾补零到与被除数位数对齐（通过左移实现），左移一位代表乘2，右移一位代表除2； (2)判断大小，确定该位商1还是商0。 计算机不可能提前知道除数是否小于被除数。 先让被除数减去除数，若结果为&gt;=0，说明被除数&gt;=除数，直接商1。 若结果为负数，说明被除数&lt;除数，说明不能减，则先恢复被除数的原值，再商0。 比如32（n）位的除法：被除数64(2n)位，除数32(n)位。 先把除数左移32位，然后开始同十进制类似计算。 因为二进制只有0和1所以退化为减法，先减去被除数，如果结果为负，则当前位商置为0，再加回来， 如果结果为正，则当前位商为1，除数右移一位，继续如上做减法。 循环n&#43;1次，商的位数满足为止。 2.有符号数除法 (1)原码表示(符号位与数值位分开求) 1.符号位:被除数和除数的符号位“异或”运算得到 2.数值位:被除数和除数的数值位执行 “无符号除法” 注:余数符号位与被除数符号位相同 (2)补码表示(符号位参与运算) 1.符号位参与运算，除数和被除数，余数和商(异号相除较特殊)均用补码表示。 2.其他过程与无符号除法一致，区别在于判断是否可以减时，不能直接相减看结果的符号位，要按分情况来看。 注:如果同号相除得商；异号相除，将商的负数求补(带符号位) " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E5%AE%9A%E7%82%B9%E6%95%B0%E9%99%A4%E6%B3%95/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-05T17:49:27+08:00" />
+<meta property="article:modified_time" content="2024-09-05T17:49:27+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">定点数除法</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 5, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>m位数 / n位数 = (m - n + 1)位数&mdash;-&gt;最多位数
+注:(m&gt;=n)</p>
+<p>二进制除法的运算，本质上相当于看最多几个除数累加能逼近于被除数。
+（加上余数后就等于被除数）。</p>
+<p>定点数除法(均使用试商法，即恢复余数法，但计算机实际使用不恢复余数法)
+1.无符号数除法
+无符号数除法运算用减法和移位运算来实现</p>
+<pre><code>    (1)先对除数末尾补零到与被除数位数对齐（通过左移实现），左移一位代表乘2，右移一位代表除2；
+
+    (2)判断大小，确定该位商1还是商0。
+
+        计算机不可能提前知道除数是否小于被除数。
+
+        先让被除数减去除数，若结果为&gt;=0，说明被除数&gt;=除数，直接商1。
+        若结果为负数，说明被除数&lt;除数，说明不能减，则先恢复被除数的原值，再商0。
+
+    比如32（n）位的除法：被除数64(2n)位，除数32(n)位。
+    先把除数左移32位，然后开始同十进制类似计算。
+    因为二进制只有0和1所以退化为减法，先减去被除数，如果结果为负，则当前位商置为0，再加回来，
+    如果结果为正，则当前位商为1，除数右移一位，继续如上做减法。
+    循环n+1次，商的位数满足为止。
+
+2.有符号数除法
+    (1)原码表示(符号位与数值位分开求)
+        1.符号位:被除数和除数的符号位“异或”运算得到
+
+        2.数值位:被除数和除数的数值位执行 “无符号除法”
+
+        注:余数符号位与被除数符号位相同
+    (2)补码表示(符号位参与运算)
+        1.符号位参与运算，除数和被除数，余数和商(异号相除较特殊)均用补码表示。
+
+        2.其他过程与无符号除法一致，区别在于判断是否可以减时，不能直接相减看结果的符号位，要按分情况来看。
+
+        注:如果同号相除得商；异号相除，将商的负数求补(带符号位)
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>网络层概述 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="网络层概述"/>
+<meta name="twitter:description" content="⽹际层的设计选择 ⽹络层的主要任务 1.就是将分组从源主机经过多个⽹络和多段链路传输到⽬的主机 2.可以将该任务划分为分组转发和路由选择两种重要的功能。
+⽹络层向上层提供两种服务 1.⾯向连接的虚电路服务 (1)核⼼思想是“可靠通信应由⽹络⾃身来保证”。 (2)通信双⽅沿着已建⽴的虚电路发送分组。 注:很多⼴域分组交换⽹都使⽤⾯向连接的虚电路服务。 例如，曾经的X.25和逐渐过时的帧中继（Frame Relay，FR）、异步传输模式（Asynchronnous Transfer Mode，ATM）。 2.⽆连接的数据报服务 (1)核⼼思想是“可靠通信应由⽤户主机来保证”。 (2)不需要建⽴⽹络层连接。 (3)每个分组可⾛不同的路径，因此，每个分组的⾸部都必须携带⽬的主机的完整地址。 (4)通信结束后，没有需要释放的连接。 注:这种通信⽅式所传送的分组可能误码、丢失、重复和失序。 由于⽹络⾃身不提供端到端的可靠传输服务，这就使得⽹络中的路由器可以做得⽐较简单，⼤⼤降低了⽹络造价。 ⽹络层协议 IPv4数据报格式 1.在TCP/IP标准中，各种数据格式常常以32⽐特（即4字节）为单位来描述。 2.⽹络层数据包（IP数据包，Packet）由⾸部、数据2部分组成 (1)数据：很多时候是由传输层传递下来的数据段（Segment）
+IPv4数据报⾸部协议 1.版本(Version) ⻓度为4个⽐特，⽤来表示IP协议的版本。 (1)0b0100 : IPv4 (2)0b0110 : IPv6 2.⾸部⻓度(Header Length) 占4个⽐特，乘以4才是最终⻓度，⽤来表示IPv4数据报的⾸部⻓度。 (1)最⼩取值为⼆进制的0101，20字节 (2)最⼤取值为⼆进制的1111，60字节。 3.可选字段 (1)⻓度从1字节到40字节不等，⽤来⽀持排错、测量以及安全措施等功能。 (2)虽然可选字段增加了IPv4数据报的功能，但这同时也使得IPv4数据报的⾸部⻓度成为可变的，这就增加了因特⽹中每⼀个路由器处理IPv4数据报的开销。 4.填充 (1)当⾸部⻓度（20字节固定部分&#43;可变部分）的⻓度不是4字节整数倍时，填充相应数量的全0字节，以确保IPv4数据报的⾸部⻓度是4字节的整数倍。 (2)使⽤全0进⾏填充。 5.区分服务(Differentiated Services Field) (1)占8个⽐特 (2)可以⽤于提⾼⽹络的服务质量 6.总长度(Total Length) (1)占16个⽐特 (2)⾸部 &#43; 数据的⻓度之和，最⼤65535 7.标识、标志、⽚偏移 注:由于帧的数据不能超过1500字节，所以过⼤的IP数据包，需要分成⽚（fragments）传输给数据链路层。且每⼀⽚都有⾃⼰的⽹络层⾸部（IP⾸部）。 (1)标识（Identification）： a.占16⽐特 b.数据包的ID，当数据包过⼤进⾏分⽚时，同⼀个数据包的所有⽚的标识都是⼀样的 c.有⼀个计数器专⻔管理数据包的ID，每发出⼀个数据包，ID就加1 (2)标志（Flags）： a.占3⽐特 b.最低位（More Fragment，MF） i.MF=1表示本分⽚后⾯还有分⽚ ii.MF=0表示本分⽚后⾯没有分⽚ c.中间位（Don’t Fragment，DF） i."/>
+
+    <meta property="og:title" content="网络层概述" />
+<meta property="og:description" content="⽹际层的设计选择 ⽹络层的主要任务 1.就是将分组从源主机经过多个⽹络和多段链路传输到⽬的主机 2.可以将该任务划分为分组转发和路由选择两种重要的功能。
+⽹络层向上层提供两种服务 1.⾯向连接的虚电路服务 (1)核⼼思想是“可靠通信应由⽹络⾃身来保证”。 (2)通信双⽅沿着已建⽴的虚电路发送分组。 注:很多⼴域分组交换⽹都使⽤⾯向连接的虚电路服务。 例如，曾经的X.25和逐渐过时的帧中继（Frame Relay，FR）、异步传输模式（Asynchronnous Transfer Mode，ATM）。 2.⽆连接的数据报服务 (1)核⼼思想是“可靠通信应由⽤户主机来保证”。 (2)不需要建⽴⽹络层连接。 (3)每个分组可⾛不同的路径，因此，每个分组的⾸部都必须携带⽬的主机的完整地址。 (4)通信结束后，没有需要释放的连接。 注:这种通信⽅式所传送的分组可能误码、丢失、重复和失序。 由于⽹络⾃身不提供端到端的可靠传输服务，这就使得⽹络中的路由器可以做得⽐较简单，⼤⼤降低了⽹络造价。 ⽹络层协议 IPv4数据报格式 1.在TCP/IP标准中，各种数据格式常常以32⽐特（即4字节）为单位来描述。 2.⽹络层数据包（IP数据包，Packet）由⾸部、数据2部分组成 (1)数据：很多时候是由传输层传递下来的数据段（Segment）
+IPv4数据报⾸部协议 1.版本(Version) ⻓度为4个⽐特，⽤来表示IP协议的版本。 (1)0b0100 : IPv4 (2)0b0110 : IPv6 2.⾸部⻓度(Header Length) 占4个⽐特，乘以4才是最终⻓度，⽤来表示IPv4数据报的⾸部⻓度。 (1)最⼩取值为⼆进制的0101，20字节 (2)最⼤取值为⼆进制的1111，60字节。 3.可选字段 (1)⻓度从1字节到40字节不等，⽤来⽀持排错、测量以及安全措施等功能。 (2)虽然可选字段增加了IPv4数据报的功能，但这同时也使得IPv4数据报的⾸部⻓度成为可变的，这就增加了因特⽹中每⼀个路由器处理IPv4数据报的开销。 4.填充 (1)当⾸部⻓度（20字节固定部分&#43;可变部分）的⻓度不是4字节整数倍时，填充相应数量的全0字节，以确保IPv4数据报的⾸部⻓度是4字节的整数倍。 (2)使⽤全0进⾏填充。 5.区分服务(Differentiated Services Field) (1)占8个⽐特 (2)可以⽤于提⾼⽹络的服务质量 6.总长度(Total Length) (1)占16个⽐特 (2)⾸部 &#43; 数据的⻓度之和，最⼤65535 7.标识、标志、⽚偏移 注:由于帧的数据不能超过1500字节，所以过⼤的IP数据包，需要分成⽚（fragments）传输给数据链路层。且每⼀⽚都有⾃⼰的⽹络层⾸部（IP⾸部）。 (1)标识（Identification）： a.占16⽐特 b.数据包的ID，当数据包过⼤进⾏分⽚时，同⼀个数据包的所有⽚的标识都是⼀样的 c.有⼀个计数器专⻔管理数据包的ID，每发出⼀个数据包，ID就加1 (2)标志（Flags）： a.占3⽐特 b.最低位（More Fragment，MF） i.MF=1表示本分⽚后⾯还有分⽚ ii.MF=0表示本分⽚后⾯没有分⽚ c.中间位（Don’t Fragment，DF） i." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%A6%82%E8%BF%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-10T20:07:23+08:00" />
+<meta property="article:modified_time" content="2024-09-10T20:07:23+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">网络层概述</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 10, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>⽹际层的设计选择
+⽹络层的主要任务
+1.就是将分组从源主机经过多个⽹络和多段链路传输到⽬的主机
+2.可以将该任务划分为分组转发和路由选择两种重要的功能。</p>
+<pre><code>⽹络层向上层提供两种服务
+    1.⾯向连接的虚电路服务
+        (1)核⼼思想是“可靠通信应由⽹络⾃身来保证”。
+        (2)通信双⽅沿着已建⽴的虚电路发送分组。
+        
+        注:很多⼴域分组交换⽹都使⽤⾯向连接的虚电路服务。
+        例如，曾经的X.25和逐渐过时的帧中继（Frame Relay，FR）、异步传输模式（Asynchronnous Transfer Mode，ATM）。
+    2.⽆连接的数据报服务
+        (1)核⼼思想是“可靠通信应由⽤户主机来保证”。
+        (2)不需要建⽴⽹络层连接。
+        (3)每个分组可⾛不同的路径，因此，每个分组的⾸部都必须携带⽬的主机的完整地址。
+        (4)通信结束后，没有需要释放的连接。
+
+        注:这种通信⽅式所传送的分组可能误码、丢失、重复和失序。
+        由于⽹络⾃身不提供端到端的可靠传输服务，这就使得⽹络中的路由器可以做得⽐较简单，⼤⼤降低了⽹络造价。
+</code></pre>
+<p>⽹络层协议
+IPv4数据报格式
+1.在TCP/IP标准中，各种数据格式常常以32⽐特（即4字节）为单位来描述。
+2.⽹络层数据包（IP数据包，Packet）由⾸部、数据2部分组成
+(1)数据：很多时候是由传输层传递下来的数据段（Segment）</p>
+<pre><code>IPv4数据报⾸部协议
+    1.版本(Version)
+        ⻓度为4个⽐特，⽤来表示IP协议的版本。
+            (1)0b0100 : IPv4 
+            (2)0b0110 : IPv6
+    2.⾸部⻓度(Header Length)
+        占4个⽐特，乘以4才是最终⻓度，⽤来表示IPv4数据报的⾸部⻓度。
+            (1)最⼩取值为⼆进制的0101，20字节
+            (2)最⼤取值为⼆进制的1111，60字节。
+    3.可选字段
+        (1)⻓度从1字节到40字节不等，⽤来⽀持排错、测量以及安全措施等功能。
+        (2)虽然可选字段增加了IPv4数据报的功能，但这同时也使得IPv4数据报的⾸部⻓度成为可变的，这就增加了因特⽹中每⼀个路由器处理IPv4数据报的开销。
+    4.填充
+        (1)当⾸部⻓度（20字节固定部分+可变部分）的⻓度不是4字节整数倍时，填充相应数量的全0字节，以确保IPv4数据报的⾸部⻓度是4字节的整数倍。
+        (2)使⽤全0进⾏填充。
+    5.区分服务(Differentiated Services Field)
+        (1)占8个⽐特
+        (2)可以⽤于提⾼⽹络的服务质量
+    6.总长度(Total Length)
+        (1)占16个⽐特
+        (2)⾸部 + 数据的⻓度之和，最⼤65535
+    7.标识、标志、⽚偏移
+        注:由于帧的数据不能超过1500字节，所以过⼤的IP数据包，需要分成⽚（fragments）传输给数据链路层。且每⼀⽚都有⾃⼰的⽹络层⾸部（IP⾸部）。
+
+        (1)标识（Identification）：
+            a.占16⽐特
+            b.数据包的ID，当数据包过⼤进⾏分⽚时，同⼀个数据包的所有⽚的标识都是⼀样的
+            c.有⼀个计数器专⻔管理数据包的ID，每发出⼀个数据包，ID就加1
+        (2)标志（Flags）：
+            a.占3⽐特
+            b.最低位（More Fragment，MF）
+                i.MF=1表示本分⽚后⾯还有分⽚
+                ii.MF=0表示本分⽚后⾯没有分⽚
+            c.中间位（Don’t Fragment，DF）
+                i.DF=1表示不允许分⽚
+                ii.DF=0表示允许分⽚
+            d.最⾼位为保留位，必须设置为0
+        (3)⽚偏移（Fragment Offset）：
+            a.占13⽐特
+            b.⽚偏移乘以8：字节偏移
+            c.每⼀⽚的⻓度⼀定是8的整数倍
+    8.⽣存周期（Time To Live，TTL）
+        (1)占8⽐特
+        (2)每个路由器在转发之前会将TTL减1，⼀旦发现TTL减为0，路由器会返回错误报告
+    9.协议
+        (1)⻓度为8个⽐特，⽤来指明IPv4数据报的数据载荷是何种协议数据单元PDU。
+
+        常用的一些协议和相应的协议字段值：
+            协议名称: ICMP IGMP TCP UDP lPv6 OSPF
+            协议字段值: 1    2   6   17   41   89
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

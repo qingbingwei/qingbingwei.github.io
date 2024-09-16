@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Docker容器 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker容器"/>
+<meta name="twitter:description" content="docker的理念:1次镜像，处处运行
+docker概念:Docker是基于Go语言实现的云开源项目 主要目标:“Build，Ship and Run Any App,Anywhere”
+容器与虚拟机比较： 1.传统的虚拟机有一些缺点：资源占用多、冗余步骤多、启动慢
+由于前面虚拟机存在某些缺点，Linux发展出了另一种虚拟化技术： Linux容器(LinuxContainers，缩写为 LXC)。 1.容器提供的镜像包含了应用的所有依赖项，因而在从开发到测试再到生产的整个过程中，它都具有可移植性和一致性 2.Linux容器不是模拟一个完整的操作系统而是对进程进行隔离 3.容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置 。 2.传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程； 3.容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。 4.每个容器之间互相隔离，每个容器有自己的文件系统 ，容器之间进程不会相互影响，能区分计算资源。 docker的优势:一次构建 处处运行 1.更快速的应用交付和部署 2.更便捷的升级和扩缩容 3.更简单的系统运维 4.更高效的计算资源利用
+docker和podman比较 注:Podman是一个无守护进程的容器引擎
+1、守护进程 Docker使用守护进程，一个正在后台运行的程序，来创建镜像和运行容器。 Podman是无守护进程的架构，这意味着它可以在启动容器的用户下运行容器。 2、安全性 Podman允许容器使用Rootless特权。Rootless容器被认为比Root特权的容器更安全。 在Docker中，守护进程拥有Root权限，这使得它们易成为攻击者的首选入侵点。 Podman中的容器默认情况下不具有Root访问权限，这在Root级别和Rootless级别之间添加了一个自然屏障，提高了安全性。 不过，Podman可以同时运行Root容器和Rootless容器。 3、镜像构建 作为一款自给自足的工具，Docker可以自己构建容器镜像。 Podman则需要另一种名为Buildah的工具的辅助。 4、多合一和模块化 Docker是一个独立的、强大的工具，在整个循环中处理所有的容器化任务，有优点也有缺点。 Podman采用模块化的方法，依靠专门的工具来完成特定的任务。 "/>
+
+    <meta property="og:title" content="Docker容器" />
+<meta property="og:description" content="docker的理念:1次镜像，处处运行
+docker概念:Docker是基于Go语言实现的云开源项目 主要目标:“Build，Ship and Run Any App,Anywhere”
+容器与虚拟机比较： 1.传统的虚拟机有一些缺点：资源占用多、冗余步骤多、启动慢
+由于前面虚拟机存在某些缺点，Linux发展出了另一种虚拟化技术： Linux容器(LinuxContainers，缩写为 LXC)。 1.容器提供的镜像包含了应用的所有依赖项，因而在从开发到测试再到生产的整个过程中，它都具有可移植性和一致性 2.Linux容器不是模拟一个完整的操作系统而是对进程进行隔离 3.容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置 。 2.传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程； 3.容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。 4.每个容器之间互相隔离，每个容器有自己的文件系统 ，容器之间进程不会相互影响，能区分计算资源。 docker的优势:一次构建 处处运行 1.更快速的应用交付和部署 2.更便捷的升级和扩缩容 3.更简单的系统运维 4.更高效的计算资源利用
+docker和podman比较 注:Podman是一个无守护进程的容器引擎
+1、守护进程 Docker使用守护进程，一个正在后台运行的程序，来创建镜像和运行容器。 Podman是无守护进程的架构，这意味着它可以在启动容器的用户下运行容器。 2、安全性 Podman允许容器使用Rootless特权。Rootless容器被认为比Root特权的容器更安全。 在Docker中，守护进程拥有Root权限，这使得它们易成为攻击者的首选入侵点。 Podman中的容器默认情况下不具有Root访问权限，这在Root级别和Rootless级别之间添加了一个自然屏障，提高了安全性。 不过，Podman可以同时运行Root容器和Rootless容器。 3、镜像构建 作为一款自给自足的工具，Docker可以自己构建容器镜像。 Podman则需要另一种名为Buildah的工具的辅助。 4、多合一和模块化 Docker是一个独立的、强大的工具，在整个循环中处理所有的容器化任务，有优点也有缺点。 Podman采用模块化的方法，依靠专门的工具来完成特定的任务。 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/docker%E5%AE%B9%E5%99%A8/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-19T17:26:43+08:00" />
+<meta property="article:modified_time" content="2024-03-19T17:26:43+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Docker容器</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 19, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/docker/">docker</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>docker的理念:1次镜像，处处运行</p>
+<p>docker概念:Docker是基于Go语言实现的云开源项目
+主要目标:“Build，Ship and  Run Any App,Anywhere”</p>
+<p>容器与虚拟机比较：
+1.传统的虚拟机有一些缺点：资源占用多、冗余步骤多、启动慢</p>
+<pre><code>由于前面虚拟机存在某些缺点，Linux发展出了另一种虚拟化技术：
+Linux容器(LinuxContainers，缩写为 LXC)。
+    1.容器提供的镜像包含了应用的所有依赖项，因而在从开发到测试再到生产的整个过程中，它都具有可移植性和一致性
+    2.Linux容器不是模拟一个完整的操作系统而是对进程进行隔离
+    3.容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置 。
+
+
+2.传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；
+
+3.容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。
+
+4.每个容器之间互相隔离，每个容器有自己的文件系统 ，容器之间进程不会相互影响，能区分计算资源。
+</code></pre>
+<p>docker的优势:一次构建 处处运行
+1.更快速的应用交付和部署
+2.更便捷的升级和扩缩容
+3.更简单的系统运维
+4.更高效的计算资源利用</p>
+<p>docker和podman比较
+注:Podman是一个无守护进程的容器引擎</p>
+<pre><code>1、守护进程
+Docker使用守护进程，一个正在后台运行的程序，来创建镜像和运行容器。
+Podman是无守护进程的架构，这意味着它可以在启动容器的用户下运行容器。
+
+2、安全性
+Podman允许容器使用Rootless特权。Rootless容器被认为比Root特权的容器更安全。
+在Docker中，守护进程拥有Root权限，这使得它们易成为攻击者的首选入侵点。
+Podman中的容器默认情况下不具有Root访问权限，这在Root级别和Rootless级别之间添加了一个自然屏障，提高了安全性。
+不过，Podman可以同时运行Root容器和Rootless容器。
+
+3、镜像构建
+作为一款自给自足的工具，Docker可以自己构建容器镜像。
+Podman则需要另一种名为Buildah的工具的辅助。
+
+4、多合一和模块化
+Docker是一个独立的、强大的工具，在整个循环中处理所有的容器化任务，有优点也有缺点。
+Podman采用模块化的方法，依靠专门的工具来完成特定的任务。</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

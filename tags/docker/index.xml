@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on 清兵卫的博客</title>
+    <link>https://qingbingwei.github.io/tags/docker/</link>
+    <description>Recent content in docker on 清兵卫的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 31 Mar 2024 13:44:38 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker本地镜像推送</title>
+      <link>https://qingbingwei.github.io/post/docker%E6%9C%AC%E5%9C%B0%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81/</link>
+      <pubDate>Sun, 31 Mar 2024 13:44:38 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/docker%E6%9C%AC%E5%9C%B0%E9%95%9C%E5%83%8F%E6%8E%A8%E9%80%81/</guid>
+      <description>推送到远端仓库 docker login &amp;ndash;username=清兵卫 registry.cn-hangzhou.aliyuncs.com docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/qingbingwei_docker/linux_docker:[镜像版本号] docker push registry.cn-hangzhou.aliyuncs.com/qingbingwei_docker/linux_docker:[镜像版本号]
+从远端仓库拉取 docker pull registry.cn-hangzhou.aliyuncs.com/qingbingwei_docker/linux_docker:[镜像版本号]
+推送到私有库 1.搭建私有库 docker pull registry docker run -d -p 5000:5000 -v /qingbingwei/myregistry/:/tmp/registry &amp;ndash;privileged=true registry
+2.将镜像推送到私服库 1.在ubuntu内添加ifconfig功能然后制作成新的镜像 apt-get update apt-get install net-tools 2.使用curl工具验证私服库上有什么镜像 curl -XGET http://192.168.146.135:5000/v2/_catalog 3.将新镜像ubuntu1:1.1修改符合私服规范的Tag docker tag 镜像:Tag Host:Port/Repository:Tag docker tag ubuntu1:1.1 192.168.146.135:5000/ubuntu:1.1 4.修改docker配置文件使之支持http vim命令新增如下内容：vim /etc/docker/daemon.json &amp;quot;insecure-registries&amp;quot;: [&amp;quot;192.168.146.135:5000&amp;quot;] 注:最好重启docker 5.push推送到私服库 docker push 192.168.146.135:5000/ubuntu1:1.1 6.验证私服库上是否存在镜像 curl -XGET http://192.168.146.135:5000/v2/_catalog 7.从私服上拉取镜像 docker pull 192.168.146.135:5000/ubuntu1:1.1 </description>
+    </item>
+    
+    <item>
+      <title>Docker底层原理</title>
+      <link>https://qingbingwei.github.io/post/docker%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sun, 31 Mar 2024 13:12:34 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/docker%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/</guid>
+      <description>docker镜像底层原理 1.docker镜像是分层的文件系统 每个分层的镜像都有单独的功能，然后汇聚成一起对外暴露成一个整体的镜像。 这种分层的镜像我们又称为联合文件系统(UnionFS)。
+Union 文件系统是 Docker 镜像的基础。 镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体的应用镜像。 2.docker镜像的加载原理 1.bootfs(boot file system)主要包含bootloader和kernel, bootloader主要是引导加载kernel, Linux刚启动时会加载bootfs文件系统，在Docker镜像的最底层是引导文件系统bootfs。 2.rootfs (root file system) ，在bootfs之上。 包含的就是典型 Linux 系统中的 /dev,/proc, /bin, /etc 等标准目录和文件。 3.为什么Docker镜像要设计成这种分层的镜像? 是为了提高复用率 注:Docker镜像层都是只读的，容器层是可写的。 当容器启动时，一个新的可写层被加载到镜像的顶部。 这一层通常被称作“容器层”，“容器层”之下的都叫“镜像层” 3.使用commit制作镜像 1.在ubuntu内添加vim功能然后制作成新的镜像 apt-get update apt-get -y install vim 2.提交容器副本使之成为一个新的镜像 docker commit -m=&amp;quot;提交的描述信息&amp;quot; -a=&amp;quot;作者&amp;quot; 容器ID 要创建的目标镜像名:[标签名] docker commit -m=&amp;quot;add vim&amp;quot; -a=&amp;quot;qingbingwei&amp;quot; f36b2a311fb6 ubuntu:1.1 </description>
+    </item>
+    
+    <item>
+      <title>Docker常用命令</title>
+      <link>https://qingbingwei.github.io/post/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <pubDate>Tue, 26 Mar 2024 19:40:30 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/docker%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>Docker常用命令 1.帮助启动类命令 systemctl start docker #启动docker systemctl status docker #查看docker的运行状态 systemctl restart docker #重启docker服务 systemctl stop docker #停止docker服务 docker &amp;ndash;help #查看docker帮助文档
+查看指定某条docker命令的帮助信息 docker cp --help 2.docker的镜像命令 1.docker images 列出本地主机上的镜像 各属性含义 REPOSITORY：表示镜像的仓库源 TAG：镜像的标签版本号。在下载镜像的时候，如果默认不加版本号，就会下载默认最新版本的镜像。 如果加上指定版本号的镜像，下载的就是对应版本的镜像。 IMAGE ID：镜像ID CREATED：镜像创建时间 SIZE：镜像大小 注:同一仓库源可以有多个 TAG版本，代表这个仓库源的不同个版本，我们使用REPOSITORY:TAG 来定义不同的镜像。 参数 -a :列出本地所有的镜像（含历史映像层） -q :只显示镜像ID。 2.docker search 某个XXX镜像名字 指定搜索某个镜像的名称。 docker search redis 参数 --limit :只列出N个镜像，默认25个 docker search --limit 5 redis 3.docker pull 某个XXX镜像名字 拉取指定的镜像到本地(下载镜像) docker pull 镜像名字[:TAG] 4.docker system df 查看镜像/容器/数据卷所占的空间 5.</description>
+    </item>
+    
+    <item>
+      <title>Docker组成与架构</title>
+      <link>https://qingbingwei.github.io/post/docker%E7%BB%84%E6%88%90%E4%B8%8E%E6%9E%B6%E6%9E%84/</link>
+      <pubDate>Tue, 26 Mar 2024 18:54:13 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/docker%E7%BB%84%E6%88%90%E4%B8%8E%E6%9E%B6%E6%9E%84/</guid>
+      <description>Docker的基本组成 1.镜像(image) Docker 镜像（Image）就是一个只读的模板。 镜像可以用来创建 Docker 容器，一个镜像可以创建很多容器。 2.容器(container) 可以把容器看做是一个简易版的 Linux 环境（包括root用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。 3.仓库(repository) 仓库（Repository）是集中存放镜像文件的场所。 注:Docker公司提供的官方registry被称为Docker Hub
+在Centos7上安装Docker 安装gcc环境 [root@shjava2202 ~]# yum -y install gcc [root@shjava2202 ~]# yum -y install gcc-c++
+安装需要的软件包 [root@shjava2202 ~]# yum install -y yum-utils 设置镜像仓库 [root@shjava2202 ~]# yum-config-manager --add-repohttp://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo 更新yum软件包索引 [root@shjava2202 ~]# yum makecache fast 安装Docker [root@shjava2202 ~]# yum -y install docker-ce docker-ce-clicontainerd.io 启动Docker [root@shjava2202 ~]# systemctl start docker 安装完成之后，我们可以查看Docker安装的版本信息 # docker version 为什么Docker会比VM虚拟机快 (1) docker有着比虚拟机更少的抽象层 由于docker不需要Hypervisor(虚拟机)实现硬件资源虚拟化,运行在docker容器上的程序直接使用的都是实际物理机的硬件资源。 因此在CPU、内存利用率上docker将会在效率上有明显优势。 (2) docker利用的是宿主机的内核,而不需要加载操作系统OS内核 当新建一个容器(docker run)时,docker不需要和虚拟机一样重新加载一个操作系统内核。 进而避免引寻、加载操作系统内核返回等比较费时费资源的过程,当新建一个虚拟机时,虚拟机软件需要加载OS,返回新建过程是分钟级别的。 而docker由于直接利用宿主机的操作系统,则省略了返回过程,因此新建一个docker容器只需要几秒钟。</description>
+    </item>
+    
+    <item>
+      <title>Docker容器</title>
+      <link>https://qingbingwei.github.io/post/docker%E5%AE%B9%E5%99%A8/</link>
+      <pubDate>Tue, 19 Mar 2024 17:26:43 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/docker%E5%AE%B9%E5%99%A8/</guid>
+      <description>docker的理念:1次镜像，处处运行
+docker概念:Docker是基于Go语言实现的云开源项目 主要目标:“Build，Ship and Run Any App,Anywhere”
+容器与虚拟机比较： 1.传统的虚拟机有一些缺点：资源占用多、冗余步骤多、启动慢
+由于前面虚拟机存在某些缺点，Linux发展出了另一种虚拟化技术： Linux容器(LinuxContainers，缩写为 LXC)。 1.容器提供的镜像包含了应用的所有依赖项，因而在从开发到测试再到生产的整个过程中，它都具有可移植性和一致性 2.Linux容器不是模拟一个完整的操作系统而是对进程进行隔离 3.容器与虚拟机不同，不需要捆绑一整套操作系统，只需要软件工作所需的库资源和设置 。 2.传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程； 3.容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。 4.每个容器之间互相隔离，每个容器有自己的文件系统 ，容器之间进程不会相互影响，能区分计算资源。 docker的优势:一次构建 处处运行 1.更快速的应用交付和部署 2.更便捷的升级和扩缩容 3.更简单的系统运维 4.更高效的计算资源利用
+docker和podman比较 注:Podman是一个无守护进程的容器引擎
+1、守护进程 Docker使用守护进程，一个正在后台运行的程序，来创建镜像和运行容器。 Podman是无守护进程的架构，这意味着它可以在启动容器的用户下运行容器。 2、安全性 Podman允许容器使用Rootless特权。Rootless容器被认为比Root特权的容器更安全。 在Docker中，守护进程拥有Root权限，这使得它们易成为攻击者的首选入侵点。 Podman中的容器默认情况下不具有Root访问权限，这在Root级别和Rootless级别之间添加了一个自然屏障，提高了安全性。 不过，Podman可以同时运行Root容器和Rootless容器。 3、镜像构建 作为一款自给自足的工具，Docker可以自己构建容器镜像。 Podman则需要另一种名为Buildah的工具的辅助。 4、多合一和模块化 Docker是一个独立的、强大的工具，在整个循环中处理所有的容器化任务，有优点也有缺点。 Podman采用模块化的方法，依靠专门的工具来完成特定的任务。 </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,7 +6,62 @@
     <description>Recent content in 数据结构 on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 04 Feb 2024 17:45:25 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 30 Mar 2024 21:29:57 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>KMP</title>
+      <link>https://qingbingwei.github.io/post/kmp/</link>
+      <pubDate>Sat, 30 Mar 2024 21:29:57 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/kmp/</guid>
+      <description>字符串算法:KMP算法
+字符串:由若干个字符组成的有序序列
+字符串：末尾有一个隐含的结束符&amp;rsquo;\0&#39; 字符数组：末尾没有隐含结束符
+字符串匹配问题:给出一个主串p 和一个模式串s，问s有没有在p中出现过，出现过几次，每次出现位置在哪里
+p:dfghahjsgfhjas&amp;mdash;&amp;gt;m s:hjdj&amp;mdash;&amp;gt;n
+1.BF算法(暴力匹配) O(n*m) for(int i = 0;i + LS &amp;lt; LP ;++i) { int j(0); int k(i); while(j &amp;lt; LS) { if(p[k] == s[j]) { ++j; ++k; } else { break; } } if(j == LS) { cout &amp;laquo; i &amp;laquo; endl; } }
+2.KMP算法 O(n+m) next[0]=-1 next[1]=0 //以上均为默认 代码思路:模式串自己(错位)匹配自己</description>
+    </item>
+    
+    <item>
+      <title>数据结构 B&#43;树</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-b&#43;%E6%A0%91/</link>
+      <pubDate>Sun, 24 Mar 2024 15:02:02 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-b&#43;%E6%A0%91/</guid>
+      <description>B树的缺点: 1.B树节点既存储了索引(主键),又存储了对应的地址
+优化:在内部非终端节点中只存储索引(主键), 在终端节点中既存储索引(主键),又存储对应的地址 2.B树不支持区间查询 优化:让终端节点形成链表,支持区间查询 3.B树查找效率不稳定 优化:B+树查找效率稳定 B+树在B树基础上进行改进。
+m阶B+树的性质: 1.有序性 2.其节点中最多有m个关键字和m个孩子&amp;mdash;&amp;mdash;&amp;mdash;&amp;gt;父亲节点是孩子节点的索引 3.节点中最少要有ceil(m/2)个关键字和孩子 4.终端节点保存所有的关键字和真实数据，并且终端节点之间要有指针相连 4.非终端节点只保存关键字，终端节点保存真实数据
+B+树的操作 1.查找 (1)单点查找 注意要找到终端节点上(相等时判断孩子是否为空，为空则为终端节点) (2)区间查找 [l,r],先对左边界数据进行单点查找，再沿着终端节点之间的指针进行顺序遍历 2.插入 和B树类似，先查找到插入位置&amp;mdash;-&amp;gt;插入&amp;mdash;-&amp;gt;判断是否超过上限,超过则分裂 (1)单点查询插入位置 (2)把数据插入到终端节点上 (3)判断插入节点的关键字个数是否&amp;gt;m,如果大于，分裂上传 特殊情况:如果插入的是节点中的最大值，其父亲的关键字(索引数据)要发生改变
+注:为了更加实用，忽略掉特殊情况，一棵m阶B+树，其非终端节点关键字个数最多可以是m-1个 3.删除 和B树类似，先查找删除位置---&amp;gt;删除----&amp;gt;判断是否低于下限，低于则调整 (1)查找删除数据(在终端节点上) (2)删除，如果删除的是节点中的最大值，记得向上修改父亲节点 (3)判断删除节点中的关键字个数是否&amp;lt;ceil(m/2),如果小于: 1.兄弟够借，则借 2.兄弟不够借，则合并 应用场景:数据库 外存管理</description>
+    </item>
+    
+    <item>
+      <title>数据结构 红黑树</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%A2%E9%BB%91%E6%A0%91/</link>
+      <pubDate>Tue, 05 Mar 2024 19:34:13 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E7%BA%A2%E9%BB%91%E6%A0%91/</guid>
+      <description>AVL树缺点: 1.不适合动态查找，为了保持平衡，不停的进行旋转调整，浪费时间 2.不直观
+多路平衡树:多路平衡二叉树 B树 B+树 红黑树
+索引存储
+1.外存和内存进行数据交互比较慢 2.数据管理方案:通常会使用索引表进行数据查找和交互，由于外存中数据比较多，建立的索引表中的索引数据也会比较多，所以索引表也往往存储在外存中
+多路平衡树:2-3-4-&amp;hellip;-n树:树的度(阶):n &amp;mdash;-&amp;gt; n阶B树 (不允许有高度差) 以2-3树为例(3阶B树) 由以下节点组成: (1)二叉节点:含有一个数据和两个孩子的节点，其中左子树的值均小于父亲节点，右子树的值均大于父亲节点 (2)三叉节点:含有两个数据和三个孩子的节点，并且数据之间保持顺序性
+红黑树:用二叉树表示的4(或3)阶B树 把4阶B树中的3-，4-节点拆分为2-节点 注:红黑树一定是BST树 性质: 1.节点为红色或者黑色 2.根节点是黑色 3.所有外部叶子节点(NULL节点)是黑色 4.每个红色节点的两个子节点都是黑色(从根节点到每个叶子节点的路径不能有两个连续的红色节点) 5.从根节点到每个叶子节点的所有路径都包含相同数目黑色节点 注：从根节点到到叶子节点的黑色节点个数(黑高) 黑高相同&amp;mdash;&amp;ndash;&amp;gt;黑路同
+结论: 1.从根节点到叶子节点的最长路径不大于最短路径的两倍 最短路径(bh):只有黑色节点 最长路径(2*bh):在最短路径基础上，每个黑色节点分下去一个红色节点 2.有n个内部节点的红黑树，其高度h&amp;lt;=2log(n+1) ----&amp;gt;红黑树操作时间复杂度O(logn) 证明:b&amp;lt;=2*bh-----&amp;gt;bh&amp;gt;=h/2 黑高bh 内部节点的数目最少:只有黑色节点的满二叉树 2^bh-1 n &amp;gt;= 2^bh-1 log(n+1)&amp;gt;=bh&amp;gt;=h/2 h&amp;lt;=2log(n+1) 红黑树的优点: BST----&amp;gt;AVL----&amp;gt;平衡因子的约束太严格了，需要频繁调整 -----&amp;gt;红黑树:一棵子树的高度最多可以是另一棵子树的2倍 1.⼤多数⾃平衡BST(self-balancing BST) 库函数都是⽤红⿊树实现的，⽐如C++中的map 和 set （或者 Java 中的 TreeSet 和 TreeMap）。 2.红⿊树也⽤于实现 Linux 操作系统的 CPU 调度。 完全公平调度（Completely Fair Scheduler）使⽤的就是红⿊树。 3.红⿊树也⽤于Linux提供的epoll多路复⽤的底层结构，便于快速增加、删除和查找⽹络连接的节点。 操作: 查找:特殊的BST,同BST RBT的插入:在一棵RBT中插入一个节点z 1.</description>
+    </item>
+    
+    <item>
+      <title>数据结构 基础查找</title>
+      <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE/</link>
+      <pubDate>Fri, 01 Mar 2024 15:28:19 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%9F%BA%E7%A1%80%E6%9F%A5%E6%89%BE/</guid>
+      <description>基本概念 静态查找 数据集合稳定，不需要添加，删除元素的查找操作 动态查找 在数据集合进行查找的过程中，需要同时添加或删除元素的查找操作 关键字 数据元素中某个项的值，用它可以唯一标识一个数据元素 内查找和外查找 若整个查找过程都在内存中进⾏，则称之为内查找(internalsearch)； 反之，若查找过程的需要访问外存，则称之为外查找(external search)。 平均查找⻓度(Average Search Length，ASL) 注:ASL是衡量查找算法性能好坏的重要指标。 ⼀个査找算法的ASL越⼤，其时间性能越差； 反之，⼀个查找算法的ASL越⼩，其时间性能越好。 线性查找:顺序查找 二分查找 分块查找&amp;mdash;&amp;mdash;&amp;gt;静态查找 注:以上均基于比较查找 1.顺序查找 从表中的第⼀个（或者最后⼀个）记录开始，逐个进⾏记录的关键字和给定值的⽐较， 若某个记录的关键字和给定值⽐较相等，则查找成功。 如果查找了所有的记录仍然找不到与给定值相等的关键字，则查找不成功。
+时间复杂度:O(n) 2.二分查找----前提，数据有序存放，存放在数组中(链表不适合) 确定待查记录所在的范围（区间），然后逐步缩⼩范围直到找到或者找不到该记录为⽌。 注意⼆分查找是在有序表上进⾏的，且⼆分查找也是分治思想的很好例证。 时间复杂度:O(logn) 判定树: 折半查找过程可⽤⼆叉树来描述，把当前查找区间的中间位置上的元素作为根， 由左⼦表和右⼦表构造的⼆叉树分别作为根的左⼦树和右⼦树，由此得到的⼆叉树称为描述折半查找过程的判定树 (deecision tree)或⽐较树(comparison tree)。 注:显然，判定树是⼀棵平衡⼆叉树,反之不成立 3.分块查找 索引存储结构 索引存储结构是在存储数据的同时还建⽴附加的索引表。索引表中的每⼀项称为索引项，索引项的⼀般形式为(关键字，地址)。 其中，关键字唯⼀标识⼀个结点，地址作为指向该关键字对应结点的指针，也可以是相对地址(如数组的下标)。 将査找表分为若⼲⼦块。块内的元素可以⽆序，但块之间是有序的，即第⼀个块中的最⼤关键字 ⼩于第⼆个块中的所有记录的关键字，第⼆个块中的最⼤关键字⼩于第三个块中的所有记录的关键字,以此类推。 再建⽴⼀个索引表，索引表中的每个元素含有各块的最⼤关键字和各块中的第⼀个元素的地址，索引表按关键字有序排列。 分块查找步骤 分块查找的过程分为两步： 第⼀步是在索引表中确定待查记录所在的块，可以顺序查找或折半査找索引表； 第⼆步是在块内顺序查找。
+基于散列表的查找:哈希&amp;mdash;&amp;mdash;&amp;gt;动态查找 注:散列存储也叫hash存储 哈希查找&amp;mdash;散列查找&amp;mdash;&amp;ndash;&amp;gt;散列存储
+哈希: key &amp;mdash;&amp;ndash;&amp;gt; 哈希函数 &amp;mdash;&amp;mdash;&amp;gt; Add(地址) 冲突:两个不同数据，计算出同一个地址 哈希函数如何设计 1.直接定址法:哈希函数设计为一次函数 h(key)=a*key+b 优点:不产生冲突 缺点:空间浪费大 2.除留余数法:哈希函数设计为对一个质数取余 h(key)=key%p p&amp;lt;=m的质数,m是散列表大小 缺点:冲突几乎必然存在，只能尽可能降低 3.平方取中法 4.数字分析法 5.折叠法</description>
+    </item>
+    
     <item>
       <title>数据结构 归并和计数排序</title>
       <link>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E5%BD%92%E5%B9%B6%E5%92%8C%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F/</link>
@@ -67,7 +122,7 @@
       <pubDate>Sat, 27 Jan 2024 10:19:17 +0800</pubDate>
       
       <guid>https://qingbingwei.github.io/post/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/</guid>
-      <description>注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&amp;gt;贪心 多源最短路径算法 2.Floyd算法----&amp;gt;动态规划 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { for (int i = 0; i &amp;lt; sz1; ++i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } } //初始化 for (int i = 0; i &amp;lt; sz1; ++i) { for (int j = 0; j &amp;lt; sz1; ++j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &amp;lt; sz2; ++i) { cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y &amp;gt;&amp;gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &amp;gt;&amp;gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &amp;lt; size1; ++i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &amp;lt; size1 - 1; ++i) { min_n = 999999; for (int j = 0; j &amp;lt; size1; ++j) { if (visit[j] == false &amp;amp;&amp;amp; dist[j] &amp;lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &amp;lt; size1; ++j) { if (visit[j] == false &amp;amp;&amp;amp; dist[j] &amp;gt; (dist[k] + graph[k][j])) { dist[j] = dist[k] + graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g.</description>
+      <description>注：对于无向无权图而言，最短路径就是经过边的条数，可以通过BFS求 对于无向带权图，有如下常用算法 单源最短路径算法 1.dijkstra算法----&amp;gt;贪心 单源最短路 O(n^2) 不能解决带负边权问题 多源最短路径算法 2.Floyd算法----&amp;gt;动态规划 多源最短路 o(n^3) 不能解决负边权回路 最短路径算法核心思想：用中转点找更短的路径 注：源点（即起点） dijkstra算法 循环n-1次，每次找到一 最小并且未确定最短路径的点y，点y的最短路径就确定下来，然后用y去更新y的邻接点到源点的最短路径长度 时间复杂度：O(n^2) 注：n为点的个数 dijkstra算法: #define _CRT_SECURE_NO_WARNINGS #include&amp;lt;iostream&amp;gt; using namespace std; class Graph { public: int size1;//点的个数 int size2;//边的个数 int** graph; bool* visit;//标记点到源点的最短路径是否确定下来 int* pre;//记录点的上一个中转点下标，源点中转点为其自身 int* dist;//记录点到源点最小距离 public: Graph(int sz1, int sz2) :size1(sz1), size2(sz2) { graph = new int* [sz1]; visit = new bool[sz1]; pre = new int[sz1]; dist = new int[sz1]; if (graph == nullptr || visit == nullptr || pre == nullptr || dist == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } else { for (int i = 0; i &amp;lt; sz1; ++i) { graph[i] = new int[sz1]; if (graph[i] == nullptr) { cout &amp;lt;&amp;lt; &amp;quot;开辟失败&amp;quot; &amp;lt;&amp;lt; endl; } } //初始化 for (int i = 0; i &amp;lt; sz1; ++i) { for (int j = 0; j &amp;lt; sz1; ++j) { if (i == j) { graph[i][j] = 0; } else { graph[i][j] = 999999; } } visit[i] = false; pre[i] = -1; dist[i] = 999999; } //输入边 int x(0); int y(0); int wi(0); for (int i = 0; i &amp;lt; sz2; ++i) { cin &amp;gt;&amp;gt; x &amp;gt;&amp;gt; y &amp;gt;&amp;gt; wi; graph[x][y] = graph[y][x] = wi; } } } void dijkstra() { //输入起点 int x(0); cin &amp;gt;&amp;gt; x; visit[x] = true; pre[x] = x; dist[x] = 0; //更新邻接点 for (int i = 0; i &amp;lt; size1; ++i) { dist[i] = graph[x][i]; } //循环n-1次 int min_n(999999); int k(0);//dist[k]最小 for (int i = 0; i &amp;lt; size1 - 1; ++i) { min_n = 999999; for (int j = 0; j &amp;lt; size1; ++j) { if (visit[j] == false &amp;amp;&amp;amp; dist[j] &amp;lt; min_n) { k = j; min_n = dist[j]; } } //以k为中转点更新其邻接点dist //注：因为第一个k对应pre无法更新，所以单独判断 if (i == 0) { visit[k] = true; pre[k] = x; } else { visit[k] = true; } for (int j = 0; j &amp;lt; size1; ++j) { if (visit[j] == false &amp;amp;&amp;amp; dist[j] &amp;gt; (dist[k] + graph[k][j])) { dist[j] = dist[k] + graph[k][j]; pre[j] = k; } } } } }; int main() { Graph g(9, 16); g.</description>
     </item>
     
     <item>

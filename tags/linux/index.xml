@@ -6,7 +6,25 @@
     <description>Recent content in Linux on 清兵卫的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 29 Feb 2024 20:14:56 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 01 Mar 2024 07:34:29 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux实例应用</title>
+      <link>https://qingbingwei.github.io/post/linux%E5%AE%9E%E4%BE%8B%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Fri, 01 Mar 2024 07:34:29 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/linux%E5%AE%9E%E4%BE%8B%E5%BA%94%E7%94%A8/</guid>
+      <description>1.每天凌晨2:30备份数据库day01到/data/backup/db; 2.备份开始和备份结束的时候，要给出相应的提示信息； 3.备份后的文件要以备份时间为文件名，并打包成tar.gz的格式，比如：2021-09-15_230201.tar.gz; 4.在备份的同时，要检查是否有10天前备份的数据库文件，如果有就将其删除。
+注:cd /usr/sbin # 为什么要放在sbin目录，因为这个目录是root用户具备执行的权限
+数据库用户名 DB_USER=root
+数据库密码 DB_PW=Xml0607!
+备份的数据库 DATABASE=day01
+创建备份目录,如果目录不存在，则创建 只有[]里面的表达式为true 才会执行 &amp;amp;&amp;amp; 右边的内容 ${} 用来取文件名或文件路径 [ ! -d &amp;ldquo;${BACKUP}/${DATETIME}&amp;rdquo; ] &amp;amp;&amp;amp; mkdir -p &amp;ldquo;${BACKUP}/${DATETIME}&amp;rdquo;
+备份数据库 mysqldump -u${DB_USER} -p${DB_PW} &amp;ndash;host=${HOST} -q -R &amp;ndash;databases ${DATABASE} | gzip &amp;gt; ${BACKUP}/${DATETIME}/$DATETIME.sql.gz
+将文件打包成tar.gz格式 cd ${BACKUP} tar -zcvf $DATETIME.tar.gz ${DATETIME}
+删除对应目录 rm -rf ${BACKUP}/${DATETIME}
+删除十天之前备份文件 find ${BACKUP} -atime +10 -name &amp;ldquo;*.tar.gz&amp;rdquo; -exec rm -rf {} ; echo &amp;ldquo;数据库${DATABASE}备份成功&amp;rdquo;</description>
+    </item>
+    
     <item>
       <title>Linux日志管理</title>
       <link>https://qingbingwei.github.io/post/linux%E6%97%A5%E5%BF%97%E7%AE%A1%E7%90%86/</link>

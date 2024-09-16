@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>线程与进程 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="线程与进程"/>
+<meta name="twitter:description" content="进程模型 进程是对正在运行中的程序的一个抽象
+进程的创建 1.系统初始化 启动操作系统时，通常会创建若干个进程 1.前台进程 2.守护进程 2.正在运行的程序执行了创建进程的系统调用 3.用户请求创建一个新进程 4.初始化一个批处理工作 进程的终止 1.正常退出(自愿的) 2.错误退出(自愿的) 3.严重错误(非自愿的) 4.被其他进程杀死(非自愿的) 进程的层次结构 1.Unix进程体系:进程树,结构清晰 2.Windows进程体系:Windows中没有进程层次的概念，Windows中所有进程都是平等的，唯一类似于层次结构的是在创建进程的时候，父进程得到一个特别的令牌（称为句柄），该句柄可以用来控制子进程。 进程的状态 1.阻塞(因为等待) 2.运行 3.就绪(因为调度程序的选择) 线程模型 为什么要有线程的概念？ 1.多线程之间会共享同一块地址空间和所有可用数据的能力，这是进程所不具备的 2.线程要比进程更轻量级 3.如果多个线程都是CPU密集型的，那么并不能获得性能上的增强，但是如果存在着大量的计算和大量的I/O处理，拥有多个线程能在这些活动中彼此重叠进行，从而会加快应用程序的执行速度。
+线程的使用 1.多线程解决方案 有并行性，阻塞系统调用 2.单线程解决方案 无并行性，性能较差，阻塞系统调用 3.状态机解决方案(状态机中保存将要发生的或者会使得状态改变的一个集合) 并行性，非阻塞系统调用、中断 经典的线程模型 线程可称为轻量级进程 线程的系统调用 POSIX线程(IEEE在IEEE标准1003.1c中定义线程标准) 线程实现 1.在用户空间中实现线程 优势: 1.启动他们比进行内核调用效率更高。因为不需要切换到内核,也就不需要上下文 切换，也不需要对内存高速缓存进行刷新，因为线程调度非常便捷，因此效率比较高 2.它允许每个进程有自己定制的调度算法 劣势: 1.如何阻塞系统调用 2.不可能使用轮转调度的方式调度线程 2.在内核空间中实现线程 注:系统调用开销大 3.在用户和内核空间中混合实现线程 进程间通信
+竞态条件 即两个或多个线程同时对一共享数据进行修改，从而影响程序运行的正确性时，这种就被称为竞态条件(race condition) 临界区 1.任何时候两个进程不能同时处于临界区 2.不应对CPU的速度和数量做任何假设 3.位于临界区外的进程不得阻塞其他进程 4.不能使任何进程无限等待进入临界区 忙等互斥 1.屏蔽中断 在单处理器系统上，最简单的解决方案是让每个进程在进入临界区后立即屏蔽所有中断（包括CPU时钟中断） 对内核来说，当它在执行更新变量或列表的几条指令期间将中断屏蔽是很方便的 2.锁变量 寻找一种软件层面解决方案 3.严格轮询法 while(TRUE){ while(turn == 0 ) { /*进入关键区域*/ critical_region (); turn = 1; /*离开关键区域*/ noncritical_region(); } } while(TRUE){ while(turn == 1 ) { /*进入关键区域*/ critical_region (); turn = 0; /*离开关键区域*/ noncritical_region(); } } 4."/>
+
+    <meta property="og:title" content="线程与进程" />
+<meta property="og:description" content="进程模型 进程是对正在运行中的程序的一个抽象
+进程的创建 1.系统初始化 启动操作系统时，通常会创建若干个进程 1.前台进程 2.守护进程 2.正在运行的程序执行了创建进程的系统调用 3.用户请求创建一个新进程 4.初始化一个批处理工作 进程的终止 1.正常退出(自愿的) 2.错误退出(自愿的) 3.严重错误(非自愿的) 4.被其他进程杀死(非自愿的) 进程的层次结构 1.Unix进程体系:进程树,结构清晰 2.Windows进程体系:Windows中没有进程层次的概念，Windows中所有进程都是平等的，唯一类似于层次结构的是在创建进程的时候，父进程得到一个特别的令牌（称为句柄），该句柄可以用来控制子进程。 进程的状态 1.阻塞(因为等待) 2.运行 3.就绪(因为调度程序的选择) 线程模型 为什么要有线程的概念？ 1.多线程之间会共享同一块地址空间和所有可用数据的能力，这是进程所不具备的 2.线程要比进程更轻量级 3.如果多个线程都是CPU密集型的，那么并不能获得性能上的增强，但是如果存在着大量的计算和大量的I/O处理，拥有多个线程能在这些活动中彼此重叠进行，从而会加快应用程序的执行速度。
+线程的使用 1.多线程解决方案 有并行性，阻塞系统调用 2.单线程解决方案 无并行性，性能较差，阻塞系统调用 3.状态机解决方案(状态机中保存将要发生的或者会使得状态改变的一个集合) 并行性，非阻塞系统调用、中断 经典的线程模型 线程可称为轻量级进程 线程的系统调用 POSIX线程(IEEE在IEEE标准1003.1c中定义线程标准) 线程实现 1.在用户空间中实现线程 优势: 1.启动他们比进行内核调用效率更高。因为不需要切换到内核,也就不需要上下文 切换，也不需要对内存高速缓存进行刷新，因为线程调度非常便捷，因此效率比较高 2.它允许每个进程有自己定制的调度算法 劣势: 1.如何阻塞系统调用 2.不可能使用轮转调度的方式调度线程 2.在内核空间中实现线程 注:系统调用开销大 3.在用户和内核空间中混合实现线程 进程间通信
+竞态条件 即两个或多个线程同时对一共享数据进行修改，从而影响程序运行的正确性时，这种就被称为竞态条件(race condition) 临界区 1.任何时候两个进程不能同时处于临界区 2.不应对CPU的速度和数量做任何假设 3.位于临界区外的进程不得阻塞其他进程 4.不能使任何进程无限等待进入临界区 忙等互斥 1.屏蔽中断 在单处理器系统上，最简单的解决方案是让每个进程在进入临界区后立即屏蔽所有中断（包括CPU时钟中断） 对内核来说，当它在执行更新变量或列表的几条指令期间将中断屏蔽是很方便的 2.锁变量 寻找一种软件层面解决方案 3.严格轮询法 while(TRUE){ while(turn == 0 ) { /*进入关键区域*/ critical_region (); turn = 1; /*离开关键区域*/ noncritical_region(); } } while(TRUE){ while(turn == 1 ) { /*进入关键区域*/ critical_region (); turn = 0; /*离开关键区域*/ noncritical_region(); } } 4." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E7%BA%BF%E7%A8%8B%E4%B8%8E%E8%BF%9B%E7%A8%8B/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-05-08T15:36:12+08:00" />
+<meta property="article:modified_time" content="2024-05-08T15:36:12+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">线程与进程</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          May 8, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          3 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>进程模型
+进程是对正在运行中的程序的一个抽象</p>
+<pre><code>进程的创建
+1.系统初始化
+    启动操作系统时，通常会创建若干个进程
+    1.前台进程
+    2.守护进程
+2.正在运行的程序执行了创建进程的系统调用
+3.用户请求创建一个新进程
+4.初始化一个批处理工作
+
+进程的终止
+1.正常退出(自愿的)
+2.错误退出(自愿的)
+3.严重错误(非自愿的)
+4.被其他进程杀死(非自愿的)
+
+进程的层次结构
+1.Unix进程体系:进程树,结构清晰
+2.Windows进程体系:Windows中没有进程层次的概念，Windows中所有进程都是平等的，唯一类似于层次结构的是在创建进程的时候，父进程得到一个特别的令牌（称为句柄），该句柄可以用来控制子进程。
+
+进程的状态
+1.阻塞(因为等待)
+2.运行
+3.就绪(因为调度程序的选择)
+</code></pre>
+<p>线程模型
+为什么要有线程的概念？
+1.多线程之间会共享同一块地址空间和所有可用数据的能力，这是进程所不具备的
+2.线程要比进程更轻量级
+3.如果多个线程都是CPU密集型的，那么并不能获得性能上的增强，但是如果存在着大量的计算和大量的I/O处理，拥有多个线程能在这些活动中彼此重叠进行，从而会加快应用程序的执行速度。</p>
+<pre><code>线程的使用
+    1.多线程解决方案
+        有并行性，阻塞系统调用
+    2.单线程解决方案
+        无并行性，性能较差，阻塞系统调用
+    3.状态机解决方案(状态机中保存将要发生的或者会使得状态改变的一个集合)
+        并行性，非阻塞系统调用、中断
+
+经典的线程模型
+    线程可称为轻量级进程
+
+线程的系统调用
+
+POSIX线程(IEEE在IEEE标准1003.1c中定义线程标准)
+
+线程实现
+    1.在用户空间中实现线程
+        优势:
+        1.启动他们比进行内核调用效率更高。因为不需要切换到内核,也就不需要上下文
+        切换，也不需要对内存高速缓存进行刷新，因为线程调度非常便捷，因此效率比较高
+
+        2.它允许每个进程有自己定制的调度算法
+
+        劣势:
+        1.如何阻塞系统调用
+        2.不可能使用轮转调度的方式调度线程
+
+    2.在内核空间中实现线程
+        注:系统调用开销大
+    
+    3.在用户和内核空间中混合实现线程
+</code></pre>
+<p>进程间通信</p>
+<pre><code>竞态条件
+    即两个或多个线程同时对一共享数据进行修改，从而影响程序运行的正确性时，这种就被称为竞态条件(race condition)
+
+临界区
+    1.任何时候两个进程不能同时处于临界区
+    2.不应对CPU的速度和数量做任何假设
+    3.位于临界区外的进程不得阻塞其他进程
+    4.不能使任何进程无限等待进入临界区
+
+忙等互斥
+    1.屏蔽中断
+        在单处理器系统上，最简单的解决方案是让每个进程在进入临界区后立即屏蔽所有中断（包括CPU时钟中断）
+
+        对内核来说，当它在执行更新变量或列表的几条指令期间将中断屏蔽是很方便的
+
+    2.锁变量
+        寻找一种软件层面解决方案
+
+    3.严格轮询法
+        while(TRUE){
+            while(turn == 0 ) {
+                /*进入关键区域*/
+                critical_region ();
+                turn = 1;
+                /*离开关键区域*/
+                noncritical_region();
+            }
+        }
+            
+        while(TRUE){
+            while(turn == 1 ) {
+                /*进入关键区域*/
+                critical_region ();
+                turn = 0;
+                /*离开关键区域*/
+                noncritical_region();
+            }
+        }
+         
+    4.Peterson算法
+        #define FALSE 0
+        #define TRUE 1
+        #define N 2//进程数量
+
+        int turn;//现在轮到谁了
+        //在使用临界区之前，各个进程使用各自的进程号作为参数进行调用
+
+        //一开始初始化为0 FALSE
+        int interested[N];
+
+        //进程是0或者1
+        void enter_region(int process)
+        {
+            int other = 1 - process;//另一个进程号
+
+            interested[process] = TRUE;
+            turn = process;
+
+            //空循环
+            while(turn == process &amp;&amp; interested[other] == TRUE)
+        }
+
+        void leave_region(int process)
+        {
+            interested[process] = FALSE; 
+        }
+
+    5.TSL指令
+        测试并加锁
+            TSL RX,LOCK  执行TSL指令的CPU将会锁住内存总线，用来禁止其他CPU在这个指令结束之前访问内存
+
+            锁住内存总线和禁用中断不一样
+    ......
+</code></pre>
+<p>睡眠与唤醒
+1.忙等待本质先检查是否能够进入临界区，若不允许，则该进程将原地等待，直到允许为止。
+2.为了不允许它们进入关键区域之前会阻塞而不是浪费CPU时间，最简单的是 sleep和 wakeup
+3.Sleep是一个能够造成调用者阻塞的系统调用，也就是说，这个系统调用会暂停直到其他进程唤醒它。wakeup 调用有一个参数，即要唤醒的进程。</p>
+<p>生产者-消费者问题
+两个进程共享一个公共的固定大小的缓冲区。其中一个是生产者(producer)，
+将信息放入缓冲区，另一个是消费者(consumer)，会从缓冲区中取出。
+两个进程共享一个公共的固定大小的缓冲区。其中一个是生产者(producer)，将信息放入缓冲区,另一个是消费者(consumer)，会从缓冲区中取出。</p>
+<p>/* 缓冲区 slot操的数量 */
+#define N 100
+typedef int semaphore;//信号量 一种比较特殊的int类型</p>
+<p>//控制关键区域访问
+semaphore mutex = 1;
+//统计缓冲区空槽数量
+semaphore empty = N;
+//统计缓冲区满槽数量
+semaphore full = 0;</p>
+<p>/* 监视变量 缓冲区数据的数量 <em>/
+int count  = 0;
+//只能监视一个进程，尝试睡眠的时候，如果检测到为1，则清除为0
+//当wakeup信号发送给没有在睡眠的进程，等待位置为1
+int wake_up_count = 0;
+/</em> 生产者 <em>/
+void producer()
+{
+int item;
+/</em> 无限循环 <em>/
+while(true)
+{
+//生成下一项数据
+itme = produce_itme();
+//空槽数量减1
+down(&amp;empty);
+/</em> 进入关键区域 <em>/
+down(&amp;mutex);
+//数据放入缓冲区
+insert_item(item);
+/</em> 离开关键区域 */
+up(&amp;mutex);</p>
+<pre><code>    /* 将缓冲区满槽数量加1 */ 
+    up(&amp;full);
+}
+</code></pre>
+<p>}</p>
+<p>/* 消费者 <em>/
+void consumer()
+{
+int item;
+/</em> 无限循环 <em>/
+while(true)
+{
+/</em> 将缓冲区满槽数量减1 <em>/
+down(&amp;full);
+/</em> 进入关键区域 <em>/
+down(&amp;mutex);
+//从缓冲区取得数据
+remove_item(item);
+/</em> 离开关键区域 */
+up(&amp;mutex);</p>
+<pre><code>    //空槽数量加1
+    up(&amp;empty);
+}
+</code></pre>
+<p>}</p>
+<p>信号量
+1.它使用一个整形变量来累计唤醒次数以供之后使用。
+2.一个信号量的取值可以是0，或任意正数。0表示的是不需要任何唤醒，任意的正数表示的就是唤醒次数。
+3.信号量有两个操作
+Down (sleep)
+Up ( wakeup)</p>
+<p>/*************************************/</p>
+<p>FUTEXES</p>
+<p>同步(synchronization)+互斥(locking)===&gt;Futex</p>
+<p>/****************************************/</p>
+<p>管程
+1.管程是程序、变量和数据结构等组成的一个集合，它们组成一个特殊的模块或者包。
+2.管程有一个很重要的特性，即在任何时候管程中只能有一个活跃的进程，这一特性使管程能够很方便的实现互斥操作。</p>
+<p>/*************************************** */</p>
+<p>消息传递</p>
+<pre><code>send(des,&amp;msg);
+receive(src,&amp;msg);
+</code></pre>
+<p>/*************************************** */</p>
+<p>屏障
+1.用于进程组
+2.某些应用中划分了若干阶段，并且规定，除非所有的进程都就绪准备着手下一个阶段，否则任何进程都不能进入下一个阶段</p>
+<p>/***************************************** */</p>
+<p>避免锁(RCU算法)
+1.无招胜有招
+2.在某些情况下，我们可以允许写操作来更新数据结构，即便还有其他的进程正在使用。
+3.确保每个读操作要么读取旧的版本，要么读取新的版本</p>
+<p>/****************************************** */</p>
+<p>操作系统进程与线程之调度
+当一个计算机是多道程序设计系统时，会频繁的有很多进程或者线程来同时竞争 CPU 时间片。</p>
+<pre><code>当两个或两个以上的进程/线程处于就绪状态时，就会发生这种情况。
+如果只有一个 CPU 可用，那么必须选择接下来哪个进程/线程可以运行。
+
+操作系统中有一个叫做 调度程序(scheduler) 的角色存在，它就是做这件事儿的，该程序使用的算法叫做调度算法(scheduling algorithm)
+</code></pre>
+<p>进程行为
+计算机上执行任务的两种策略
+1.CPU密集型(适合多进程)
+一般是指服务器的硬盘、内存硬件性能相对CPU好很多，或者使用率低很多。
+系统运行CPU读写I/O(硬盘/内存)时可以在很短的时间内完成，几乎没有阻塞（等待I/O的实时间）时间，而CPU一直有大量运算要处理，因此CPU负载长期过高。
+2.IO密集型(适合多线程)
+一般是指服务器CPU的性能相对硬盘、内存硬件好很多，或者使用率低很多。
+系统运行多是CPU在等I/O (硬盘/内存) 的读写操作，此类情景下CPU负载并不高。</p>
+<p>何时调度
+1.第一个和调度有关的问题是何时进行调度决策。存在着需要调度处理的各种情形。首先，在创建一个新进程后，需要决定是运行父进程还是子进程。
+2.第二，在进程退出时需要作出调度决定。因为此进程不再运行（因为它将不再存在），因此必须从就绪进程中选择其他进程运行。
+3.第三种情况是，当进程阻塞在 I/O 、信号量或其他原因时，必须选择另外一个进程来运行。
+4.第四点，当 I/O 中断发生时，可以做出调度决策。</p>
+<p>调度算法的分类
+根据如何处理时钟中断可以把调度算法可以分为两类
+1.非抢占式
+挑选一个进程，让该进程运行直到被阻塞（阻塞在 I/O 上或等待另一个进程），或者直到该进程自动释放 CPU。</p>
+<pre><code>2.抢占式
+    选择一个进程，并使其在最大固定时间内运行。
+    如果在时间间隔结束后仍在运行，这个进程会被挂起，调度程序会选择其他进程来运行（前提是存在就绪进程）。
+</code></pre>
+<p>调度系统的环境
+1.批处理
+2.交互式
+3.实时</p>
+<p>调度算法的目标
+1.所有系统
+公平、策略强制执行、平衡
+2.批处理系统
+吞吐量、周转时间、CPU利用率
+3.交互式系统
+响应时间、均衡性
+4.实时系统
+满足截止时间、可预测性</p>
+<p>批处理中的调度
+1.先来先服务
+2.最短作业优先
+3.最短剩余时间优先
+注:最短作业优先的抢占式版本</p>
+<p>交互式系统的调度
+1.轮询调度
+2.优先级调度
+(1)轮询调度假设了所有的进程是同等重要的。但事实情况可能不是这样。
+(2)每个进程都被赋予一个优先级，优先级高的进程优先运行。
+(3)调度程序会在每个时钟中断期间降低当前运行进程的优先级。
+(4)优先级可以静态分配，也可以动态分配。
+3.多级队列
+该算法将系统中的进程就绪队列从一个拆分为若干个，将不同类型或性质的进程固定分配在不同的就绪队列，不同的就绪队列采用不同的调度算法，
+一个就绪队列中的进程可以设置不同的优先级，不同的就绪队列本身也可以设置不同的优先级。
+4.最短进程优先
+(1)交互式进程通常遵循下列模式：等待命令、执行命令、等待命令、执行命令
+(2)如果我们把每个命令的执行都看作一个分离的作业，那么我们可以通过首先运行最短的作业来使响应时间最短。
+(3)如何从当前可运行进程中找出最短的那一个进程&mdash;&ndash;&gt;预测
+5.保证调度
+若用户工作时有 n 个用户登录，则每个用户将获得 CPU 处理能力的 1/n
+6.彩票调度
+为进程提供各种系统资源（例如 CPU 时间）的彩票。
+当做出一个调度决策的时候，就随机抽出一张彩票，拥有彩票的进程将获得该资源。
+7.公平分享算法
+根据用户数量平均分配CPU份额</p>
+<p>实时系统的调度
+1.正确但是却缓慢的响应甚至要比没有响应还糟糕。
+2.分为硬实时(hard real time) 和 软实时(soft real time) 系统
+3.在检测到一个外部信号时，调度程序的任务就是按照满足所有截止时间的要求调度进程。</p>
+<pre><code>实时系统中的事件的分类
+    1.周期性(以规则的时间间隔发生)事件
+    2.非周期性(发生时间不可预知)事件
+    注:实时系统的调度算法可以是静态的或动态的。
+</code></pre>
+<p>注:调度策略和机制(策略和机制相分离)</p>
+<p>线程调度
+注:算法与进程调度相同，但是注意区分用户线程和内核线程</p>
+<p>/****************************************** */
+#include&lt;stdio.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;unistd.h&gt;
+#include&lt;sys/wait.h&gt;
+int main()
+{
+pid_t pid;
+pid = fork();
+if(pid &lt; 0)
+{
+printf(stderr,&ldquo;ForkFaild);
+}
+else if(pid == 0)
+{
+execlp(&quot;/bin/ls&rdquo;,&ldquo;ls&rdquo;,NULL);
+}
+else
+{
+wait(NULL);
+printf(&ldquo;Child Complete&rdquo;);
+}
+}</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

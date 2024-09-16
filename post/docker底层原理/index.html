@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Docker底层原理 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Docker底层原理"/>
+<meta name="twitter:description" content="docker镜像底层原理 1.docker镜像是分层的文件系统 每个分层的镜像都有单独的功能，然后汇聚成一起对外暴露成一个整体的镜像。 这种分层的镜像我们又称为联合文件系统(UnionFS)。
+Union 文件系统是 Docker 镜像的基础。 镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体的应用镜像。 2.docker镜像的加载原理 1.bootfs(boot file system)主要包含bootloader和kernel, bootloader主要是引导加载kernel, Linux刚启动时会加载bootfs文件系统，在Docker镜像的最底层是引导文件系统bootfs。 2.rootfs (root file system) ，在bootfs之上。 包含的就是典型 Linux 系统中的 /dev,/proc, /bin, /etc 等标准目录和文件。 3.为什么Docker镜像要设计成这种分层的镜像? 是为了提高复用率 注:Docker镜像层都是只读的，容器层是可写的。 当容器启动时，一个新的可写层被加载到镜像的顶部。 这一层通常被称作“容器层”，“容器层”之下的都叫“镜像层” 3.使用commit制作镜像 1.在ubuntu内添加vim功能然后制作成新的镜像 apt-get update apt-get -y install vim 2.提交容器副本使之成为一个新的镜像 docker commit -m=&quot;提交的描述信息&quot; -a=&quot;作者&quot; 容器ID 要创建的目标镜像名:[标签名] docker commit -m=&quot;add vim&quot; -a=&quot;qingbingwei&quot; f36b2a311fb6 ubuntu:1.1 "/>
+
+    <meta property="og:title" content="Docker底层原理" />
+<meta property="og:description" content="docker镜像底层原理 1.docker镜像是分层的文件系统 每个分层的镜像都有单独的功能，然后汇聚成一起对外暴露成一个整体的镜像。 这种分层的镜像我们又称为联合文件系统(UnionFS)。
+Union 文件系统是 Docker 镜像的基础。 镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体的应用镜像。 2.docker镜像的加载原理 1.bootfs(boot file system)主要包含bootloader和kernel, bootloader主要是引导加载kernel, Linux刚启动时会加载bootfs文件系统，在Docker镜像的最底层是引导文件系统bootfs。 2.rootfs (root file system) ，在bootfs之上。 包含的就是典型 Linux 系统中的 /dev,/proc, /bin, /etc 等标准目录和文件。 3.为什么Docker镜像要设计成这种分层的镜像? 是为了提高复用率 注:Docker镜像层都是只读的，容器层是可写的。 当容器启动时，一个新的可写层被加载到镜像的顶部。 这一层通常被称作“容器层”，“容器层”之下的都叫“镜像层” 3.使用commit制作镜像 1.在ubuntu内添加vim功能然后制作成新的镜像 apt-get update apt-get -y install vim 2.提交容器副本使之成为一个新的镜像 docker commit -m=&quot;提交的描述信息&quot; -a=&quot;作者&quot; 容器ID 要创建的目标镜像名:[标签名] docker commit -m=&quot;add vim&quot; -a=&quot;qingbingwei&quot; f36b2a311fb6 ubuntu:1.1 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/docker%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-31T13:12:34+08:00" />
+<meta property="article:modified_time" content="2024-03-31T13:12:34+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Docker底层原理</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Mar 31, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/docker/">docker</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>docker镜像底层原理
+1.docker镜像是分层的文件系统
+每个分层的镜像都有单独的功能，然后汇聚成一起对外暴露成一个整体的镜像。
+这种分层的镜像我们又称为联合文件系统(UnionFS)。</p>
+<pre><code>    Union 文件系统是 Docker 镜像的基础。
+    镜像可以通过分层来进行继承，基于基础镜像，可以制作各种具体的应用镜像。
+
+2.docker镜像的加载原理
+    1.bootfs(boot file system)主要包含bootloader和kernel, 
+    bootloader主要是引导加载kernel, Linux刚启动时会加载bootfs文件系统，在Docker镜像的最底层是引导文件系统bootfs。
+
+    2.rootfs (root file system) ，在bootfs之上。
+    包含的就是典型 Linux 系统中的 /dev,/proc, /bin, /etc 等标准目录和文件。
+
+    3.为什么Docker镜像要设计成这种分层的镜像?
+    是为了提高复用率
+
+    注:Docker镜像层都是只读的，容器层是可写的。
+    当容器启动时，一个新的可写层被加载到镜像的顶部。
+    这一层通常被称作“容器层”，“容器层”之下的都叫“镜像层”
+
+3.使用commit制作镜像
+    1.在ubuntu内添加vim功能然后制作成新的镜像
+    apt-get update
+    apt-get -y install vim
+
+    2.提交容器副本使之成为一个新的镜像
+    docker commit -m=&quot;提交的描述信息&quot; -a=&quot;作者&quot; 容器ID 要创建的目标镜像名:[标签名]
+    docker commit -m=&quot;add vim&quot; -a=&quot;qingbingwei&quot; f36b2a311fb6 ubuntu:1.1</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

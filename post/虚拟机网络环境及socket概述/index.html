@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>虚拟机网络环境及socket概述 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="虚拟机网络环境及socket概述"/>
+<meta name="twitter:description" content="一、Vmware虚拟机网络环境概述 虚拟机&mdash;&mdash;软件技术(宿主机里安装一个服务，利用这个服务来共享宿主机的资源，通过服务，虚拟化成多个独立的主机进行管理) 1．宿主机里找到这个服务 2．几种组网方式的区别 a.NAT方式 宿主机里含有一个NAT服务(网络地址转换器，模拟成路由器) a.1.宿主机里被安装了一个能够连接到NAT路由器的虚拟网卡(vmnet8)，宿主机就是通过这个网卡和虚拟机通信 a.2.虚拟机如果要访问外网，需要配置网关，网关的地址，必须是NAT路由器的LAN口IP(不能是windows的vmnet8) a.3.vmnet8这个网卡，是给宿主机专门用来访问虚拟机用的，一定不要配置网关和DNS，这个网卡不是为宿主机提供网络服务假的路由器(软件)，外网能不能上，就看宿主机能不能上网了 b.host-only 宿主机里安装了一个虚拟的交换机，为宿主机提供了vmnet1的网卡，来连接到交换机上。 一旦虚拟机网卡连接到host-only，就意味连接到了交换机，只能和vmnet1进行数据交互。因为没有路由能力，虚拟机就无法访问外网 c.桥接 虚拟机利用宿主机里实际的网卡，充当虚拟机的物理层，虚拟机利用自己的独立NAc地址，使用宿主机的物理层进行数据通信寝室里其他设备也可以直接访问到虚拟机 3.Vmware和windows的数据互通 a.vmtools就是vmware这个软件提供的一个插件，只适合同一台机器上宿主机和虚拟机的访问实验室的多台主机和服务器相连，这个插件无能为力 b.建议使用网络服务进行数据交换 c.C/S模型 client和server a.1.ssh的远程登陆协议 a.2.虚拟机里安装ssh的服务器进程 如何判断虚拟机里有没有这个服务 netstat -tuan 查看当前机器服务链接状态 只需要在本地地址中端口号为22的，只要有这一行就表示服务已安装 a.3.宿主机安装ssh的客户端进程 Mobaxterm/Xterminal
+二、socket简介 应用层 用户态 利用文件描述符和系统调用，实现数据的交换 &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-syscall 系统调用 名词(文件描述符) 传输层 网络层 内核态 很多条链接，每条链接如何抽象给用户态 物理接口层
+文件描述符:就是一个非负整数 Linux的操作系统内，有一张表 0 内核的驱动1 1 内核的驱动2 2 内核的驱动3 3 NULL 4 NULL 必须获得这个内核抽象链接的对应的文件描述符 socket认为是一张信封，但是socket是一个大而全的一个通用接口 三、socket下的常用编程接口 socket 拿信封 bind 绑定local address"/>
+
+    <meta property="og:title" content="虚拟机网络环境及socket概述" />
+<meta property="og:description" content="一、Vmware虚拟机网络环境概述 虚拟机&mdash;&mdash;软件技术(宿主机里安装一个服务，利用这个服务来共享宿主机的资源，通过服务，虚拟化成多个独立的主机进行管理) 1．宿主机里找到这个服务 2．几种组网方式的区别 a.NAT方式 宿主机里含有一个NAT服务(网络地址转换器，模拟成路由器) a.1.宿主机里被安装了一个能够连接到NAT路由器的虚拟网卡(vmnet8)，宿主机就是通过这个网卡和虚拟机通信 a.2.虚拟机如果要访问外网，需要配置网关，网关的地址，必须是NAT路由器的LAN口IP(不能是windows的vmnet8) a.3.vmnet8这个网卡，是给宿主机专门用来访问虚拟机用的，一定不要配置网关和DNS，这个网卡不是为宿主机提供网络服务假的路由器(软件)，外网能不能上，就看宿主机能不能上网了 b.host-only 宿主机里安装了一个虚拟的交换机，为宿主机提供了vmnet1的网卡，来连接到交换机上。 一旦虚拟机网卡连接到host-only，就意味连接到了交换机，只能和vmnet1进行数据交互。因为没有路由能力，虚拟机就无法访问外网 c.桥接 虚拟机利用宿主机里实际的网卡，充当虚拟机的物理层，虚拟机利用自己的独立NAc地址，使用宿主机的物理层进行数据通信寝室里其他设备也可以直接访问到虚拟机 3.Vmware和windows的数据互通 a.vmtools就是vmware这个软件提供的一个插件，只适合同一台机器上宿主机和虚拟机的访问实验室的多台主机和服务器相连，这个插件无能为力 b.建议使用网络服务进行数据交换 c.C/S模型 client和server a.1.ssh的远程登陆协议 a.2.虚拟机里安装ssh的服务器进程 如何判断虚拟机里有没有这个服务 netstat -tuan 查看当前机器服务链接状态 只需要在本地地址中端口号为22的，只要有这一行就表示服务已安装 a.3.宿主机安装ssh的客户端进程 Mobaxterm/Xterminal
+二、socket简介 应用层 用户态 利用文件描述符和系统调用，实现数据的交换 &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-syscall 系统调用 名词(文件描述符) 传输层 网络层 内核态 很多条链接，每条链接如何抽象给用户态 物理接口层
+文件描述符:就是一个非负整数 Linux的操作系统内，有一张表 0 内核的驱动1 1 内核的驱动2 2 内核的驱动3 3 NULL 4 NULL 必须获得这个内核抽象链接的对应的文件描述符 socket认为是一张信封，但是socket是一个大而全的一个通用接口 三、socket下的常用编程接口 socket 拿信封 bind 绑定local address" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%8E%AF%E5%A2%83%E5%8F%8Asocket%E6%A6%82%E8%BF%B0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-13T23:19:29+08:00" />
+<meta property="article:modified_time" content="2024-09-13T23:19:29+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">虚拟机网络环境及socket概述</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 13, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>一、Vmware虚拟机网络环境概述
+虚拟机&mdash;&mdash;软件技术(宿主机里安装一个服务，利用这个服务来共享宿主机的资源，通过服务，虚拟化成多个独立的主机进行管理)
+1．宿主机里找到这个服务
+2．几种组网方式的区别
+a.NAT方式
+宿主机里含有一个NAT服务(网络地址转换器，模拟成路由器)
+a.1.宿主机里被安装了一个能够连接到NAT路由器的虚拟网卡(vmnet8)，宿主机就是通过这个网卡和虚拟机通信
+a.2.虚拟机如果要访问外网，需要配置网关，网关的地址，必须是NAT路由器的LAN口IP(不能是windows的vmnet8)
+a.3.vmnet8这个网卡，是给宿主机专门用来访问虚拟机用的，一定不要配置网关和DNS，这个网卡不是为宿主机提供网络服务假的路由器(软件)，外网能不能上，就看宿主机能不能上网了
+b.host-only
+宿主机里安装了一个虚拟的交换机，为宿主机提供了vmnet1的网卡，来连接到交换机上。
+一旦虚拟机网卡连接到host-only，就意味连接到了交换机，只能和vmnet1进行数据交互。因为没有路由能力，虚拟机就无法访问外网
+c.桥接
+虚拟机利用宿主机里实际的网卡，充当虚拟机的物理层，虚拟机利用自己的独立NAc地址，使用宿主机的物理层进行数据通信寝室里其他设备也可以直接访问到虚拟机
+3.Vmware和windows的数据互通
+a.vmtools就是vmware这个软件提供的一个插件，只适合同一台机器上宿主机和虚拟机的访问实验室的多台主机和服务器相连，这个插件无能为力
+b.建议使用网络服务进行数据交换
+c.C/S模型
+client和server
+a.1.ssh的远程登陆协议
+a.2.虚拟机里安装ssh的服务器进程
+如何判断虚拟机里有没有这个服务
+netstat -tuan
+查看当前机器服务链接状态
+只需要在本地地址中端口号为22的，只要有这一行就表示服务已安装
+a.3.宿主机安装ssh的客户端进程
+Mobaxterm/Xterminal</p>
+<p>二、socket简介
+应用层    用户态    利用文件描述符和系统调用，实现数据的交换
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-syscall 系统调用 名词(文件描述符)
+传输层
+网络层    内核态    很多条链接，每条链接如何抽象给用户态
+物理接口层</p>
+<pre><code>文件描述符:就是一个非负整数
+    Linux的操作系统内，有一张表
+        0       内核的驱动1
+        1       内核的驱动2
+        2       内核的驱动3
+        3           NULL
+        4           NULL
+必须获得这个内核抽象链接的对应的文件描述符    socket认为是一张信封，但是socket是一个大而全的一个通用接口
+</code></pre>
+<p>三、socket下的常用编程接口
+socket    拿信封
+bind      绑定local address</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

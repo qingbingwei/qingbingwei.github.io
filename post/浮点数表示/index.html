@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>浮点数表示 // 清兵卫的博客</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.117.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="qingbingwei" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="浮点数表示"/>
+<meta name="twitter:description" content="在二进制系统中，科学计数法通常被称为浮点表示法，并且是计算机科学中用于存储和计算实数的标准方法。
+这种表示方式同样由两部分构成：
+1.尾数： 在二进制科学计数法中，尾数通常是小数形式的二进制数，并且在标准化的情况下，它总是从 1.xxxxxx开始，这里的每个 x是0或1。 2.指数： 指数是一个以某个基数（通常为2）为底的整数，表示基数的小数点相对于固定点的位置偏移了多少位。 在计算机中任意一个二进制实数表示： X = (-1)^S * M * R^E 其中： S : sign，取值0或1，确定符号。 R ：radix，基数/进制。二进制下为2。 M ：mantissa，尾数。是一个二进制定点小数（0.1b&hellip;bbb），其位数反映了X的有效位数，决定了精度。 E ：exponent， 阶/指数。是一个二进制定点整数，其位数决定X的表示范围，其值确定小数点的位置。
+存储时存储 S M E三个字段即可，其中阶码E常用补码或移码表示，尾数M常用原码或补码表示。 移码 注:常用来表示浮点数的阶码。 移码就是在真值X上加上一个常数(偏置值)，通常这个常数取2^n，相当于X在数轴上向正方向偏移了若干单位，这就是“移码”一词的由来。
+n&#43;1位移码的特点： 1.零的表示唯一：[&#43;0]移=2n&#43;0=100...00 [-0]移=2n-0=100...00 (n个0) 2.一个真值的移码和补码仅差一个符号位，所以[x]补的符号位取反得到[x]移 所以在 原 反 补码中“ 0正1负” ；移码中 “0负1正”。-----&gt;注:前提是偏置值取2^n 3.移码全0时，对应真值的最小值-2^n;移码全1时，对应真值的最大值2^n-1。-----&gt;注:前提是偏置值取2^n 4.移码保持了数据原有的大小顺序，移码大真值就大，移码小真值就小。 IEEE 754标准 IEEE 754标准规定了四种表示浮点数值的方式： 单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80位实现）。 其中，只有32位模式有强制要求，其他都是选择性的。
+32位 单精度格式 单精度格式中包含1位符号s、8位阶码e和23位尾数f 尾数用原码表示。阶码用移码表示。 尾数： 对于规格化的二进制浮点数，尾数的最高位总是1,为了能使尾数多表示一位有效位，将这个1隐藏，称为隐藏位，因此23位尾数实际表示了24位有效数字。 IEEE 754规定隐藏位1的位置在小数点之前，即1.xxx...xxx的尾数形式。 例如，(12)10= (1100)2,将它规格化后结果为1.1x2^3,其中整数部分的“1”将不存储在23位尾数内。 阶码： 阶码用移码表示，偏置值为2^(n-1)-1。因此，单精度和双精度浮点数的偏置常数分别为127和1023。一些特殊的位序列(如阶码为全0或全1)有其特别的解释。 以IEEE 754标准中的单精度浮点数为例，其阶码部分有8位，能够表示的范围通常是-127到128，但是实际可用的范围是从-126到127，因为全0和全1的指数值有特殊的含义。 IEEE 754中对数进行了以下分类： 1."/>
+
+    <meta property="og:title" content="浮点数表示" />
+<meta property="og:description" content="在二进制系统中，科学计数法通常被称为浮点表示法，并且是计算机科学中用于存储和计算实数的标准方法。
+这种表示方式同样由两部分构成：
+1.尾数： 在二进制科学计数法中，尾数通常是小数形式的二进制数，并且在标准化的情况下，它总是从 1.xxxxxx开始，这里的每个 x是0或1。 2.指数： 指数是一个以某个基数（通常为2）为底的整数，表示基数的小数点相对于固定点的位置偏移了多少位。 在计算机中任意一个二进制实数表示： X = (-1)^S * M * R^E 其中： S : sign，取值0或1，确定符号。 R ：radix，基数/进制。二进制下为2。 M ：mantissa，尾数。是一个二进制定点小数（0.1b&hellip;bbb），其位数反映了X的有效位数，决定了精度。 E ：exponent， 阶/指数。是一个二进制定点整数，其位数决定X的表示范围，其值确定小数点的位置。
+存储时存储 S M E三个字段即可，其中阶码E常用补码或移码表示，尾数M常用原码或补码表示。 移码 注:常用来表示浮点数的阶码。 移码就是在真值X上加上一个常数(偏置值)，通常这个常数取2^n，相当于X在数轴上向正方向偏移了若干单位，这就是“移码”一词的由来。
+n&#43;1位移码的特点： 1.零的表示唯一：[&#43;0]移=2n&#43;0=100...00 [-0]移=2n-0=100...00 (n个0) 2.一个真值的移码和补码仅差一个符号位，所以[x]补的符号位取反得到[x]移 所以在 原 反 补码中“ 0正1负” ；移码中 “0负1正”。-----&gt;注:前提是偏置值取2^n 3.移码全0时，对应真值的最小值-2^n;移码全1时，对应真值的最大值2^n-1。-----&gt;注:前提是偏置值取2^n 4.移码保持了数据原有的大小顺序，移码大真值就大，移码小真值就小。 IEEE 754标准 IEEE 754标准规定了四种表示浮点数值的方式： 单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80位实现）。 其中，只有32位模式有强制要求，其他都是选择性的。
+32位 单精度格式 单精度格式中包含1位符号s、8位阶码e和23位尾数f 尾数用原码表示。阶码用移码表示。 尾数： 对于规格化的二进制浮点数，尾数的最高位总是1,为了能使尾数多表示一位有效位，将这个1隐藏，称为隐藏位，因此23位尾数实际表示了24位有效数字。 IEEE 754规定隐藏位1的位置在小数点之前，即1.xxx...xxx的尾数形式。 例如，(12)10= (1100)2,将它规格化后结果为1.1x2^3,其中整数部分的“1”将不存储在23位尾数内。 阶码： 阶码用移码表示，偏置值为2^(n-1)-1。因此，单精度和双精度浮点数的偏置常数分别为127和1023。一些特殊的位序列(如阶码为全0或全1)有其特别的解释。 以IEEE 754标准中的单精度浮点数为例，其阶码部分有8位，能够表示的范围通常是-127到128，但是实际可用的范围是从-126到127，因为全0和全1的指数值有特殊的含义。 IEEE 754中对数进行了以下分类： 1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://qingbingwei.github.io/post/%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E7%A4%BA/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-09-09T20:21:39+08:00" />
+<meta property="article:modified_time" content="2024-09-09T20:21:39+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://qingbingwei.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="qingbingwei" /></a>
+      <span class="app-header-title">清兵卫的博客</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/">Home</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/tags/">Tags</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/about/">About</a>
+      </nav>
+      <p>这里是清兵卫的博客，用于记录生活日常，代码存储于GitHub上</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/qingbingwei" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/gohugoio" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">浮点数表示</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Sep 9, 2024
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line>
+</svg>
+              <a class="tag" href="https://qingbingwei.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">计算机组成原理</a>
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <p>在二进制系统中，科学计数法通常被称为浮点表示法，并且是计算机科学中用于存储和计算实数的标准方法。</p>
+<p>这种表示方式同样由两部分构成：</p>
+<pre><code>1.尾数：
+    在二进制科学计数法中，尾数通常是小数形式的二进制数，并且在标准化的情况下，它总是从 1.xxxxxx开始，这里的每个 x是0或1。
+2.指数：
+    指数是一个以某个基数（通常为2）为底的整数，表示基数的小数点相对于固定点的位置偏移了多少位。
+</code></pre>
+<p>在计算机中任意一个二进制实数表示：
+X = (-1)^S * M * R^E
+其中：
+S : sign，取值0或1，确定符号。
+R ：radix，基数/进制。二进制下为2。
+M ：mantissa，尾数。是一个二进制定点小数（0.1b&hellip;bbb），其位数反映了X的有效位数，决定了精度。
+E ：exponent， 阶/指数。是一个二进制定点整数，其位数决定X的表示范围，其值确定小数点的位置。</p>
+<pre><code>存储时存储 S M E三个字段即可，其中阶码E常用补码或移码表示，尾数M常用原码或补码表示。
+</code></pre>
+<p>移码
+注:常用来表示浮点数的阶码。
+移码就是在真值X上加上一个常数(偏置值)，通常这个常数取2^n，相当于X在数轴上向正方向偏移了若干单位，这就是“移码”一词的由来。</p>
+<pre><code>n+1位移码的特点：
+    1.零的表示唯一：[+0]移=2n+0=100...00   [-0]移=2n-0=100...00 (n个0)
+    2.一个真值的移码和补码仅差一个符号位，所以[x]补的符号位取反得到[x]移
+        所以在 原 反 补码中“ 0正1负” ；移码中 “0负1正”。-----&gt;注:前提是偏置值取2^n
+    3.移码全0时，对应真值的最小值-2^n;移码全1时，对应真值的最大值2^n-1。-----&gt;注:前提是偏置值取2^n
+    4.移码保持了数据原有的大小顺序，移码大真值就大，移码小真值就小。
+</code></pre>
+<p>IEEE 754标准
+IEEE 754标准规定了四种表示浮点数值的方式：
+单精确度（32位）、双精确度（64位）、延伸单精确度（43比特以上，很少使用）与延伸双精确度（79比特以上，通常以80位实现）。
+其中，只有32位模式有强制要求，其他都是选择性的。</p>
+<pre><code>32位 单精度格式
+    单精度格式中包含1位符号s、8位阶码e和23位尾数f
+    尾数用原码表示。阶码用移码表示。
+
+    尾数：
+        对于规格化的二进制浮点数，尾数的最高位总是1,为了能使尾数多表示一位有效位，将这个1隐藏，称为隐藏位，因此23位尾数实际表示了24位有效数字。
+        IEEE 754规定隐藏位1的位置在小数点之前，即1.xxx...xxx的尾数形式。
+        例如，(12)10= (1100)2,将它规格化后结果为1.1x2^3,其中整数部分的“1”将不存储在23位尾数内。
+    阶码：
+        阶码用移码表示，偏置值为2^(n-1)-1。因此，单精度和双精度浮点数的偏置常数分别为127和1023。一些特殊的位序列(如阶码为全0或全1)有其特别的解释。
+        以IEEE 754标准中的单精度浮点数为例，其阶码部分有8位，能够表示的范围通常是-127到128，但是实际可用的范围是从-126到127，因为全0和全1的指数值有特殊的含义。
+
+IEEE 754中对数进行了以下分类：
+    1.阶码非全0且非全1------------&gt;规格化非0数
+        真值计算公式：其中e的值是移码的值
+        X = (-1)^s * 1.f * 2^(e-127)
+    2.阶码全0且尾数全0
+        表示的值不再根据前面的公式计算，而是规定固定为0。
+        根据s的值分为+0或-0。一般情况下正负零是等效的。
+    3.阶码全0且尾数不全为0-----------&gt;非规格化数---------&gt;解决下溢出
+        此时隐藏位不再为1，隐藏位固定为0。
+        阶码e = 0000 0000 , 转化出的真值为-127，但是此时我们不进行转化，而是将阶码固定看成是 -126。
+        X = (-1)^s * 0.f * 2^(-126)
+    4.阶码全1且尾数全0-----------------&gt;解决上溢出
+        此时固定表示正负无穷大 +∞  -∞
+        引人无穷大数使得在计算过程出现异常的情况下程序能继续进行下去,并且可为程序提供错误检测功能。
+        +∞在数值上大于所有有限数,-∞则小于所有有限数,无穷大数既可作为操作数，也可能是运算的结果。
+    5.阶码全1且尾数不全为0
+        非数(NaN)  Not  a  Number
+        表示一个没有定义的数,称为非数。
+        一些没有数学解释的计算(如0/0, 0*∞等)会产生一个NaN。
+</code></pre>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>

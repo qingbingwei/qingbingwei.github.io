@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>前端 on 清兵卫的博客</title>
+    <link>https://qingbingwei.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+    <description>Recent content in 前端 on 清兵卫的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 10 Mar 2024 23:33:25 +0800</lastBuildDate><atom:link href="https://qingbingwei.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BOM和DOM</title>
+      <link>https://qingbingwei.github.io/post/bom%E5%92%8Cdom/</link>
+      <pubDate>Sun, 10 Mar 2024 23:33:25 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/bom%E5%92%8Cdom/</guid>
+      <description>BOM：BOM（Browser Object Model），即浏览器对象模型，BOM 提供了独立于内容的对象结构，可以与浏览器窗口进行互动
+1.window对象 ![](/img/window.png) 1.history对象 ![](/img/history.png) 2.location对象 ![](/img/location.png) 3.document对象 ![](/img/document.png) 2.Date类 ![](/img/date.png) 3.周期函数和延迟函数 ![](/img/periodic_function.png) DOM:DOM（Document Object Model），即文档对象模型，DOM主要提供了对于页面内容的一些操作。 在DOM中，所有的内容（标签和文本）都是DOM节点，所有的标签都是DOM元素。
+1.DOM节点关系 ![](/img/DOM_Node.png) 2.节点属性 ![](/img/Node.png) 3.元素属性 ![](/img/element.png) 4.节点操作 ![](/img/Node_operation.png) 5.节点样式 6.节点属性 ![](/img/Node_attribute.png) promise对象 Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息，其状态不受外界影响。Promise对象代表一个异步操作，有三种状态： 1.pending: 初始状态，不是成功或失败状态。 2.fulfilled: 意味着操作成功完成。 3.rejected: 意味着操作失败。
+只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态。 这也是Promise 这个名字的由来，它的英语意思就是承诺，表示其他手段无法改变。 一旦 Promise 对象从初始状态改变，就不会再变，任何时候都可以得到这个结果。Promise 对象的状态改变，只有两种可能： 从 Pending 变为 Resolved 和从 Pending 变为 Rejected。 只要这两种情况发生，状态就凝固了，不会再变了，会一直保持这个结果。 promise应用 function cal(a,b) { let promise = new Promise(function (resolve,reject) { if(b == 0) { reject(new Error(&amp;ldquo;除数不能为零&amp;rdquo;)); //异常情况处理使用reject函数进行拒绝 } else { //成功处理的情况使用resolve函数进行处理 resolve(a/b); } }); promise.</description>
+    </item>
+    
+    <item>
+      <title>JavaScript</title>
+      <link>https://qingbingwei.github.io/post/javascript/</link>
+      <pubDate>Sun, 10 Mar 2024 14:15:09 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/javascript/</guid>
+      <description>JavaScript 是一种解释性脚本语言（不用编译），主要用于向 HTML 添加交互行为，语法与 Java 语言类似。
+JavaScript 由 ECMAScript（简称 ES）、DOM（Document Object Model） 和 BOM（Broswer ObjectModel） 三大部分组成。
+注:该结构可以在HTML中的任意位置书写，但必须保证 JavaScript 脚本中使用到的元素必须在 JavaScript脚本执行前完成加载。 例. //可以访问id为a元素，不可以访问id为b元素 JavaScript 引入方式 1.行内脚本 2.内部脚本 document.getElementById(&amp;ldquo;btn&amp;rdquo;).onclick=function() { alert(&amp;lsquo;你点击了按钮&amp;rsquo;); } 3.外部脚本 // demo.js document.getElementById(&amp;quot;btn&amp;quot;).onclick=function() { alert(&#39;你点击了按钮&#39;); } &amp;lt;!-- demo.html --&amp;gt; &amp;lt;input type=&amp;quot;button&amp;quot; value=&amp;quot;点击&amp;quot; id=&amp;quot;btn&amp;quot;&amp;gt; &amp;lt;script type=&amp;quot;text/javascript&amp;quot; src=&amp;quot;demo.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt; JavaScript 语法 1.数据类型 2.变量 var 与 let 的区别 注:let 声明的变量只在它所在的代码块有效。 var 声明的变量属于全局变量 3.字符串 常用函数 ![](/img/string.png) 4.数组 1.创建数组 let 数组名 = new Array(数组长度); let 数组名 = new Array(数组元素1, 数组元素2, .</description>
+    </item>
+    
+    <item>
+      <title>CSS3及页面布局</title>
+      <link>https://qingbingwei.github.io/post/css3%E5%8F%8A%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/</link>
+      <pubDate>Sat, 09 Mar 2024 16:26:02 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/css3%E5%8F%8A%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/</guid>
+      <description>CSS3新特性 1.边框 border-radius:用于创建圆角 #border { width: 100px; height: 100px; background-color: red; border-radius: 5px; }
+2.盒子阴影 box-shadow:用来添加阴影 box-shadow:阴影类型 水平阴影位置 垂直阴影位置 阴影模糊距离 阴影大小 阴影颜色; box-shadow: inset 2px 2px 2px 2px red; 3.渐变 1.线性渐变—Linear Gradients: 颜色沿着一条直线过渡：从左到右、从右到左、从上到下等 linear-gradient(渐变方向, 颜色1, yanse2, ..., 颜色n) 2.径向渐变—Radial Gradients: 圆形或椭圆形渐变，颜色不再沿着一条直线变化，而是从一个起点朝所有方向混合 radial-gradient(center, shape size, start-color, ..., last-color) 4.文本效果 1.text-shadow:向文本添加阴影 ![](/img/text_shadow.png) 2.text-overflow:当文本溢出包含元素时发生的事情 white-space:nowrap 文本不会换行，在同一行继续 overflow:hidden 元素溢出部分隐藏 text-overflow:ellipsis 用省略号来代表被修剪的文本 5.字体 @font-face { font-family: 必需。规定字体的名称 src: 必需。定义字体文件的 URL font-weight: 可选。定义字体的粗细。默认是 &amp;quot;normal&amp;quot; font-style: 可选。定义字体的样式。默认是 &amp;quot;normal&amp;quot; } 6.</description>
+    </item>
+    
+    <item>
+      <title>CSS</title>
+      <link>https://qingbingwei.github.io/post/css/</link>
+      <pubDate>Sat, 09 Mar 2024 00:16:48 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/css/</guid>
+      <description>有一说一，前端确实比后端见效快，只能说正反馈相当及时了。现在学一下CSS，之后学一下JavaScript，也算是初步了解前端了。
+CSS 是 Cascading Style Sheet 的简写，表示层叠样式表，主要用于渲染HTML元素在网页中的展示效果。 主要包括对元素高度、宽度、字体、颜色、背景图片、边距、定位、呈现方式等设定
+CSS选择器 CSS 选择分为基本选择器和层次选择器。 CSS 基本选择器分为ID选择器、类选择器和标签选择器三大类。 CSS 选择器有优先级之分： ID选择器 &amp;gt; 类选择器 &amp;gt; 标签选择器
+基本语法 /*标签选择器*/ 标签名{ 声明1; 声明2; ... 声明n; } /*类选择器*/ .类名{ 声明1; 声明2; ... 声明n; } /*ID选择器*/ #ID值{ 声明1; 声明2; ... 声明n; } CSS样式引入 1.行类样式 &amp;lt;div style=&amp;quot;color:red;font-size:20px;&amp;quot;&amp;gt; 这是行内样式 &amp;lt;/div&amp;gt; 2.内部样式 &amp;lt;style&amp;gt; #demo{ color:red; font-size:20px; } &amp;lt;/style&amp;gt; &amp;lt;div id=&amp;quot;demo&amp;quot;&amp;gt; 这是内部样式 &amp;lt;/div&amp;gt; 3.外部样式 /*demo.css*/ #demo { color:red; font-size:20px; } &amp;lt;!-- demo.html --&amp;gt; &amp;lt;head&amp;gt; &amp;lt;link type=&amp;quot;text/css&amp;quot; href=&amp;quot;demo.</description>
+    </item>
+    
+    <item>
+      <title>HTML</title>
+      <link>https://qingbingwei.github.io/post/html/</link>
+      <pubDate>Wed, 06 Mar 2024 22:48:44 +0800</pubDate>
+      
+      <guid>https://qingbingwei.github.io/post/html/</guid>
+      <description>HTML是Hyper Text Markup Language的简称，即超文本标记语言，是一种用于创建网页的标准标记语言。
+HTML基本结构
+&amp;lt;/body&amp;gt; 基本结构说明 表示定义的文档类型为 HTML5 文档。 &amp;lt;/html 表示整个 HTML 文档内容的定义只能在该标签对之间 表示整个 HTML 文档的头部信息，比如文档的标题、文档使用的字符集编码、文档是否可以缩放等。 表示定义文档的字符集编码为 &amp;ldquo;utf-8&amp;rdquo;，支持中文 表示定义文档显示的标题 表示 HTML 文档的主体内容部分应该定义在该标签内
+注意:标签一般都是成对出现，分别叫开放标签和闭合标签
+HTML标签 1.HTML 标签分类 块级标签（block elements） 块级标签特征 a. 总是在新行上开始 b. 高度，行高以及外边距和内边距都可控制 c. 宽度缺省是它的容器的100% d. 可以容纳内联元素和其他块元素
+标签标题 &amp;lt;h1&amp;gt;一级标题&amp;lt;/h1&amp;gt; &amp;lt;h2&amp;gt;二级标题&amp;lt;/h2&amp;gt; &amp;lt;h3&amp;gt;三级标题&amp;lt;/h3&amp;gt; &amp;lt;h4&amp;gt;四级标题&amp;lt;/h4&amp;gt; &amp;lt;h5&amp;gt;五级标题&amp;lt;/h5&amp;gt; &amp;lt;h6&amp;gt;六级标题&amp;lt;/h6&amp;gt; 水平线标签 &amp;lt;hr&amp;gt; 段落标签 &amp;lt;p&amp;gt; &amp;lt;!-- 段落内容 --&amp;gt; &amp;lt;/p&amp;gt; 无序列表标签 &amp;lt;ul&amp;gt; &amp;lt;li&amp;gt;列表项1&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;列表项2&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;列表项3&amp;lt;/li&amp;gt; ...... &amp;lt;li&amp;gt;列表项n&amp;lt;/li&amp;gt; &amp;lt;/ul&amp;gt; 有序列表标签 &amp;lt;!--可以通过type=&amp;quot;&amp;quot;指定序号--&amp;gt; &amp;lt;ol&amp;gt; &amp;lt;li&amp;gt;列表项1&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;列表项2&amp;lt;/li&amp;gt; &amp;lt;li&amp;gt;列表项3&amp;lt;/li&amp;gt; ...... &amp;lt;li&amp;gt;列表项n&amp;lt;/li&amp;gt; &amp;lt;/ol&amp;gt; 表格标签 &amp;lt;table border=&amp;quot;12&amp;quot;&amp;gt;&amp;lt;!</description>
+    </item>
+    
+  </channel>
+</rss>
