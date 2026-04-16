@@ -1,1 +1,2 @@
-# qingbingwei.github.io
+# C++ Init
+
