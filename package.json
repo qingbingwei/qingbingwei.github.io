@@ -1,0 +1,29 @@
+{
+  "name": "qingbingwei.github.io",
+  "version": "1.0.0",
+  "description": "VuePress 2 study notes for computer science topics",
+  "scripts": {
+    "docs:dev": "vuepress dev docs --clean-cache",
+    "docs:build": "vuepress build docs",
+    "docs:clean-dev": "vuepress dev docs --clean-cache",
+    "docs:clean-build": "vuepress build docs --clean-cache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qingbingwei/qingbingwei.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qingbingwei/qingbingwei.github.io/issues"
+  },
+  "homepage": "https://github.com/qingbingwei/qingbingwei.github.io#readme",
+  "devDependencies": {
+    "@vuepress/bundler-vite": "^2.0.0-rc.28",
+    "@vuepress/theme-default": "^2.0.0-rc.128",
+    "sass-embedded": "^1.99.0",
+    "sass-loader": "^16.0.7",
+    "vuepress": "^2.0.0-rc.28"
+  }
+}
