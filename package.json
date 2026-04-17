@@ -6,7 +6,8 @@
     "docs:dev": "vuepress dev docs --clean-cache",
     "docs:build": "vuepress build docs",
     "docs:clean-dev": "vuepress dev docs --clean-cache",
-    "docs:clean-build": "vuepress build docs --clean-cache"
+    "docs:clean-build": "vuepress build docs --clean-cache",
+    "test:local": "bash scripts/local-test.sh"
   },
   "repository": {
     "type": "git",

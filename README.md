@@ -27,3 +27,21 @@ npm run docs:build
 ```
 
 构建输出目录：docs/.vuepress/dist
+
+## 本地测试脚本
+
+```bash
+bash scripts/local-test.sh
+```
+
+可选：执行一次清缓存构建测试
+
+```bash
+bash scripts/local-test.sh clean-build
+```
+
+也可以通过 npm 脚本执行：
+
+```bash
+npm run test:local
+```

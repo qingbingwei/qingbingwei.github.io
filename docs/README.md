@@ -1,7 +1,7 @@
 ---
 home: true
 title: 首页
-heroText: CPP 与 Agent 学习笔记
+heroText: CPP 与 Agent 学习笔记[WIP]
 tagline: 只保留两个核心专题，聚焦学习与实践。
 actions:
   - text: 进入 CPP
