@@ -1,0 +1,77 @@
+name: Build and publish from pre_release
+
+on:
+  push:
+    branches:
+      - pre_release
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-main-from-pre-release
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout pre_release source
+        uses: actions/checkout@v4
+        with:
+          ref: pre_release
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run docs:build
+
+      - name: Publish dist to main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          DIST_DIR="docs/.vuepress/dist"
+          TMP_DIST="/tmp/site-dist"
+
+          if [ ! -d "$DIST_DIR" ]; then
+            echo "Build output not found: $DIST_DIR"
+            exit 1
+          fi
+
+          rm -rf "$TMP_DIST"
+          mkdir -p "$TMP_DIST"
+          cp -a "$DIST_DIR"/. "$TMP_DIST"/
+
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin main
+          git checkout -B main origin/main
+
+          find . -mindepth 1 -maxdepth 1 \
+            ! -name '.git' \
+            ! -name '.github' \
+            -exec rm -rf {} +
+
+          cp -a "$TMP_DIST"/. .
+          touch .nojekyll
+
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to publish"
+            exit 0
+          fi
+
+          git add -A
+          git commit -m "chore: publish from pre_release ${GITHUB_SHA}"
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" main
